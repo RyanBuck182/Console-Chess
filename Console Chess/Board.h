@@ -6,6 +6,11 @@ using namespace std;
 class Board
 {
 public:
+
+	Board();
+
+	enum PieceType {none, pawn, knight, bishop, rook, king, queen};
+
 	const int BOARD_SIZE = 64;
 	Square* board;
 	bool boardWhite[64];
