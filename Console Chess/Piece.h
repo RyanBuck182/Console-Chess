@@ -2,10 +2,10 @@
 #define PIECE_H
 
 #include <vector>
-#include "Move.h"
 
 class Square;
 class Board;
+class Move;
 
 class Piece {
 public:

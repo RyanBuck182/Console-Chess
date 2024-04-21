@@ -2,6 +2,7 @@
 #include "Pawn.h"
 #include "Square.h"
 #include "Board.h"
+#include "Move.h"
 
 using namespace std;
 
