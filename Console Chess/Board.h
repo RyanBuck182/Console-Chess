@@ -1,20 +1,25 @@
-#pragma once
+#ifndef BOARD_H
+#define BOARD_H
+
 #include <iostream>
 #include "Square.h"
 
 using namespace std;
-class Board
-{
-public:
 
+const int BOARD_SIZE = 64;
+
+class Board {
+public:
 	Board();
 
-	enum PieceType {none, pawn, knight, bishop, rook, king, queen};
+	bool idInRange(int) const;
+	Square* getSquare(int) const;
 
-	const int BOARD_SIZE = 64;
-	Square* board;
-	bool boardWhite[64];
-	bool boardBlack[64];
-	bool boardWhiteAttack[64];
-	bool boardBlackAttack[64];
+	Square* board[BOARD_SIZE];
+	bool boardWhite[BOARD_SIZE];
+	bool boardBlack[BOARD_SIZE];
+	bool boardWhiteAttack[BOARD_SIZE];
+	bool boardBlackAttack[BOARD_SIZE];
 };
+
+#endif
