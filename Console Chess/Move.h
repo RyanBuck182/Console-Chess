@@ -8,6 +8,8 @@ struct Move {
 
 	Square* startSquare;
 	Square* endSquare;
+
+	bool operator==(const Move& move) const;
 };
 
 #endif
