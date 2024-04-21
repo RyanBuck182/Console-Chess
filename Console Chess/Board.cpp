@@ -23,6 +23,10 @@ Square* Board::getSquare(int id) const {
 	return board[id];
 }
 
+Move Board::getLastMove() const {
+	return moveList.back();
+}
+
 void Board::makeMove(Move* move) {
 	bool moveIsValid = false;
 

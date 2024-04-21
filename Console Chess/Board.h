@@ -17,6 +17,7 @@ public:
 
 	bool idInRange(int) const;
 	Square* getSquare(int) const;
+	Move getLastMove() const;
 	void makeMove(Move*);
 
 	Square* board[BOARD_SIZE];
