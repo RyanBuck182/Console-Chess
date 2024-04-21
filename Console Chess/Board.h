@@ -6,7 +6,7 @@
 
 const int BOARD_SIZE = 64;
 
-enum BoardState { Play, Win, Stalemate, Draw };
+enum BoardState { WhiteToPlay, BlackToPlay, Win, Stalemate, Draw };
 
 class Square;
 class Move;

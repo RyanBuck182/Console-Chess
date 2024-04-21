@@ -8,7 +8,7 @@ using namespace std;
 Board::Board() {
 	//implement this
 
-	state = Play;
+	state = WhiteToPlay;
 }
 
 bool Board::idInRange(int id) const {
@@ -25,13 +25,16 @@ Square* Board::getSquare(int id) const {
 
 void Board::makeMove(Move* move) {
 	bool moveIsValid = false;
+
 	vector<Move> validMoves = move->startSquare->piece->computeValidMoves(*this);
-	
 	for (int i = 0; i < validMoves.size(); i++)
 		if (*move == validMoves[i])
 			moveIsValid = true;
 
 	if (!moveIsValid)
+		return;
+
+	if (state == WhiteToPlay && !move->startSquare->piece->isWhite || state == BlackToPlay && move->startSquare->piece->isWhite)
 		return;
 
 	moveList.push_back(*move);
@@ -44,6 +47,8 @@ void Board::makeMove(Move* move) {
 	
 	move->startSquare->piece = nullptr;
 	move->startSquare->isOccupied = false;
+
+	state = (state == WhiteToPlay) ? BlackToPlay : WhiteToPlay;
 
 	//check for win/stalemate/etc
 }
