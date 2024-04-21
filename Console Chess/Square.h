@@ -1,13 +1,14 @@
 #ifndef SQUARE_H
 #define SQUARE_H
-#include "Piece.h"
-class Square 
-{
+
+class Piece;
+
+class Square {
 public:
+	Square(int);
+	Square(int, Piece*);
 
-	Square();
-	Square(Piece*);
-
+	int id;
 	bool isOccupied;
 	Piece* piece;
 };
