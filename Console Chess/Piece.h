@@ -14,7 +14,7 @@ public:
 	Square* square; //add accessor and mutator
 	bool isWhite; //add accessor
 
-	virtual std::vector<Move> getValidMoves(const Board&) const = 0;
+	virtual std::vector<Move> computeValidMoves(const Board&) const = 0;
 };
 
 #endif

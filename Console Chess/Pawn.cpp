@@ -3,9 +3,11 @@
 #include "Square.h"
 #include "Board.h"
 
+using namespace std;
+
 Pawn::Pawn(Square* square, bool isWhite) : Piece(square, isWhite), hasMoved(false) {}
 
-vector<Move> Pawn::getValidMoves(const Board& board) const {
+vector<Move> Pawn::computeValidMoves(const Board& board) const {
 	vector<Move> validMoves;
 
 	Square* forwardSquare;
