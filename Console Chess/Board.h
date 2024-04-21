@@ -2,11 +2,12 @@
 #define BOARD_H
 
 #include <iostream>
-#include "Square.h"
-
-using namespace std;
+#include <vector>
 
 const int BOARD_SIZE = 64;
+
+class Square;
+class Move;
 
 class Board {
 public:
@@ -20,6 +21,8 @@ public:
 	bool boardBlack[BOARD_SIZE];
 	bool boardWhiteAttack[BOARD_SIZE];
 	bool boardBlackAttack[BOARD_SIZE];
+
+	std::vector<Move> moveList;
 };
 
 #endif

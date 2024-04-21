@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "Square.h";
 
 Board::Board() {
 	//implement this
