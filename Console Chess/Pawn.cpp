@@ -45,7 +45,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 
 	bool doubleForwardSquareIsValid = doubleForwardSquare != nullptr && !doubleForwardSquare->isOccupied;
 	if (forwardSquareIsValid && doubleForwardSquareIsValid && !hasMoved)
-		validMoves.push_back(Move(square, doubleForwardSquare));
+		validMoves.push_back(Move(square, doubleForwardSquare, DoublePawn));
 
 	//Considering left diagonal
 	leftDiagonalId = square->id + (isWhite) ? 7 : -9;
@@ -60,7 +60,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 	}
 
 	if (leftDiagonal != nullptr && leftDiagonal->isOccupied && leftDiagonal->piece->isWhite != isWhite)
-		validMoves.push_back(Move(square, leftDiagonal));
+		validMoves.push_back(Move(square, leftDiagonal, Capture));
 
 	//Considering right diagonal
 	rightDiagonalId = square->id + (isWhite) ? 9: -7;
@@ -75,8 +75,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 	}
 
 	if (rightDiagonal != nullptr && rightDiagonal->isOccupied && rightDiagonal->piece->isWhite != isWhite)
-		validMoves.push_back(Move(square, rightDiagonal));
-
+		validMoves.push_back(Move(square, rightDiagonal, Capture));
 
 	//Consider en passant (need to check last board move)
 
