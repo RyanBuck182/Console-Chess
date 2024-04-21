@@ -7,6 +7,8 @@ using namespace std;
 
 Board::Board() {
 	//implement this
+
+	state = Play;
 }
 
 bool Board::idInRange(int id) const {
