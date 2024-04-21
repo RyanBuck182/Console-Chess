@@ -4,12 +4,17 @@
 #include <vector>
 #include "Move.h"
 
+class Square;
+class Board;
+
 class Piece {
 public:
-	int currentSquare;
+	Piece(Square*, bool);
+
+	Square* square;
 	bool isWhite;
 
-	virtual vector<Move> getValidMoves(bool boardWhite[], bool boardBlack[]) = 0;
+	virtual std::vector<Move> getValidMoves(const Board&) const = 0;
 };
 
 #endif
