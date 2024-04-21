@@ -1,6 +1,7 @@
 #include "Move.h"
+#include "Square.h"
 
-Move::Move(int startSquare, int endSquare) {
+Move::Move(Square* startSquare, Square* endSquare) {
 	this->startSquare = startSquare;
 	this->endSquare = endSquare;
 }
