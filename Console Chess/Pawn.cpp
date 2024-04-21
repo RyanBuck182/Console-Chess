@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Pawn::Pawn(Square* square, bool isWhite) : Piece(square, isWhite), hasMoved(false) {}
+Pawn::Pawn(Square* square, bool isWhite) : Piece(square, isWhite, 'P', 'p'), hasMoved(false) {}
 
 vector<Move> Pawn::computeValidMoves(const Board& board) const {
 	vector<Move> validMoves;

@@ -9,10 +9,14 @@ class Move;
 
 class Piece {
 public:
-	Piece(Square*, bool);
+	Piece(Square*, bool, char, char);
 
 	Square* square; //add accessor and mutator
 	bool isWhite; //add accessor
+
+	//add accessor
+	char whitePieceSymbol;
+	char blackPieceSymbol;
 
 	virtual std::vector<Move> computeValidMoves(const Board&) const = 0;
 };
