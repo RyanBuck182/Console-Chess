@@ -11,8 +11,8 @@ class Piece {
 public:
 	Piece(Square*, bool);
 
-	Square* square;
-	bool isWhite;
+	Square* square; //add accessor and mutator
+	bool isWhite; //add accessor
 
 	virtual std::vector<Move> getValidMoves(const Board&) const = 0;
 };

@@ -8,9 +8,10 @@ public:
 	Square(int);
 	Square(int, Piece*);
 
-	int id;
-	bool isOccupied;
-	Piece* piece;
+	//make private
+	int id; //add accessor
+	bool isOccupied; //add accessor
+	Piece* piece; //add accessor and mutator
 };
 
 #endif
