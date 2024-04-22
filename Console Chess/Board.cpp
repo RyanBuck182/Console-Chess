@@ -63,6 +63,9 @@ Move* Board::getLastMove() const {
 void Board::makeMove(Move* move) {
 	bool moveIsValid = false;
 
+	if (move->startSquare->piece == nullptr)
+		throw "Starting square has no piece on it.";
+
 	vector<Move*> validMoves = move->startSquare->piece->computeValidMoves(*this);
 	for (int i = 0; i < validMoves.size(); i++) {
 		if (*move == *validMoves[i]) {
@@ -72,10 +75,10 @@ void Board::makeMove(Move* move) {
 	}
 
 	if (!moveIsValid)
-		return;
+		throw "That move is not valid.";
 
 	if (state == WhiteToPlay && !move->startSquare->piece->isWhite || state == BlackToPlay && move->startSquare->piece->isWhite)
-		return;
+		throw "Attempting to move other side's piece.";
 
 	moveList.push_back(move);
 
