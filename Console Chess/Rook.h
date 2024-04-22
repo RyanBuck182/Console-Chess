@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ROOK_H
+#define ROOK_H
 
 #include "Piece.h"
 class Rook : public Piece 
@@ -8,3 +9,5 @@ class Rook : public Piece
 
 	std::vector<Move*> computeValidMoves(const Board&) const override;
 };
+
+#endif
