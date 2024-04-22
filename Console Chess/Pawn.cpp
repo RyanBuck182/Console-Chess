@@ -1,5 +1,3 @@
-#include <string>
-
 #include "Pawn.h"
 #include "Square.h"
 #include "Board.h"
@@ -18,7 +16,7 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 
 	try {
 		lastMove = board.getLastMove();
-	} catch (string error) {
+	} catch (const char* error) {
 		lastMove = nullptr;
 	}
 	
@@ -30,7 +28,7 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 	//Considering forward
 	try {
 		forwardSquare = board.getForwardSquare(square);
-	} catch (string error) {
+	} catch (const char* error) {
 		forwardSquare = nullptr;
 	}
 
@@ -41,7 +39,7 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 	//Considering forward 2 spaces
 	try {
 		doubleForwardSquare = board.getForwardSquare(forwardSquare);
-	} catch (string error) {
+	} catch (const char* error) {
 		doubleForwardSquare = nullptr;
 	}
 
@@ -52,7 +50,7 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 	//Considering left diagonal
 	try {
 		leftDiagonalSquare = board.getLeftSquare(board.getForwardSquare(square));
-	} catch (string error) {
+	} catch (const char* error) {
 		leftDiagonalSquare = nullptr;
 	}
 
@@ -69,7 +67,7 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 	//Considering right diagonal
 	try {
 		rightDiagonalSquare = board.getRightSquare(board.getForwardSquare(square));
-	} catch (string error) {
+	} catch (const char* error) {
 		rightDiagonalSquare = nullptr;
 	}
 
