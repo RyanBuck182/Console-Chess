@@ -11,15 +11,17 @@ public:
 	Square(int, Piece*);
 	~Square();
 
+	int getId() const;
+	bool getIsOccupied() const;
+	Piece* getPiece() const;
 	void setPiece(Piece*);
 
 	bool operator==(const Square&);
 	friend std::istream& operator>>(std::istream&, Square*&);
-
-	//make private
-	int id; //add accessor
-	bool isOccupied; //add accessor
-	Piece* piece; //add accessor
+private:
+	int id;
+	bool isOccupied;
+	Piece* piece;
 };
 
 #endif

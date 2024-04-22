@@ -15,8 +15,8 @@ vector<Move*>Rook::computeValidMoves() const {
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getForwardSquare(squareCursor);
-			if (squareCursor->isOccupied)
-				if (squareCursor->piece->isWhite == isWhite)
+			if (squareCursor->getIsOccupied())
+				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -32,8 +32,8 @@ vector<Move*>Rook::computeValidMoves() const {
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getBackwardSquare(squareCursor);
-			if (squareCursor->isOccupied)
-				if (squareCursor->piece->isWhite == isWhite)
+			if (squareCursor->getIsOccupied())
+				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -49,8 +49,8 @@ vector<Move*>Rook::computeValidMoves() const {
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getLeftSquare(squareCursor);
-			if (squareCursor->isOccupied)
-				if (squareCursor->piece->isWhite == isWhite)
+			if (squareCursor->getIsOccupied())
+				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -67,8 +67,8 @@ vector<Move*>Rook::computeValidMoves() const {
 	{
 		try {
 			squareCursor = Board::getRightSquare(squareCursor);
-			if (squareCursor->isOccupied)
-				if (squareCursor->piece->isWhite == isWhite)
+			if (squareCursor->getIsOccupied())
+				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));

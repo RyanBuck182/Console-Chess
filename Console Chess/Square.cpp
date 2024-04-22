@@ -25,6 +25,18 @@ Square::~Square() {
 	}
 }
 
+int Square::getId() const {
+	return id;
+}
+
+bool Square::getIsOccupied() const {
+	return isOccupied;
+}
+
+Piece* Square::getPiece() const {
+	return piece;
+}
+
 void Square::setPiece(Piece* piece) {
 	this->piece = piece;
 	isOccupied = (piece != nullptr) ? true : false;

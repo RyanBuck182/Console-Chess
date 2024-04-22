@@ -63,19 +63,19 @@ Square* Board::getSquareFromId(int id) {
 }
 
 Square* Board::getNorthSquare(Square* square) {
-	return Board::getSquareFromId(square->id + 8);
+	return Board::getSquareFromId(square->getId() + 8);
 }
 
 Square* Board::getSouthSquare(Square* square) {
-	return Board::getSquareFromId(square->id - 8);
+	return Board::getSquareFromId(square->getId() - 8);
 }
 
 Square* Board::getEastSquare(Square* square) {
-	return Board::getSquareFromId(square->id + 1);
+	return Board::getSquareFromId(square->getId() + 1);
 }
 
 Square* Board::getWestSquare(Square* square) {
-	return Board::getSquareFromId(square->id - 1);
+	return Board::getSquareFromId(square->getId() - 1);
 }
 
 Square* Board::getForwardSquare(Square* square) {
@@ -114,14 +114,14 @@ Move* Board::getLastMove() {
 }
 
 bool Board::moveIsValid(Move* move) {
-	if (move->startSquare->piece == nullptr)
+	if (move->startSquare->getPiece() == nullptr)
 		return false;
 
-	if (state == Board::WhiteToPlay && !move->startSquare->piece->isWhite || state == Board::BlackToPlay && move->startSquare->piece->isWhite)
+	if (state == Board::WhiteToPlay && !move->startSquare->getPiece()->isWhite || state == Board::BlackToPlay && move->startSquare->getPiece()->isWhite)
 		return false;
 
 	bool moveIsValid = false;
-	vector<Move*> validMoves = move->startSquare->piece->computeValidMoves();
+	vector<Move*> validMoves = move->startSquare->getPiece()->computeValidMoves();
 	for (int i = 0; i < validMoves.size(); i++) {
 		if (*move == *validMoves[i]) {
 			moveIsValid = true;
@@ -136,7 +136,7 @@ void Board::correctMoveType(Move* move) {
 	if (!moveIsValid(move))
 		throw "Cannot correct the move type of an invalid move.";
 
-	vector<Move*> validMoves = move->startSquare->piece->computeValidMoves();
+	vector<Move*> validMoves = move->startSquare->getPiece()->computeValidMoves();
 	for (int i = 0; i < validMoves.size(); i++) {
 		if (*move == *validMoves[i]) {
 			move->moveType = validMoves[i]->moveType;
@@ -156,9 +156,9 @@ void Board::makeMove(Move* move) {
 	//check for special moves (castle, en passant, promotion)
 
 	//make move
-	delete move->endSquare->piece;
-	move->endSquare->setPiece(move->startSquare->piece);
-	move->endSquare->piece->square = move->endSquare;
+	delete move->endSquare->getPiece();
+	move->endSquare->setPiece(move->startSquare->getPiece());
+	move->endSquare->getPiece()->square = move->endSquare;
 	move->startSquare->setPiece(nullptr);
 
 	state = (state == Board::WhiteToPlay) ? Board::BlackToPlay : Board::WhiteToPlay;
@@ -175,7 +175,7 @@ string Board::formatAsString() {
 			str << i;
 			for (int j = Board::BOARD_LENGTH; j > 0; j--) {
 				str << " | ";
-				Piece* piece = Board::getSquareFromId(i * Board::BOARD_LENGTH - j)->piece;
+				Piece* piece = Board::getSquareFromId(i * Board::BOARD_LENGTH - j)->getPiece();
 				if (piece == nullptr)
 					str << ' ';
 				else
@@ -191,7 +191,7 @@ string Board::formatAsString() {
 			str << i;
 			for (int j = 1; j <= Board::BOARD_LENGTH; j++) {
 				str << " | ";
-				Piece* piece = Board::getSquareFromId(i * Board::BOARD_LENGTH - j)->piece;
+				Piece* piece = Board::getSquareFromId(i * Board::BOARD_LENGTH - j)->getPiece();
 				if (piece == nullptr)
 					str << ' ';
 				else
