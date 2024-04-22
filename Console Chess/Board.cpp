@@ -1,7 +1,7 @@
-#include "Board.h"
-#include "Square.h";
-#include "Move.h";
-#include "Piece.h";
+﻿#include "Board.h"
+#include "Square.h"
+#include "Move.h"
+#include "Piece.h"
 
 using namespace std;
 
@@ -55,4 +55,20 @@ void Board::makeMove(Move* move) {
 	state = (state == WhiteToPlay) ? BlackToPlay : WhiteToPlay;
 
 	//check for win/stalemate/etc
+}
+
+ostream& operator<<(ostream& out, const Board& board) {
+	out << "  +---+---+---+---+---+---+---+---+\n";
+	for (int i = 0; i < BOARD_LENGTH; i++) {
+		out << i;
+		for (int j = 0; j < BOARD_LENGTH; j++) {
+			out << " | ";
+			Piece* piece = board.getSquare(i * BOARD_LENGTH + j)->piece;
+			out << (piece->isWhite) ? piece->whitePieceSymbol : piece->blackPieceSymbol;
+		}
+		out << " |\n";
+	}
+	out << "    a   b   c   d   e   f   g   h  \n";
+	
+	return out;
 }
