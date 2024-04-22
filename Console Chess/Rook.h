@@ -3,6 +3,7 @@
 #include "Piece.h"
 class Rook : public Piece 
 {
+public:
 	Rook(Square*, bool);
 	~Rook();
 

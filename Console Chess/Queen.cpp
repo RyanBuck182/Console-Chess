@@ -116,6 +116,7 @@ vector<Move*>Queen::computeValidMoves(const Board& board) const
 	}
 
 	// forward right
+	squareCursor = square;
 	while (squareCursor != nullptr)
 	{
 		try {
@@ -140,6 +141,7 @@ vector<Move*>Queen::computeValidMoves(const Board& board) const
 		}
 	}
 	// backwards right
+	squareCursor = square;
 	while (squareCursor != nullptr)
 	{
 		try {
@@ -164,6 +166,7 @@ vector<Move*>Queen::computeValidMoves(const Board& board) const
 		}
 	}
 	// forward left
+	squareCursor = square;
 	while (squareCursor != nullptr)
 	{
 		try {
@@ -188,6 +191,7 @@ vector<Move*>Queen::computeValidMoves(const Board& board) const
 		}
 	}
 	// backwards left
+	squareCursor = square;
 	while (squareCursor != nullptr)
 	{
 		try {
