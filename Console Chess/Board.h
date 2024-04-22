@@ -37,6 +37,8 @@ public:
 	static Square* getLeftSquare(Square*);
 
 	static Move* getLastMove();
+	static bool moveIsValid(Move*);
+	static void correctMoveType(Move*);
 	static void makeMove(Move*);
 
 	static std::string formatAsString();

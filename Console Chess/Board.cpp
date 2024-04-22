@@ -113,26 +113,42 @@ Move* Board::getLastMove() {
 		throw "Can not retrieve the last element of an empty move list.";
 }
 
-void Board::makeMove(Move* move) {
+bool Board::moveIsValid(Move* move) {
 	bool moveIsValid = false;
 
 	if (move->startSquare->piece == nullptr)
-		throw "Starting square has no piece on it.";
+		return false;
 
 	vector<Move*> validMoves = move->startSquare->piece->computeValidMoves();
 	for (int i = 0; i < validMoves.size(); i++) {
 		if (*move == *validMoves[i]) {
 			moveIsValid = true;
-			move->moveType = validMoves[i]->moveType;
 			break;
 		}
 	}
 
-	if (!moveIsValid)
-		throw "That move is not valid.";
-
 	if (state == Board::WhiteToPlay && !move->startSquare->piece->isWhite || state == Board::BlackToPlay && move->startSquare->piece->isWhite)
-		throw "Attempting to move other side's piece.";
+		return false;
+}
+
+void Board::correctMoveType(Move* move) {
+	if (!moveIsValid(move))
+		throw "Cannot correct the move type of an invalid move.";
+
+	vector<Move*> validMoves = move->startSquare->piece->computeValidMoves();
+	for (int i = 0; i < validMoves.size(); i++) {
+		if (*move == *validMoves[i]) {
+			move->moveType = validMoves[i]->moveType;
+			break;
+		}
+	}
+}
+
+void Board::makeMove(Move* move) {
+	if (!moveIsValid(move))
+		throw "Cannot make an invalid move.";
+
+	correctMoveType(move);
 
 	moveList.push_back(move);
 
