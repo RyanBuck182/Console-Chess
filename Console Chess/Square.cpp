@@ -37,7 +37,7 @@ void Square::setPiece(Piece* piece) {
 }
 
 bool Square::isOccupied() const {
-	return this->piece != nullptr;
+	return piece != nullptr;
 }
 
 bool Square::operator==(const Square& square) {
