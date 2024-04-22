@@ -110,3 +110,47 @@ ostream& operator<<(ostream& out, const Board& board) {
 	
 	return out;
 }
+
+Square* Board::getNorthSquare(Square* square) const {
+	return getSquareFromId(square->id + 8);
+}
+
+Square* Board::getSouthSquare(Square* square) const {
+	return getSquareFromId(square->id - 8);
+}
+
+Square* Board::getEastSquare(Square* square) const {
+	return getSquareFromId(square->id + 1);
+}
+
+Square* Board::getWestSquare(Square* square) const {
+	return getSquareFromId(square->id - 1);
+}
+
+Square* Board::getForwardSquare(Square* square) const {
+	if (square->piece == nullptr || square->piece->isWhite)
+		return getNorthSquare(square);
+	else
+		return getSouthSquare(square);
+}
+
+Square* Board::getBackwardSquare(Square* square) const {
+	if (square->piece == nullptr || square->piece->isWhite)
+		return getSouthSquare(square);
+	else
+		return getNorthSquare(square);
+}
+
+Square* Board::getRightSquare(Square* square) const {
+	if (square->piece == nullptr || square->piece->isWhite)
+		return getEastSquare(square);
+	else
+		return getWestSquare(square);
+}
+
+Square* Board::getLeftSquare(Square* square) const {
+	if (square->piece == nullptr || square->piece->isWhite)
+		return getWestSquare(square);
+	else
+		return getEastSquare(square);
+}

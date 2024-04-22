@@ -16,6 +16,15 @@ public:
 
 	Board();
 
+	Square* getNorthSquare(Square*) const;
+	Square* getSouthSquare(Square*) const;
+	Square* getEastSquare(Square*) const;
+	Square* getWestSquare(Square*) const;
+	Square* getForwardSquare(Square*) const;
+	Square* getBackwardSquare(Square*) const;
+	Square* getRightSquare(Square*) const;
+	Square* getLeftSquare(Square*) const;
+
 	bool idInRange(int) const;
 	Square* getSquareFromId(int) const;
 	Move getLastMove() const;
