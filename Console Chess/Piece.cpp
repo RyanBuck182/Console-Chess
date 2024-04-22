@@ -8,10 +8,4 @@ Piece::Piece(Square* square, bool isWhite, char whitePieceSymbol, char blackPiec
 	this->blackPieceSymbol = blackPieceSymbol;
 }
 
-Piece::~Piece() {
-	if (square != nullptr) {
-		square->piece = nullptr;
-		delete square;
-		square = nullptr;
-	}
-}
+Piece::~Piece() {}
