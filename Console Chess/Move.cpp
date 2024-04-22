@@ -22,7 +22,5 @@ Move::~Move() {
 }
 
 bool Move::operator==(const Move& move) const {
-	return startSquare == move.startSquare
-		&& endSquare == move.endSquare
-		&& moveType == move.moveType;
+	return startSquare == move.startSquare && endSquare == move.endSquare;
 }
