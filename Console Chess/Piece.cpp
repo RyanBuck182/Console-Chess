@@ -7,5 +7,3 @@ Piece::Piece(Square* square, bool isWhite, char whitePieceSymbol, char blackPiec
 	this->whitePieceSymbol = whitePieceSymbol;
 	this->blackPieceSymbol = blackPieceSymbol;
 }
-
-Piece::~Piece() {}

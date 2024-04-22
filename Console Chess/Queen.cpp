@@ -6,7 +6,6 @@
 using namespace std;
 
 Queen::Queen(Square* square, bool isWhite) : Piece(square, isWhite, 'Q', 'q') {}
-Queen::~Queen() {}
 
 vector<Move*>Queen::computeValidMoves() const 
 {

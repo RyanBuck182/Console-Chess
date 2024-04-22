@@ -6,7 +6,6 @@
 using namespace std;
 
 Rook::Rook(Square* square, bool isWhite) : Piece(square, isWhite, 'R', 'r') {}
-Rook:: ~Rook() {}
 
 vector<Move*>Rook::computeValidMoves() const {
 	vector<Move*> validMoves;
