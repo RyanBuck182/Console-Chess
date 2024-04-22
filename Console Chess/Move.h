@@ -1,6 +1,8 @@
 #ifndef MOVE_H
 #define MOVE_H
 
+#include <iostream>
+
 class Square;
 
 struct Move {
@@ -15,6 +17,7 @@ struct Move {
 	MoveType moveType;
 
 	bool operator==(const Move& move) const;
+	friend std::istream& operator>>(std::istream&, Move*&);
 };
 
 #endif
