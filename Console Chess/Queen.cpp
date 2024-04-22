@@ -16,7 +16,7 @@ vector<Move*>Queen::computeValidMoves() const
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getForwardSquare(squareCursor);
-			if (squareCursor->getIsOccupied())
+			if (squareCursor->isOccupied())
 				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
@@ -34,7 +34,7 @@ vector<Move*>Queen::computeValidMoves() const
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getBackwardSquare(squareCursor);
-			if (squareCursor->getIsOccupied())
+			if (squareCursor->isOccupied())
 				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
@@ -51,7 +51,7 @@ vector<Move*>Queen::computeValidMoves() const
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getLeftSquare(squareCursor);
-			if (squareCursor->getIsOccupied())
+			if (squareCursor->isOccupied())
 				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
@@ -68,7 +68,7 @@ vector<Move*>Queen::computeValidMoves() const
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getRightSquare(squareCursor);
-			if (squareCursor->getIsOccupied())
+			if (squareCursor->isOccupied())
 				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
@@ -85,7 +85,7 @@ vector<Move*>Queen::computeValidMoves() const
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getLeftSquare(Board::getForwardSquare(squareCursor));
-			if (squareCursor->getIsOccupied())
+			if (squareCursor->isOccupied())
 				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
@@ -102,7 +102,7 @@ vector<Move*>Queen::computeValidMoves() const
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getRightSquare(Board::getForwardSquare(squareCursor));
-			if (squareCursor->getIsOccupied())
+			if (squareCursor->isOccupied())
 				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
@@ -119,7 +119,7 @@ vector<Move*>Queen::computeValidMoves() const
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getLeftSquare(Board::getBackwardSquare(squareCursor));
-			if (squareCursor->getIsOccupied())
+			if (squareCursor->isOccupied())
 				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else
@@ -136,7 +136,7 @@ vector<Move*>Queen::computeValidMoves() const
 	while (squareCursor != nullptr) {
 		try {
 			squareCursor = Board::getRightSquare(Board::getBackwardSquare(squareCursor));
-			if (squareCursor->getIsOccupied())
+			if (squareCursor->isOccupied())
 				if (squareCursor->getPiece()->isWhite == isWhite)
 					break;
 				else

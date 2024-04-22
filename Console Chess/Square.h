@@ -12,15 +12,15 @@ public:
 	~Square();
 
 	int getId() const;
-	bool getIsOccupied() const;
 	Piece* getPiece() const;
 	void setPiece(Piece*);
+
+	bool isOccupied() const;
 
 	bool operator==(const Square&);
 	friend std::istream& operator>>(std::istream&, Square*&);
 private:
 	int id;
-	bool isOccupied;
 	Piece* piece;
 };
 

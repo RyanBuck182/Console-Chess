@@ -8,7 +8,6 @@ Square::Square(int id)
 {
 	this->id = id;
 	this->piece = nullptr;
-	isOccupied = false;
 }
 
 Square::Square(int id, Piece* piece)
@@ -29,17 +28,16 @@ int Square::getId() const {
 	return id;
 }
 
-bool Square::getIsOccupied() const {
-	return isOccupied;
-}
-
 Piece* Square::getPiece() const {
 	return piece;
 }
 
 void Square::setPiece(Piece* piece) {
 	this->piece = piece;
-	isOccupied = (piece != nullptr) ? true : false;
+}
+
+bool Square::isOccupied() const {
+	return this->piece != nullptr;
 }
 
 bool Square::operator==(const Square& square) {
