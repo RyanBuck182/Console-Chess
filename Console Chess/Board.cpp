@@ -70,6 +70,7 @@ void Board::makeMove(Move* move) {
 	for (int i = 0; i < validMoves.size(); i++) {
 		if (*move == *validMoves[i]) {
 			moveIsValid = true;
+			move->moveType = validMoves[i]->moveType;
 			break;
 		}
 	}
@@ -85,11 +86,10 @@ void Board::makeMove(Move* move) {
 	//check for special moves (castle, en passant, promotion)
 
 	//make move
-	move->endSquare->piece = move->startSquare->piece;
-	move->endSquare->isOccupied = true;
+	move->endSquare->setPiece(move->startSquare->piece);
+	move->endSquare->piece->square = move->endSquare;
 	
-	move->startSquare->piece = nullptr;
-	move->startSquare->isOccupied = false;
+	move->startSquare->setPiece(nullptr);
 
 	state = (state == WhiteToPlay) ? BlackToPlay : WhiteToPlay;
 
