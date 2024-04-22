@@ -9,10 +9,12 @@ public:
 	Square(int, Piece*);
 	~Square();
 
+	void setPiece(Piece*);
+
 	//make private
 	int id; //add accessor
 	bool isOccupied; //add accessor
-	Piece* piece; //add accessor and mutator
+	Piece* piece; //add accessor
 };
 
 #endif

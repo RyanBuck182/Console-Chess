@@ -11,8 +11,7 @@ Square::Square(int id)
 Square::Square(int id, Piece* piece)
 {
 	this->id = id;
-	this->piece = piece;
-	isOccupied = true;
+	setPiece(piece);
 }
 
 Square::~Square() {
@@ -21,4 +20,9 @@ Square::~Square() {
 		delete piece;
 		piece = nullptr;
 	}
+}
+
+void Square::setPiece(Piece* piece) {
+	this->piece = piece;
+	isOccupied = (piece != nullptr) ? true : false;
 }
