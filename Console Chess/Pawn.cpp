@@ -28,7 +28,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 	forwardSquareId = square->id + (isWhite) ? 8 : -8;
 	
 	try {
-		forwardSquare = board.getSquare(forwardSquareId);
+		forwardSquare = board.getSquareFromId(forwardSquareId);
 	} catch (string error) {
 		forwardSquare = nullptr;
 	}
@@ -41,7 +41,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 	doubleForwardSquareId = square->id + (isWhite) ? 16 : -16;
 
 	try {
-		doubleForwardSquare = board.getSquare(doubleForwardSquareId);
+		doubleForwardSquare = board.getSquareFromId(doubleForwardSquareId);
 	} catch (string error) {
 		doubleForwardSquare = nullptr;
 	}
@@ -57,7 +57,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 		leftDiagonalId = -1;
 
 	try {
-		leftDiagonal = board.getSquare(leftDiagonalId);
+		leftDiagonal = board.getSquareFromId(leftDiagonalId);
 	} catch (string error) {
 		leftDiagonal = nullptr;
 	}
@@ -73,13 +73,13 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 	}
 
 	//Considering right diagonal
-	rightDiagonalId = square->id + (isWhite) ? 9: -7;
+	rightDiagonalId = square->id + (isWhite) ? 9 : -7;
 
 	if (rightDiagonalId % Board::BOARD_LENGTH == ((isWhite) ? 7 : 0))
 		rightDiagonalId = -1;
 
 	try {
-		rightDiagonal = board.getSquare(rightDiagonalId);
+		rightDiagonal = board.getSquareFromId(rightDiagonalId);
 	} catch (string error) {
 		rightDiagonal = nullptr;
 	}

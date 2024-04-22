@@ -33,7 +33,7 @@ bool Board::idInRange(int id) const {
 	return true;
 }
 
-Square* Board::getSquare(int id) const {
+Square* Board::getSquareFromId(int id) const {
 	if (!idInRange(id))
 		throw "Id not in range.";
 	return board[id];
@@ -80,7 +80,7 @@ ostream& operator<<(ostream& out, const Board& board) {
 			out << i;
 			for (int j = Board::BOARD_LENGTH; j > 0; j--) {
 				out << " | ";
-				Piece* piece = board.getSquare(i * Board::BOARD_LENGTH - j)->piece;
+				Piece* piece = board.getSquareFromId(i * Board::BOARD_LENGTH - j)->piece;
 				if (piece == nullptr)
 					out << ' ';
 				else
@@ -96,7 +96,7 @@ ostream& operator<<(ostream& out, const Board& board) {
 			out << i;
 			for (int j = 1; j <= Board::BOARD_LENGTH; j++) {
 				out << " | ";
-				Piece* piece = board.getSquare(i * Board::BOARD_LENGTH - j)->piece;
+				Piece* piece = board.getSquareFromId(i * Board::BOARD_LENGTH - j)->piece;
 				if (piece == nullptr)
 					out << ' ';
 				else
