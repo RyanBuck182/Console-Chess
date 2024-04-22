@@ -48,7 +48,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 
 	bool doubleForwardSquareIsValid = doubleForwardSquare != nullptr && !doubleForwardSquare->isOccupied;
 	if (forwardSquareIsValid && doubleForwardSquareIsValid && !hasMoved)
-		validMoves.push_back(Move(square, doubleForwardSquare, DoublePawn));
+		validMoves.push_back(Move(square, doubleForwardSquare, Move::DoublePawn));
 
 	//Considering left diagonal
 	leftDiagonalId = square->id + (isWhite) ? 7 : -9;
@@ -64,12 +64,12 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 
 	if (leftDiagonal != nullptr) {
 		bool leftDiagonalCaptureIsValid = leftDiagonal->isOccupied && leftDiagonal->piece->isWhite != isWhite;
-		bool leftDiagonalEnPassantIsValid = lastMove.moveType == DoublePawn && lastMove.endSquare->id == leftDiagonalId + (isWhite) ? -8 : 8;
+		bool leftDiagonalEnPassantIsValid = lastMove.moveType == Move::DoublePawn && lastMove.endSquare->id == leftDiagonalId + (isWhite) ? -8 : 8;
 
 		if (leftDiagonalCaptureIsValid)
-			validMoves.push_back(Move(square, leftDiagonal, Capture));
+			validMoves.push_back(Move(square, leftDiagonal, Move::Capture));
 		else if (leftDiagonalEnPassantIsValid)
-			validMoves.push_back(Move(square, leftDiagonal, EnPassant));
+			validMoves.push_back(Move(square, leftDiagonal, Move::EnPassant));
 	}
 
 	//Considering right diagonal
@@ -86,12 +86,12 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 
 	if (rightDiagonal != nullptr) {
 		bool rightDiagonalCaptureIsValid = rightDiagonal->isOccupied && rightDiagonal->piece->isWhite != isWhite;
-		bool rightDiagonalEnPassantIsValid = lastMove.moveType == DoublePawn && lastMove.endSquare->id == rightDiagonalId + (isWhite) ? -8 : 8;
+		bool rightDiagonalEnPassantIsValid = lastMove.moveType == Move::DoublePawn && lastMove.endSquare->id == rightDiagonalId + (isWhite) ? -8 : 8;
 
 		if (rightDiagonalCaptureIsValid)
-			validMoves.push_back(Move(square, rightDiagonal, Capture));
+			validMoves.push_back(Move(square, rightDiagonal, Move::Capture));
 		else if (rightDiagonalEnPassantIsValid)
-			validMoves.push_back(Move(square, rightDiagonal, EnPassant));
+			validMoves.push_back(Move(square, rightDiagonal, Move::EnPassant));
 	}
 
 	return validMoves;
