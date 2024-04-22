@@ -24,8 +24,6 @@ public:
 	friend std::ostream& operator<<(std::ostream&, const Board&);
 
 	Square* board[BOARD_SIZE];
-	bool boardWhite[BOARD_SIZE];
-	bool boardBlack[BOARD_SIZE];
 	bool boardWhiteAttack[BOARD_SIZE];
 	bool boardBlackAttack[BOARD_SIZE];
 	BoardState state;

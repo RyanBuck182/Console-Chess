@@ -2,11 +2,27 @@
 #include "Square.h"
 #include "Move.h"
 #include "Piece.h"
+#include "Pawn.h"
 
 using namespace std;
 
 Board::Board() {
-	//implement this
+	for (int i = 0; i < BOARD_SIZE / 4; i++) {
+		Square* square = new Square(i);
+		square->piece = new Pawn(square, true);
+		board[i] = square;
+	}
+
+	for (int i = BOARD_SIZE / 4; i < BOARD_SIZE / 4 * 3; i++) {
+		Square* square = new Square(i);
+		board[i] = square;
+	}
+
+	for (int i = BOARD_SIZE / 4 * 3; i < BOARD_SIZE; i++) {
+		Square* square = new Square(i);
+		square->piece = new Pawn(square, false);
+		board[i] = square;
+	}
 
 	state = WhiteToPlay;
 }
@@ -58,17 +74,39 @@ void Board::makeMove(Move* move) {
 }
 
 ostream& operator<<(ostream& out, const Board& board) {
-	out << "  +---+---+---+---+---+---+---+---+\n";
-	for (int i = 0; i < BOARD_LENGTH; i++) {
-		out << i;
-		for (int j = 0; j < BOARD_LENGTH; j++) {
-			out << " | ";
-			Piece* piece = board.getSquare(i * BOARD_LENGTH + j)->piece;
-			out << (piece->isWhite) ? piece->whitePieceSymbol : piece->blackPieceSymbol;
+	if (board.state == WhiteToPlay) {
+		out << "  +---+---+---+---+---+---+---+---+\n";
+		for (int i = BOARD_LENGTH; i > 0; i--) {
+			out << i;
+			for (int j = BOARD_LENGTH; j > 0; j--) {
+				out << " | ";
+				Piece* piece = board.getSquare(i * BOARD_LENGTH - j)->piece;
+				if (piece == nullptr)
+					out << ' ';
+				else
+					out << ((piece->isWhite) ? piece->whitePieceSymbol : piece->blackPieceSymbol);
+			}
+			out << " |\n";
+			out << "  +---+---+---+---+---+---+---+---+\n";
 		}
-		out << " |\n";
+		out << "    a   b   c   d   e   f   g   h  \n";
+	} else {
+		out << "  +---+---+---+---+---+---+---+---+\n";
+		for (int i = 1; i <= BOARD_LENGTH; i++) {
+			out << i;
+			for (int j = 1; j <= BOARD_LENGTH; j++) {
+				out << " | ";
+				Piece* piece = board.getSquare(i * BOARD_LENGTH - j)->piece;
+				if (piece == nullptr)
+					out << ' ';
+				else
+					out << ((piece->isWhite) ? piece->whitePieceSymbol : piece->blackPieceSymbol);
+			}
+			out << " |\n";
+			out << "  +---+---+---+---+---+---+---+---+\n";
+		}
+		out << "    h   g   f   e   d   c   b   a  \n";
 	}
-	out << "    a   b   c   d   e   f   g   h  \n";
 	
 	return out;
 }

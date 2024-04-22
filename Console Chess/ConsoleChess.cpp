@@ -1,7 +1,10 @@
 #include <iostream>
+#include "ConsoleChess.h"
 
 using namespace std;
 
-void main() {
-	cout << "Hello World!\n";
+int main() {
+	Board board;
+
+	cout << board;
 }
