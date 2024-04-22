@@ -9,7 +9,7 @@ using namespace std;
 Board::Board() {
 	for (int i = 0; i < BOARD_SIZE / 4; i++) {
 		Square* square = new Square(i);
-		square->piece = new Pawn(square, true);
+		square->setPiece(new Pawn(square, true));
 		board[i] = square;
 	}
 
@@ -20,7 +20,7 @@ Board::Board() {
 
 	for (int i = BOARD_SIZE / 4 * 3; i < BOARD_SIZE; i++) {
 		Square* square = new Square(i);
-		square->piece = new Pawn(square, false);
+		square->setPiece(new Pawn(square, false));
 		board[i] = square;
 	}
 
