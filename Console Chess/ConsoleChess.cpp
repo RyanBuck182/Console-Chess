@@ -19,40 +19,20 @@ int main() {
 			cout << '\n' << ((Board::state == Board::WhiteToPlay) ? "White" : "Black") << " To Play\n";
 
 			while (startSquare == nullptr) {
-				char column;
-				int row;
-
 				cout << "  Start Square: ";
-				
-				cin >> column;
-				cin >> row;
-				cin.clear();
-				cin.ignore(INT_MAX, '\n');
-
-				int id = (row - 1) * Board::BOARD_LENGTH + (static_cast<int>(tolower(column) - static_cast<int>('a')));
 
 				try {
-					startSquare = Board::getSquareFromId(id);
+					cin >> startSquare;
 				} catch (const char* error) {
 					cout << "Invalid input! Please input a valid square (e.g. a1).\n\n";
 				}
 			}
 
 			while (endSquare == nullptr) {
-				char column;
-				int row;
-
 				cout << "    End Square: ";
 
-				cin >> column;
-				cin >> row;
-				cin.clear();
-				cin.ignore(INT_MAX, '\n');
-
-				int id = (row - 1) * Board::BOARD_LENGTH + (static_cast<int>(tolower(column) - static_cast<int>('a')));
-
 				try {
-					endSquare = Board::getSquareFromId(id);
+					cin >> endSquare;
 				} catch (const char* error) {
 					cout << "Invalid input! Please input a valid square (e.g. a1).\n\n";
 				}

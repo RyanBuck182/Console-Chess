@@ -33,3 +33,19 @@ void Square::setPiece(Piece* piece) {
 bool Square::operator==(const Square& square) {
 	return id == square.id;
 }
+
+istream& operator>>(istream& in, Square*& square) {
+	char column;
+	int row;
+
+	cin >> column;
+	cin >> row;
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
+
+	int id = (row - 1) * Board::BOARD_LENGTH + (static_cast<int>(tolower(column) - static_cast<int>('a')));
+
+	square = Board::getSquareFromId(id);
+
+	return in;
+}
