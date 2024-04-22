@@ -27,7 +27,7 @@ public:
 
 	bool idInRange(int) const;
 	Square* getSquareFromId(int) const;
-	Move getLastMove() const;
+	Move* getLastMove() const;
 	void makeMove(Move*);
 
 	friend std::ostream& operator<<(std::ostream&, const Board&);
@@ -37,7 +37,7 @@ public:
 	bool boardBlackAttack[BOARD_SIZE];
 	BoardState state;
 
-	std::vector<Move> moveList;
+	std::vector<Move*> moveList;
 };
 
 #endif

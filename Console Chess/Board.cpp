@@ -39,17 +39,20 @@ Square* Board::getSquareFromId(int id) const {
 	return board[id];
 }
 
-Move Board::getLastMove() const {
+Move* Board::getLastMove() const {
 	return moveList.back();
 }
 
 void Board::makeMove(Move* move) {
 	bool moveIsValid = false;
 
-	vector<Move> validMoves = move->startSquare->piece->computeValidMoves(*this);
-	for (int i = 0; i < validMoves.size(); i++)
-		if (*move == validMoves[i])
+	vector<Move*> validMoves = move->startSquare->piece->computeValidMoves(*this);
+	for (int i = 0; i < validMoves.size(); i++) {
+		if (*move == *validMoves[i]) {
 			moveIsValid = true;
+			break;
+		}
+	}
 
 	if (!moveIsValid)
 		return;
@@ -57,7 +60,7 @@ void Board::makeMove(Move* move) {
 	if (state == WhiteToPlay && !move->startSquare->piece->isWhite || state == BlackToPlay && move->startSquare->piece->isWhite)
 		return;
 
-	moveList.push_back(*move);
+	moveList.push_back(move);
 
 	//check for special moves (castle, en passant, promotion)
 

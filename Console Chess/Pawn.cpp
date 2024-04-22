@@ -9,11 +9,11 @@ using namespace std;
 
 Pawn::Pawn(Square* square, bool isWhite) : Piece(square, isWhite, 'P', 'p'), hasMoved(false) {}
 
-vector<Move> Pawn::computeValidMoves(const Board& board) const {
-	vector<Move> validMoves;
+vector<Move*> Pawn::computeValidMoves(const Board& board) const {
+	vector<Move*> validMoves;
 	
-	Move lastMove = board.getLastMove();
-
+	Move* lastMove = board.getLastMove();
+	
 	Square* forwardSquare;
 	Square* doubleForwardSquare;
 	Square* leftDiagonalSquare;
@@ -28,7 +28,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 
 	bool forwardSquareIsValid = forwardSquare != nullptr && !forwardSquare->isOccupied;
 	if (forwardSquareIsValid)
-		validMoves.push_back(Move(square, forwardSquare));
+		validMoves.push_back(new Move(square, forwardSquare));
 
 	//Considering forward 2 spaces
 	try {
@@ -39,7 +39,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 
 	bool doubleForwardSquareIsValid = doubleForwardSquare != nullptr && !doubleForwardSquare->isOccupied;
 	if (forwardSquareIsValid && doubleForwardSquareIsValid && !hasMoved)
-		validMoves.push_back(Move(square, doubleForwardSquare, Move::DoublePawn));
+		validMoves.push_back(new Move(square, doubleForwardSquare, Move::DoublePawn));
 
 	//Considering left diagonal
 	try {
@@ -50,12 +50,12 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 
 	if (leftDiagonalSquare != nullptr) {
 		bool leftDiagonalCaptureIsValid = leftDiagonalSquare->isOccupied && leftDiagonalSquare->piece->isWhite != isWhite;
-		bool leftDiagonalEnPassantIsValid = lastMove.moveType == Move::DoublePawn && board.getBackwardSquare(lastMove.endSquare) == leftDiagonalSquare;
+		bool leftDiagonalEnPassantIsValid = lastMove->moveType == Move::DoublePawn && board.getBackwardSquare(lastMove->endSquare) == leftDiagonalSquare;
 
 		if (leftDiagonalCaptureIsValid)
-			validMoves.push_back(Move(square, leftDiagonalSquare, Move::Capture));
+			validMoves.push_back(new Move(square, leftDiagonalSquare, Move::Capture));
 		else if (leftDiagonalEnPassantIsValid)
-			validMoves.push_back(Move(square, leftDiagonalSquare, Move::EnPassant));
+			validMoves.push_back(new Move(square, leftDiagonalSquare, Move::EnPassant));
 	}
 
 	//Considering right diagonal
@@ -67,12 +67,12 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 
 	if (rightDiagonalSquare != nullptr) {
 		bool rightDiagonalCaptureIsValid = rightDiagonalSquare->isOccupied && rightDiagonalSquare->piece->isWhite != isWhite;
-		bool rightDiagonalEnPassantIsValid = lastMove.moveType == Move::DoublePawn && board.getBackwardSquare(lastMove.endSquare) == rightDiagonalSquare;
+		bool rightDiagonalEnPassantIsValid = lastMove->moveType == Move::DoublePawn && board.getBackwardSquare(lastMove->endSquare) == rightDiagonalSquare;
 
 		if (rightDiagonalCaptureIsValid)
-			validMoves.push_back(Move(square, rightDiagonalSquare, Move::Capture));
+			validMoves.push_back(new Move(square, rightDiagonalSquare, Move::Capture));
 		else if (rightDiagonalEnPassantIsValid)
-			validMoves.push_back(Move(square, rightDiagonalSquare, Move::EnPassant));
+			validMoves.push_back(new Move(square, rightDiagonalSquare, Move::EnPassant));
 	}
 
 	return validMoves;
