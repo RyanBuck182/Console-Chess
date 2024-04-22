@@ -74,13 +74,13 @@ void Board::makeMove(Move* move) {
 }
 
 ostream& operator<<(ostream& out, const Board& board) {
-	if (board.state == WhiteToPlay) {
+	if (board.state == Board::WhiteToPlay) {
 		out << "  +---+---+---+---+---+---+---+---+\n";
-		for (int i = BOARD_LENGTH; i > 0; i--) {
+		for (int i = Board::Board::BOARD_LENGTH; i > 0; i--) {
 			out << i;
-			for (int j = BOARD_LENGTH; j > 0; j--) {
+			for (int j = Board::BOARD_LENGTH; j > 0; j--) {
 				out << " | ";
-				Piece* piece = board.getSquare(i * BOARD_LENGTH - j)->piece;
+				Piece* piece = board.getSquare(i * Board::BOARD_LENGTH - j)->piece;
 				if (piece == nullptr)
 					out << ' ';
 				else
@@ -92,11 +92,11 @@ ostream& operator<<(ostream& out, const Board& board) {
 		out << "    a   b   c   d   e   f   g   h  \n";
 	} else {
 		out << "  +---+---+---+---+---+---+---+---+\n";
-		for (int i = 1; i <= BOARD_LENGTH; i++) {
+		for (int i = 1; i <= Board::BOARD_LENGTH; i++) {
 			out << i;
-			for (int j = 1; j <= BOARD_LENGTH; j++) {
+			for (int j = 1; j <= Board::BOARD_LENGTH; j++) {
 				out << " | ";
-				Piece* piece = board.getSquare(i * BOARD_LENGTH - j)->piece;
+				Piece* piece = board.getSquare(i * Board::BOARD_LENGTH - j)->piece;
 				if (piece == nullptr)
 					out << ' ';
 				else

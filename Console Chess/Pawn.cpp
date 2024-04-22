@@ -53,7 +53,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 	//Considering left diagonal
 	leftDiagonalId = square->id + (isWhite) ? 7 : -9;
 
-	if (leftDiagonalId % BOARD_LENGTH == ((isWhite) ? 0 : 7))
+	if (leftDiagonalId % Board::BOARD_LENGTH == ((isWhite) ? 0 : 7))
 		leftDiagonalId = -1;
 
 	try {
@@ -75,7 +75,7 @@ vector<Move> Pawn::computeValidMoves(const Board& board) const {
 	//Considering right diagonal
 	rightDiagonalId = square->id + (isWhite) ? 9: -7;
 
-	if (rightDiagonalId % BOARD_LENGTH == ((isWhite) ? 7 : 0))
+	if (rightDiagonalId % Board::BOARD_LENGTH == ((isWhite) ? 7 : 0))
 		rightDiagonalId = -1;
 
 	try {

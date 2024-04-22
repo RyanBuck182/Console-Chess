@@ -4,16 +4,16 @@
 #include <iostream>
 #include <vector>
 
-const int BOARD_LENGTH = 8;
-const int BOARD_SIZE = BOARD_LENGTH * BOARD_LENGTH;
-
-enum BoardState { WhiteToPlay, BlackToPlay, Win, Stalemate, Draw };
-
 class Square;
 struct Move;
 
 class Board {
 public:
+	static const int BOARD_LENGTH = 8;
+	static const int BOARD_SIZE = BOARD_LENGTH * BOARD_LENGTH;
+
+	enum BoardState { WhiteToPlay, BlackToPlay, Win, Stalemate, Draw };
+
 	Board();
 
 	bool idInRange(int) const;
