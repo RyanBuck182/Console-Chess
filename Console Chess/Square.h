@@ -11,6 +11,8 @@ public:
 
 	void setPiece(Piece*);
 
+	bool operator==(const Square&);
+
 	//make private
 	int id; //add accessor
 	bool isOccupied; //add accessor

@@ -26,3 +26,7 @@ void Square::setPiece(Piece* piece) {
 	this->piece = piece;
 	isOccupied = (piece != nullptr) ? true : false;
 }
+
+bool Square::operator==(const Square& square) {
+	return id == square.id;
+}
