@@ -86,9 +86,9 @@ void Board::makeMove(Move* move) {
 	//check for special moves (castle, en passant, promotion)
 
 	//make move
+	delete move->endSquare->piece;
 	move->endSquare->setPiece(move->startSquare->piece);
 	move->endSquare->piece->square = move->endSquare;
-	
 	move->startSquare->setPiece(nullptr);
 
 	state = (state == WhiteToPlay) ? BlackToPlay : WhiteToPlay;
