@@ -9,6 +9,8 @@ using namespace std;
 
 Pawn::Pawn(Square* square, bool isWhite) : Piece(square, isWhite, 'P', 'p'), hasMoved(false) {}
 
+Pawn::~Pawn() {}
+
 vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 	vector<Move*> validMoves;
 	

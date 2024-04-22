@@ -27,6 +27,19 @@ Board::Board() {
 	state = WhiteToPlay;
 }
 
+Board::~Board() {
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		delete board[i];
+		board[i] = nullptr;
+	}
+
+	for (int i = 0; i < moveList.size(); i++) {
+		delete moveList[i];
+		moveList[i] = nullptr;
+	}
+	moveList.clear();
+}
+
 bool Board::idInRange(int id) const {
 	if (id < 0 || id >= BOARD_SIZE)
 		return false;

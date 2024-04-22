@@ -8,6 +8,7 @@ struct Move {
 
 	Move(Square*, Square*);
 	Move(Square*, Square*, MoveType);
+	~Move();
 
 	Square* startSquare;
 	Square* endSquare;

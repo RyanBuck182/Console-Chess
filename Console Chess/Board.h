@@ -15,6 +15,7 @@ public:
 	enum BoardState { WhiteToPlay, BlackToPlay, Win, Stalemate, Draw };
 
 	Board();
+	~Board();
 
 	Square* getNorthSquare(Square*) const;
 	Square* getSouthSquare(Square*) const;

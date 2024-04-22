@@ -10,6 +10,7 @@ struct Move;
 class Piece {
 public:
 	Piece(Square*, bool, char, char);
+	~Piece();
 
 	Square* square; //add accessor and mutator
 	bool isWhite; //add accessor

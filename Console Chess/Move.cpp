@@ -13,6 +13,14 @@ Move::Move(Square* startSquare, Square* endSquare, MoveType moveType) {
 	this->moveType = moveType;
 }
 
+Move::~Move() {
+	delete startSquare;
+	startSquare = nullptr;
+
+	delete endSquare;
+	endSquare = nullptr;
+}
+
 bool Move::operator==(const Move& move) const {
 	return startSquare == move.startSquare
 		&& endSquare == move.endSquare

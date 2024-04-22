@@ -14,3 +14,11 @@ Square::Square(int id, Piece* piece)
 	this->piece = piece;
 	isOccupied = true;
 }
+
+Square::~Square() {
+	if (piece != nullptr) {
+		piece->square = nullptr;
+		delete piece;
+		piece = nullptr;
+	}
+}
