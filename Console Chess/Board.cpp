@@ -40,8 +40,12 @@ Square* Board::getSquareFromId(int id) const {
 }
 
 Move* Board::getLastMove() const {
-	return moveList.back();
+	if (moveList.size() > 0)
+		return moveList.back();
+	else
+		throw "Can not retrieve the last element of an empty move list.";
 }
+
 
 void Board::makeMove(Move* move) {
 	bool moveIsValid = false;

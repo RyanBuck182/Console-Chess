@@ -12,7 +12,13 @@ Pawn::Pawn(Square* square, bool isWhite) : Piece(square, isWhite, 'P', 'p'), has
 vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 	vector<Move*> validMoves;
 	
-	Move* lastMove = board.getLastMove();
+	Move* lastMove;
+
+	try {
+		lastMove = board.getLastMove();
+	} catch (string error) {
+		lastMove = nullptr;
+	}
 	
 	Square* forwardSquare;
 	Square* doubleForwardSquare;
@@ -50,7 +56,7 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 
 	if (leftDiagonalSquare != nullptr) {
 		bool leftDiagonalCaptureIsValid = leftDiagonalSquare->isOccupied && leftDiagonalSquare->piece->isWhite != isWhite;
-		bool leftDiagonalEnPassantIsValid = lastMove->moveType == Move::DoublePawn && board.getBackwardSquare(lastMove->endSquare) == leftDiagonalSquare;
+ 		bool leftDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->moveType == Move::DoublePawn && board.getBackwardSquare(lastMove->endSquare) == leftDiagonalSquare;
 
 		if (leftDiagonalCaptureIsValid)
 			validMoves.push_back(new Move(square, leftDiagonalSquare, Move::Capture));
@@ -67,7 +73,7 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 
 	if (rightDiagonalSquare != nullptr) {
 		bool rightDiagonalCaptureIsValid = rightDiagonalSquare->isOccupied && rightDiagonalSquare->piece->isWhite != isWhite;
-		bool rightDiagonalEnPassantIsValid = lastMove->moveType == Move::DoublePawn && board.getBackwardSquare(lastMove->endSquare) == rightDiagonalSquare;
+		bool rightDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->moveType == Move::DoublePawn && board.getBackwardSquare(lastMove->endSquare) == rightDiagonalSquare;
 
 		if (rightDiagonalCaptureIsValid)
 			validMoves.push_back(new Move(square, rightDiagonalSquare, Move::Capture));
