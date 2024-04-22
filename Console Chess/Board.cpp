@@ -114,11 +114,13 @@ Move* Board::getLastMove() {
 }
 
 bool Board::moveIsValid(Move* move) {
-	bool moveIsValid = false;
-
 	if (move->startSquare->piece == nullptr)
 		return false;
 
+	if (state == Board::WhiteToPlay && !move->startSquare->piece->isWhite || state == Board::BlackToPlay && move->startSquare->piece->isWhite)
+		return false;
+
+	bool moveIsValid = false;
 	vector<Move*> validMoves = move->startSquare->piece->computeValidMoves();
 	for (int i = 0; i < validMoves.size(); i++) {
 		if (*move == *validMoves[i]) {
@@ -127,8 +129,7 @@ bool Board::moveIsValid(Move* move) {
 		}
 	}
 
-	if (state == Board::WhiteToPlay && !move->startSquare->piece->isWhite || state == Board::BlackToPlay && move->startSquare->piece->isWhite)
-		return false;
+	return moveIsValid;
 }
 
 void Board::correctMoveType(Move* move) {
