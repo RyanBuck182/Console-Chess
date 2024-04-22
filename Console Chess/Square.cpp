@@ -1,5 +1,8 @@
 #include "Square.h"
 #include "Piece.h"
+#include "Board.h"
+
+using namespace std;
 
 Square::Square(int id)
 {

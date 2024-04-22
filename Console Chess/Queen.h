@@ -3,13 +3,12 @@
 
 #include "Piece.h"
 
-class Queen : public Piece
-{
+class Queen : public Piece {
 public:
 	Queen(Square*, bool);
 	~Queen();
 
-	std::vector<Move*> computeValidMoves(const Board&) const override;
+	std::vector<Move*> computeValidMoves() const override;
 };
 
 #endif

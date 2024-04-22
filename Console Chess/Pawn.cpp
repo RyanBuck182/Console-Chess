@@ -9,13 +9,13 @@ Pawn::Pawn(Square* square, bool isWhite) : Piece(square, isWhite, 'P', 'p'), has
 
 Pawn::~Pawn() {}
 
-vector<Move*> Pawn::computeValidMoves(const Board& board) const {
+vector<Move*> Pawn::computeValidMoves() const {
 	vector<Move*> validMoves;
 	
 	Move* lastMove;
 
 	try {
-		lastMove = board.getLastMove();
+		lastMove = Board::getLastMove();
 	} catch (const char* error) {
 		lastMove = nullptr;
 	}
@@ -27,7 +27,7 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 
 	//Considering forward
 	try {
-		forwardSquare = board.getForwardSquare(square);
+		forwardSquare = Board::getForwardSquare(square);
 	} catch (const char* error) {
 		forwardSquare = nullptr;
 	}
@@ -38,7 +38,7 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 
 	//Considering forward 2 spaces
 	try {
-		doubleForwardSquare = board.getForwardSquare(forwardSquare);
+		doubleForwardSquare = Board::getForwardSquare(forwardSquare);
 	} catch (const char* error) {
 		doubleForwardSquare = nullptr;
 	}
@@ -49,14 +49,14 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 
 	//Considering left diagonal
 	try {
-		leftDiagonalSquare = board.getLeftSquare(board.getForwardSquare(square));
+		leftDiagonalSquare = Board::getLeftSquare(Board::getForwardSquare(square));
 	} catch (const char* error) {
 		leftDiagonalSquare = nullptr;
 	}
 
 	if (leftDiagonalSquare != nullptr) {
 		bool leftDiagonalCaptureIsValid = leftDiagonalSquare->isOccupied && leftDiagonalSquare->piece->isWhite != isWhite;
- 		bool leftDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->moveType == Move::DoublePawn && *board.getLeftSquare(square) == *lastMove->endSquare;
+ 		bool leftDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->moveType == Move::DoublePawn && *Board::getLeftSquare(square) == *lastMove->endSquare;
 
 		if (leftDiagonalCaptureIsValid)
 			validMoves.push_back(new Move(square, leftDiagonalSquare, Move::Capture));
@@ -66,14 +66,14 @@ vector<Move*> Pawn::computeValidMoves(const Board& board) const {
 
 	//Considering right diagonal
 	try {
-		rightDiagonalSquare = board.getRightSquare(board.getForwardSquare(square));
+		rightDiagonalSquare = Board::getRightSquare(Board::getForwardSquare(square));
 	} catch (const char* error) {
 		rightDiagonalSquare = nullptr;
 	}
 
 	if (rightDiagonalSquare != nullptr) {
 		bool rightDiagonalCaptureIsValid = rightDiagonalSquare->isOccupied && rightDiagonalSquare->piece->isWhite != isWhite;
-		bool rightDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->moveType == Move::DoublePawn && *board.getRightSquare(square) == *lastMove->endSquare;
+		bool rightDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->moveType == Move::DoublePawn && *Board::getRightSquare(square) == *lastMove->endSquare;
 
 		if (rightDiagonalCaptureIsValid)
 			validMoves.push_back(new Move(square, rightDiagonalSquare, Move::Capture));

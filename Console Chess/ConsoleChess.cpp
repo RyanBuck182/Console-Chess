@@ -6,17 +6,17 @@
 using namespace std;
 
 int main() {
-	Board board;
+	Board::initialize();
 
-	while (board.state != Board::Win) {
-		cout << board;
+	while (Board::state != Board::Win) {
+		cout << Board::formatAsString();
 		
 		Move* move = nullptr; //set move by overloading extraction operator
 		while (move == nullptr) {
 			Square* startSquare = nullptr;
 			Square* endSquare = nullptr;
 			
-			cout << '\n' << ((board.state == Board::WhiteToPlay) ? "White" : "Black") << " To Play\n";
+			cout << '\n' << ((Board::state == Board::WhiteToPlay) ? "White" : "Black") << " To Play\n";
 
 			while (startSquare == nullptr) {
 				char column;
@@ -32,7 +32,7 @@ int main() {
 				int id = (row - 1) * Board::BOARD_LENGTH + (static_cast<int>(tolower(column) - static_cast<int>('a')));
 
 				try {
-					startSquare = board.getSquareFromId(id);
+					startSquare = Board::getSquareFromId(id);
 				} catch (const char* error) {
 					cout << "Invalid input! Please input a valid square (e.g. a1).\n\n";
 				}
@@ -52,7 +52,7 @@ int main() {
 				int id = (row - 1) * Board::BOARD_LENGTH + (static_cast<int>(tolower(column) - static_cast<int>('a')));
 
 				try {
-					endSquare = board.getSquareFromId(id);
+					endSquare = Board::getSquareFromId(id);
 				} catch (const char* error) {
 					cout << "Invalid input! Please input a valid square (e.g. a1).\n\n";
 				}
@@ -61,7 +61,7 @@ int main() {
 			move = new Move(startSquare, endSquare);
 
 			try {
-				board.makeMove(move);
+				Board::makeMove(move);
 			} catch (const char* error) {
 				move = nullptr;
 				cout << "Invalid move! Please input a legal move.\n";

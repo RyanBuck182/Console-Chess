@@ -2,19 +2,20 @@
 #include "Square.h"
 #include "Board.h"
 #include "Move.h"
+
 using namespace std;
 
 Rook::Rook(Square* square, bool isWhite) : Piece(square, isWhite, 'R', 'r') {}
 Rook:: ~Rook() {}
 
-vector<Move*>Rook::computeValidMoves(const Board& board) const {
+vector<Move*>Rook::computeValidMoves() const {
 	vector<Move*> validMoves;
 
 	// Check forward side of column.
 	Square* squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board.getForwardSquare(squareCursor);
+			squareCursor = Board::getForwardSquare(squareCursor);
 			if (squareCursor->isOccupied)
 				if (squareCursor->piece->isWhite == isWhite)
 					break;
@@ -31,7 +32,7 @@ vector<Move*>Rook::computeValidMoves(const Board& board) const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board.getBackwardSquare(squareCursor);
+			squareCursor = Board::getBackwardSquare(squareCursor);
 			if (squareCursor->isOccupied)
 				if (squareCursor->piece->isWhite == isWhite)
 					break;
@@ -48,7 +49,7 @@ vector<Move*>Rook::computeValidMoves(const Board& board) const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board.getLeftSquare(squareCursor);
+			squareCursor = Board::getLeftSquare(squareCursor);
 			if (squareCursor->isOccupied)
 				if (squareCursor->piece->isWhite == isWhite)
 					break;
@@ -66,7 +67,7 @@ vector<Move*>Rook::computeValidMoves(const Board& board) const {
 	while (squareCursor != nullptr)
 	{
 		try {
-			squareCursor = board.getRightSquare(squareCursor);
+			squareCursor = Board::getRightSquare(squareCursor);
 			if (squareCursor->isOccupied)
 				if (squareCursor->piece->isWhite == isWhite)
 					break;

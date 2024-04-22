@@ -19,7 +19,7 @@ public:
 	char whitePieceSymbol;
 	char blackPieceSymbol;
 
-	virtual std::vector<Move*> computeValidMoves(const Board&) const = 0;
+	virtual std::vector<Move*> computeValidMoves() const = 0;
 };
 
 #endif

@@ -3,42 +3,43 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 class Square;
 struct Move;
 
 class Board {
 public:
+	enum BoardState { WhiteToPlay, BlackToPlay, Win, Stalemate, Draw };
+	
 	static const int BOARD_LENGTH = 8;
 	static const int BOARD_SIZE = BOARD_LENGTH * BOARD_LENGTH;
 
-	enum BoardState { WhiteToPlay, BlackToPlay, Win, Stalemate, Draw };
+	static BoardState state;
+	static Square* board[BOARD_SIZE];
+	static bool boardWhiteAttack[BOARD_SIZE];
+	static bool boardBlackAttack[BOARD_SIZE];
+	static std::vector<Move*> moveList;
 
-	Board();
-	~Board();
+	static void initialize();
+	static void clear();
 
-	Square* getNorthSquare(Square*) const;
-	Square* getSouthSquare(Square*) const;
-	Square* getEastSquare(Square*) const;
-	Square* getWestSquare(Square*) const;
-	Square* getForwardSquare(Square*) const;
-	Square* getBackwardSquare(Square*) const;
-	Square* getRightSquare(Square*) const;
-	Square* getLeftSquare(Square*) const;
+	static bool idInRange(int);
+	static Square* getSquareFromId(int);
 
-	bool idInRange(int) const;
-	Square* getSquareFromId(int) const;
-	Move* getLastMove() const;
-	void makeMove(Move*);
+	static Square* getNorthSquare(Square*);
+	static Square* getSouthSquare(Square*);
+	static Square* getEastSquare(Square*);
+	static Square* getWestSquare(Square*);
+	static Square* getForwardSquare(Square*);
+	static Square* getBackwardSquare(Square*);
+	static Square* getRightSquare(Square*);
+	static Square* getLeftSquare(Square*);
 
-	friend std::ostream& operator<<(std::ostream&, const Board&);
+	static Move* getLastMove();
+	static void makeMove(Move*);
 
-	Square* board[BOARD_SIZE];
-	bool boardWhiteAttack[BOARD_SIZE];
-	bool boardBlackAttack[BOARD_SIZE];
-	BoardState state;
-
-	std::vector<Move*> moveList;
+	static std::string formatAsString();
 };
 
 #endif
