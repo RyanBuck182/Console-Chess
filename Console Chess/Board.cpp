@@ -151,28 +151,28 @@ Square* Board::getWestSquare(Square* square) const {
 }
 
 Square* Board::getForwardSquare(Square* square) const {
-	if (square->piece == nullptr || square->piece->isWhite)
+	if (state == WhiteToPlay)
 		return getNorthSquare(square);
 	else
 		return getSouthSquare(square);
 }
 
 Square* Board::getBackwardSquare(Square* square) const {
-	if (square->piece == nullptr || square->piece->isWhite)
+	if (state == WhiteToPlay)
 		return getSouthSquare(square);
 	else
 		return getNorthSquare(square);
 }
 
 Square* Board::getRightSquare(Square* square) const {
-	if (square->piece == nullptr || square->piece->isWhite)
+	if (state == WhiteToPlay)
 		return getEastSquare(square);
 	else
 		return getWestSquare(square);
 }
 
 Square* Board::getLeftSquare(Square* square) const {
-	if (square->piece == nullptr || square->piece->isWhite)
+	if (state == WhiteToPlay)
 		return getWestSquare(square);
 	else
 		return getEastSquare(square);
