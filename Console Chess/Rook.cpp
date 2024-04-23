@@ -10,7 +10,7 @@ Rook::Rook(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'R',
 vector<Move*>Rook::computeValidMoves() const {
 	vector<Move*> validMoves;
 
-	// Check forward side of column.
+	// Check forward side of column
 	Square* squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {

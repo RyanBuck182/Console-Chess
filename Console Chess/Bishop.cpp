@@ -9,7 +9,7 @@ Bishop::Bishop(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 
 vector<Move*>Bishop::computeValidMoves() const {
 	vector<Move*> validMoves;
 
-	// Check forward left diagonals.
+	// Check forward left diagonals
 	Square* squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -26,7 +26,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 		}
 	}
 
-	// Check forward right diagonals.
+	// Check forward right diagonals
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -43,7 +43,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 		}
 	}
 
-	// Check backward left diagonals.
+	// Check backward left diagonals
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -60,7 +60,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 		}
 	}
 
-	// Check backward right diagonals.
+	// Check backward right diagonals
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {

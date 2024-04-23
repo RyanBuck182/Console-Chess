@@ -11,7 +11,7 @@ vector<Move*>Queen::computeValidMoves() const
 {
 	vector<Move*> validMoves;
 
-	// Check forward side of column.
+	// Check forward side of column
 	Square* squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -29,7 +29,7 @@ vector<Move*>Queen::computeValidMoves() const
 		}
 	}
 
-	// Check backward side of column.
+	// Check backward side of column
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -46,7 +46,7 @@ vector<Move*>Queen::computeValidMoves() const
 		}
 	}
 
-	// Check left side of row.
+	// Check left side of row
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -63,7 +63,7 @@ vector<Move*>Queen::computeValidMoves() const
 		}
 	}
 
-	// Check right side of row.
+	// Check right side of row
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -80,7 +80,7 @@ vector<Move*>Queen::computeValidMoves() const
 		}
 	}
 
-	// Check forward left diagonals.
+	// Check forward left diagonals
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -97,7 +97,7 @@ vector<Move*>Queen::computeValidMoves() const
 		}
 	}
 
-	// Check forward right diagonals.
+	// Check forward right diagonals
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -114,7 +114,7 @@ vector<Move*>Queen::computeValidMoves() const
 		}
 	}
 
-	// Check backward left diagonals.
+	// Check backward left diagonals
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
@@ -131,7 +131,7 @@ vector<Move*>Queen::computeValidMoves() const
 		}
 	}
 
-	// Check backward right diagonals.
+	// Check backward right diagonals
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
