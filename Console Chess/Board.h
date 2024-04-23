@@ -6,7 +6,7 @@
 #include <string>
 
 class Square;
-struct Move;
+class Move;
 
 class Board {
 public:

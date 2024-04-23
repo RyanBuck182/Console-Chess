@@ -24,6 +24,22 @@ Move::~Move() {
 	endSquare = nullptr;
 }
 
+Square* Move::getStartSquare() const {
+	return startSquare;
+}
+
+Square* Move::getEndSquare() const {
+	return endSquare;
+}
+
+Move::MoveType Move::getMoveType() const {
+	return moveType;
+}
+
+void Move::setMoveType(MoveType moveType) {
+	this->moveType = moveType;
+}
+
 bool Move::operator==(const Move& move) const {
 	return startSquare == move.startSquare && endSquare == move.endSquare;
 }

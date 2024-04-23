@@ -114,14 +114,14 @@ Move* Board::getLastMove() {
 }
 
 bool Board::moveIsValid(Move* move) {
-	if (move->startSquare->getPiece() == nullptr)
+	if (move->getStartSquare()->getPiece() == nullptr)
 		return false;
 
-	if (state == Board::WhiteToPlay && !move->startSquare->getPiece()->isWhite() || state == Board::BlackToPlay && move->startSquare->getPiece()->isWhite())
+	if (state == Board::WhiteToPlay && !move->getStartSquare()->getPiece()->isWhite() || state == Board::BlackToPlay && move->getStartSquare()->getPiece()->isWhite())
 		return false;
 
 	bool moveIsValid = false;
-	vector<Move*> validMoves = move->startSquare->getPiece()->computeValidMoves();
+	vector<Move*> validMoves = move->getStartSquare()->getPiece()->computeValidMoves();
 	for (int i = 0; i < validMoves.size(); i++) {
 		if (*move == *validMoves[i]) {
 			moveIsValid = true;
@@ -136,10 +136,10 @@ void Board::correctMoveType(Move* move) {
 	if (!moveIsValid(move))
 		throw "Cannot correct the move type of an invalid move.";
 
-	vector<Move*> validMoves = move->startSquare->getPiece()->computeValidMoves();
+	vector<Move*> validMoves = move->getStartSquare()->getPiece()->computeValidMoves();
 	for (int i = 0; i < validMoves.size(); i++) {
 		if (*move == *validMoves[i]) {
-			move->moveType = validMoves[i]->moveType;
+			move->setMoveType(validMoves[i]->getMoveType());
 			break;
 		}
 	}
@@ -156,10 +156,10 @@ void Board::makeMove(Move* move) {
 	//check for special moves (castle, en passant, promotion)
 
 	//make move
-	delete move->endSquare->getPiece();
-	move->endSquare->setPiece(move->startSquare->getPiece());
-	move->endSquare->getPiece()->setSquare(move->endSquare);
-	move->startSquare->setPiece(nullptr);
+	delete move->getEndSquare()->getPiece();
+	move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());
+	move->getEndSquare()->getPiece()->setSquare(move->getEndSquare());
+	move->getStartSquare()->setPiece(nullptr);
 
 	state = (state == Board::WhiteToPlay) ? Board::BlackToPlay : Board::WhiteToPlay;
 

@@ -5,7 +5,7 @@
 
 class Square;
 class Board;
-struct Move;
+class Move;
 
 class Piece {
 public:
