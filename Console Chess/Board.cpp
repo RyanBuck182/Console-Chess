@@ -195,11 +195,15 @@ void Board::makeMove(Move* move) {
 
 	//check for special moves (castle, en passant, promotion)
 
+
+
 	//make move
-	delete move->getEndSquare()->getPiece();
-	move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());
-	move->getEndSquare()->getPiece()->setSquare(move->getEndSquare());
-	move->getStartSquare()->setPiece(nullptr);
+	move->getStartSquare()->getPiece()->makeMove(move);
+	
+	//delete move->getEndSquare()->getPiece();
+	//move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());
+	//move->getEndSquare()->getPiece()->setSquare(move->getEndSquare());
+	//move->getStartSquare()->setPiece(nullptr);
 
 	state = (state == Board::WhiteToPlay) ? Board::BlackToPlay : Board::WhiteToPlay;
 

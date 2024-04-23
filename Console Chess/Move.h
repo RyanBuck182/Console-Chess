@@ -7,7 +7,7 @@ class Square;
 
 class Move {
 public:
-	enum MoveType { Standard, Capture, DoublePawn, EnPassant, Castle };
+	enum MoveType { Standard, Capture, DoublePawn, EnPassant, PawnPromotion, Castle };
 
 	Move(Square*, Square*);
 	Move(Square*, Square*, MoveType);

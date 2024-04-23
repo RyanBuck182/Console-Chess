@@ -2,6 +2,9 @@
 #include "Square.h"
 #include "Board.h"
 #include "Move.h"
+#include "Bishop.h"
+#include "Rook.h"
+#include "Queen.h"
 
 using namespace std;
 
@@ -79,5 +82,69 @@ vector<Move*> Pawn::computeValidMoves() const {
 			validMoves.push_back(new Move(square, rightDiagonalSquare, Move::EnPassant));
 	}
 
+	for (int i = 0; i < validMoves.size(); i++) {
+		if (validMoves[i]->getEndSquare()->getId() < 8 || validMoves[i]->getEndSquare()->getId() >= 56)
+			validMoves[i]->setMoveType(Move::PawnPromotion);
+	}
+
 	return validMoves;
+}
+
+void Pawn::makeMove(Move* move) {
+	switch (move->getMoveType()) {
+		case Move::EnPassant:
+			makeEnPassantMove(move);
+			break;
+		case Move::PawnPromotion:
+			makePromotionMove(move);
+			break;
+		default:
+			makeStandardMove(move);
+			break;
+	}
+}
+
+void Pawn::makeEnPassantMove(Move* move) {
+	delete move->getEndSquare()->getPiece();
+	move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());
+	move->getEndSquare()->getPiece()->setSquare(move->getEndSquare());
+
+	delete Board::getBackwardSquare(move->getEndSquare())->getPiece();
+	Board::getBackwardSquare(move->getEndSquare())->setPiece(nullptr);
+	
+	move->getStartSquare()->setPiece(nullptr);
+}
+
+void Pawn::makePromotionMove(Move* move) {
+	cout << "\n";
+	cout << " (1) Knight\n";
+	cout << " (2) Bishop\n";
+	cout << " (3) Rook\n";
+	cout << " (4) Queen\n";
+	cout << "Choose promotion: ";
+	int choice;
+	cin >> choice;
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
+
+	Piece* promotedPiece = nullptr;
+	switch (choice) {
+		case 1:
+			//promotedPiece = new Knight(move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
+			//break
+		case 2:
+			promotedPiece = new Bishop(move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
+			break;
+		case 3:
+			promotedPiece = new Rook(move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
+			break;
+		default:
+			promotedPiece = new Queen(move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
+			break;
+	}
+
+	delete move->getEndSquare()->getPiece();
+	move->getEndSquare()->setPiece(promotedPiece);
+
+	move->getStartSquare()->setPiece(nullptr);
 }

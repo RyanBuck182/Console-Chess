@@ -19,7 +19,10 @@ public:
 	char getPieceSymbol() const;
 
 	virtual std::vector<Move*> computeValidMoves() const = 0;
+	virtual void makeMove(Move* move);
 protected:
+	void makeStandardMove(Move* move);
+
 	Square* square;
 	bool pieceIsWhite;
 	char whitePieceSymbol;
