@@ -8,12 +8,12 @@ using namespace std;
 int main() {
 	Board::initialize();
 
-	while (Board::state != Board::Win) {
+	while (Board::getState() != Board::Win) {
 		cout << Board::formatAsString();
 		
 		Move* move = nullptr;
 		while (move == nullptr) {
-			cout << '\n' << ((Board::state == Board::WhiteToPlay) ? "White" : "Black") << " To Play\n";
+			cout << '\n' << ((Board::getState() == Board::WhiteToPlay) ? "White" : "Black") << " To Play\n";
 
 			try {
 				cin >> move;

@@ -56,10 +56,22 @@ bool Board::idInRange(int id) {
 	return true;
 }
 
+Board::BoardState Board::getState() {
+	return state;
+}
+
 Square* Board::getSquareFromId(int id) {
 	if (!idInRange(id))
 		throw "Id not in range.";
 	return board[id];
+}
+
+bool Board::isSquareAttacked(int id) {
+	return (state == Board::WhiteToPlay) ? boardBlackAttack[id] : boardWhiteAttack[id];
+}
+
+bool Board::isSquareAttacked(Square* square) {
+	return (state == Board::WhiteToPlay) ? boardBlackAttack[square->getId()] : boardWhiteAttack[square->getId()];
 }
 
 Square* Board::getNorthSquare(Square* square) {
@@ -117,7 +129,7 @@ bool Board::moveIsValid(Move* move) {
 	if (move->getStartSquare()->getPiece() == nullptr)
 		return false;
 
-	if (state == Board::WhiteToPlay && !move->getStartSquare()->getPiece()->isWhite() || state == Board::BlackToPlay && move->getStartSquare()->getPiece()->isWhite())
+	if (state  == Board::WhiteToPlay && !move->getStartSquare()->getPiece()->isWhite() || state == Board::BlackToPlay && move->getStartSquare()->getPiece()->isWhite())
 		return false;
 
 	bool moveIsValid = false;

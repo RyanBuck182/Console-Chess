@@ -15,17 +15,15 @@ public:
 	static const int BOARD_LENGTH = 8;
 	static const int BOARD_SIZE = BOARD_LENGTH * BOARD_LENGTH;
 
-	static BoardState state;
-	static Square* board[BOARD_SIZE];
-	static bool boardWhiteAttack[BOARD_SIZE];
-	static bool boardBlackAttack[BOARD_SIZE];
-	static std::vector<Move*> moveList;
-
 	static void initialize();
 	static void clear();
 
 	static bool idInRange(int);
+
+	static BoardState getState();
 	static Square* getSquareFromId(int);
+	static bool isSquareAttacked(int);
+	static bool isSquareAttacked(Square*);
 
 	static Square* getNorthSquare(Square*);
 	static Square* getSouthSquare(Square*);
@@ -42,6 +40,12 @@ public:
 	static void makeMove(Move*);
 
 	static std::string formatAsString();
+private:
+	static BoardState state;
+	static Square* board[BOARD_SIZE];
+	static bool boardWhiteAttack[BOARD_SIZE];
+	static bool boardBlackAttack[BOARD_SIZE];
+	static std::vector<Move*> moveList;
 };
 
 #endif
