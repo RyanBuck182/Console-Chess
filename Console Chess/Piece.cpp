@@ -1,9 +1,25 @@
 #include "Piece.h"
 #include "Square.h"
 
-Piece::Piece(Square* square, bool isWhite, char whitePieceSymbol, char blackPieceSymbol) {
+Square* Piece::getSquare() const {
+	return square;
+}
+
+void Piece::setSquare(Square* square) {
 	this->square = square;
-	this->isWhite = isWhite;
+}
+
+bool Piece::isWhite() const {
+	return pieceIsWhite;
+}
+
+char Piece::getPieceSymbol() const {
+	return (pieceIsWhite) ? whitePieceSymbol : blackPieceSymbol;
+}
+
+Piece::Piece(Square* square, bool pieceIsWhite, char whitePieceSymbol, char blackPieceSymbol) {
+	this->square = square;
+	this->pieceIsWhite = pieceIsWhite;
 	this->whitePieceSymbol = whitePieceSymbol;
 	this->blackPieceSymbol = blackPieceSymbol;
 }

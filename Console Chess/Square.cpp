@@ -18,7 +18,7 @@ Square::Square(int id, Piece* piece)
 
 Square::~Square() {
 	if (piece != nullptr) {
-		piece->square = nullptr;
+		piece->setSquare(nullptr);
 		delete piece;
 		piece = nullptr;
 	}

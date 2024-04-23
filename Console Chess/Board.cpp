@@ -117,7 +117,7 @@ bool Board::moveIsValid(Move* move) {
 	if (move->startSquare->getPiece() == nullptr)
 		return false;
 
-	if (state == Board::WhiteToPlay && !move->startSquare->getPiece()->isWhite || state == Board::BlackToPlay && move->startSquare->getPiece()->isWhite)
+	if (state == Board::WhiteToPlay && !move->startSquare->getPiece()->isWhite() || state == Board::BlackToPlay && move->startSquare->getPiece()->isWhite())
 		return false;
 
 	bool moveIsValid = false;
@@ -158,7 +158,7 @@ void Board::makeMove(Move* move) {
 	//make move
 	delete move->endSquare->getPiece();
 	move->endSquare->setPiece(move->startSquare->getPiece());
-	move->endSquare->getPiece()->square = move->endSquare;
+	move->endSquare->getPiece()->setSquare(move->endSquare);
 	move->startSquare->setPiece(nullptr);
 
 	state = (state == Board::WhiteToPlay) ? Board::BlackToPlay : Board::WhiteToPlay;
@@ -179,7 +179,7 @@ string Board::formatAsString() {
 				if (piece == nullptr)
 					str << ' ';
 				else
-					str << ((piece->isWhite) ? piece->whitePieceSymbol : piece->blackPieceSymbol);
+					str << piece->getPieceSymbol();
 			}
 			str << " |\n";
 			str << "  +---+---+---+---+---+---+---+---+\n";
@@ -195,7 +195,7 @@ string Board::formatAsString() {
 				if (piece == nullptr)
 					str << ' ';
 				else
-					str << ((piece->isWhite) ? piece->whitePieceSymbol : piece->blackPieceSymbol);
+					str << piece->getPieceSymbol();
 			}
 			str << " |\n";
 			str << "  +---+---+---+---+---+---+---+---+\n";

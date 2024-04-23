@@ -4,7 +4,7 @@
 #include "Move.h"
 using namespace std;
 
-Bishop::Bishop(Square* square, bool isWhite) : Piece(square, isWhite, 'B', 'b') {}
+Bishop::Bishop(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'B', 'b') {}
 
 vector<Move*>Bishop::computeValidMoves() const {
 	vector<Move*> validMoves;
@@ -15,7 +15,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 		try {
 			squareCursor = Board::getLeftSquare(Board::getForwardSquare(squareCursor));
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -32,7 +32,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 		try {
 			squareCursor = Board::getRightSquare(Board::getForwardSquare(squareCursor));
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -49,7 +49,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 		try {
 			squareCursor = Board::getLeftSquare(Board::getBackwardSquare(squareCursor));
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -66,7 +66,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 		try {
 			squareCursor = Board::getRightSquare(Board::getBackwardSquare(squareCursor));
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));

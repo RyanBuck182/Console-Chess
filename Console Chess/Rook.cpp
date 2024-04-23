@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Rook::Rook(Square* square, bool isWhite) : Piece(square, isWhite, 'R', 'r') {}
+Rook::Rook(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'R', 'r') {}
 
 vector<Move*>Rook::computeValidMoves() const {
 	vector<Move*> validMoves;
@@ -16,7 +16,7 @@ vector<Move*>Rook::computeValidMoves() const {
 		try {
 			squareCursor = Board::getForwardSquare(squareCursor);
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -33,7 +33,7 @@ vector<Move*>Rook::computeValidMoves() const {
 		try {
 			squareCursor = Board::getBackwardSquare(squareCursor);
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -50,7 +50,7 @@ vector<Move*>Rook::computeValidMoves() const {
 		try {
 			squareCursor = Board::getLeftSquare(squareCursor);
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -68,7 +68,7 @@ vector<Move*>Rook::computeValidMoves() const {
 		try {
 			squareCursor = Board::getRightSquare(squareCursor);
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));

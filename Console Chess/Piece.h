@@ -11,14 +11,19 @@ class Piece {
 public:
 	Piece(Square*, bool, char, char);
 
-	Square* square; //add accessor and mutator
-	bool isWhite; //add accessor
+	Square* getSquare() const;
+	void setSquare(Square* square);
 
-	//add accessor
-	char whitePieceSymbol;
-	char blackPieceSymbol;
+	bool isWhite() const;
+
+	char getPieceSymbol() const;
 
 	virtual std::vector<Move*> computeValidMoves() const = 0;
+protected:
+	Square* square;
+	bool pieceIsWhite;
+	char whitePieceSymbol;
+	char blackPieceSymbol;
 };
 
 #endif

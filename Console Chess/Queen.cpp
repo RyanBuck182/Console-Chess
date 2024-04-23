@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Queen::Queen(Square* square, bool isWhite) : Piece(square, isWhite, 'Q', 'q') {}
+Queen::Queen(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'Q', 'q') {}
 
 vector<Move*>Queen::computeValidMoves() const 
 {
@@ -17,7 +17,7 @@ vector<Move*>Queen::computeValidMoves() const
 		try {
 			squareCursor = Board::getForwardSquare(squareCursor);
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -35,7 +35,7 @@ vector<Move*>Queen::computeValidMoves() const
 		try {
 			squareCursor = Board::getBackwardSquare(squareCursor);
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -52,7 +52,7 @@ vector<Move*>Queen::computeValidMoves() const
 		try {
 			squareCursor = Board::getLeftSquare(squareCursor);
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -69,7 +69,7 @@ vector<Move*>Queen::computeValidMoves() const
 		try {
 			squareCursor = Board::getRightSquare(squareCursor);
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -86,7 +86,7 @@ vector<Move*>Queen::computeValidMoves() const
 		try {
 			squareCursor = Board::getLeftSquare(Board::getForwardSquare(squareCursor));
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -103,7 +103,7 @@ vector<Move*>Queen::computeValidMoves() const
 		try {
 			squareCursor = Board::getRightSquare(Board::getForwardSquare(squareCursor));
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -120,7 +120,7 @@ vector<Move*>Queen::computeValidMoves() const
 		try {
 			squareCursor = Board::getLeftSquare(Board::getBackwardSquare(squareCursor));
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
@@ -137,7 +137,7 @@ vector<Move*>Queen::computeValidMoves() const
 		try {
 			squareCursor = Board::getRightSquare(Board::getBackwardSquare(squareCursor));
 			if (squareCursor->isOccupied())
-				if (squareCursor->getPiece()->isWhite == isWhite)
+				if (squareCursor->getPiece()->isWhite() == pieceIsWhite)
 					break;
 				else
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));

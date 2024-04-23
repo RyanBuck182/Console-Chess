@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Pawn::Pawn(Square* square, bool isWhite) : Piece(square, isWhite, 'P', 'p'), hasMoved(false) {}
+Pawn::Pawn(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'P', 'p'), hasMoved(false) {}
 
 vector<Move*> Pawn::computeValidMoves() const {
 	vector<Move*> validMoves;
@@ -53,7 +53,7 @@ vector<Move*> Pawn::computeValidMoves() const {
 	}
 
 	if (leftDiagonalSquare != nullptr) {
-		bool leftDiagonalCaptureIsValid = leftDiagonalSquare->isOccupied() && leftDiagonalSquare->getPiece()->isWhite != isWhite;
+		bool leftDiagonalCaptureIsValid = leftDiagonalSquare->isOccupied() && leftDiagonalSquare->getPiece()->isWhite() != pieceIsWhite;
  		bool leftDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->moveType == Move::DoublePawn && *Board::getLeftSquare(square) == *lastMove->endSquare;
 
 		if (leftDiagonalCaptureIsValid)
@@ -70,7 +70,7 @@ vector<Move*> Pawn::computeValidMoves() const {
 	}
 
 	if (rightDiagonalSquare != nullptr) {
-		bool rightDiagonalCaptureIsValid = rightDiagonalSquare->isOccupied() && rightDiagonalSquare->getPiece()->isWhite != isWhite;
+		bool rightDiagonalCaptureIsValid = rightDiagonalSquare->isOccupied() && rightDiagonalSquare->getPiece()->isWhite() != pieceIsWhite;
 		bool rightDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->moveType == Move::DoublePawn && *Board::getRightSquare(square) == *lastMove->endSquare;
 
 		if (rightDiagonalCaptureIsValid)
