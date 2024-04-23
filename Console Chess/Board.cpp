@@ -5,8 +5,22 @@
 #include "Move.h"
 #include "Piece.h"
 #include "Pawn.h"
+#include "Bishop.h"
+#include "Rook.h"
+#include "Queen.h"
 
 using namespace std;
+
+const Board::PieceType Board::DEFAULT_BOARD[BOARD_SIZE] = {
+	RookPieceWhite, KnightPieceWhite, BishopPieceWhite, QueenPieceWhite,  KingPieceWhite, BishopPieceWhite, KnightPieceWhite, RookPieceWhite,
+	PawnPieceWhite,   PawnPieceWhite,   PawnPieceWhite,  PawnPieceWhite,  PawnPieceWhite,   PawnPieceWhite,   PawnPieceWhite, PawnPieceWhite,
+	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
+	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
+	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
+	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
+	PawnPieceBlack,   PawnPieceBlack,   PawnPieceBlack,  PawnPieceBlack,  PawnPieceBlack,   PawnPieceBlack,   PawnPieceBlack, PawnPieceBlack,
+	RookPieceBlack, KnightPieceBlack, BishopPieceBlack,  KingPieceBlack, QueenPieceBlack, BishopPieceBlack, KnightPieceBlack, RookPieceBlack,
+};
 
 Board::BoardState Board::state;
 Square* Board::board[BOARD_SIZE];
@@ -15,20 +29,34 @@ bool Board::boardBlackAttack[BOARD_SIZE];
 std::vector<Move*> Board::moveList;
 
 void Board::initialize() {
-	for (int i = 0; i < BOARD_SIZE / 4; i++) {
+	for (int i = 0; i < BOARD_SIZE; i++) {
 		Square* square = new Square(i);
-		square->setPiece(new Pawn(square, true));
-		board[i] = square;
-	}
 
-	for (int i = BOARD_SIZE / 4; i < BOARD_SIZE / 4 * 3; i++) {
-		Square* square = new Square(i);
-		board[i] = square;
-	}
+		bool isWhite = static_cast<int>(DEFAULT_BOARD[i]) < 6;
 
-	for (int i = BOARD_SIZE / 4 * 3; i < BOARD_SIZE; i++) {
-		Square* square = new Square(i);
-		square->setPiece(new Pawn(square, false));
+		switch (DEFAULT_BOARD[i]) {
+			case PawnPieceWhite:
+			case PawnPieceBlack:
+				square->setPiece(new Pawn(square, isWhite));
+				break;
+			//knight here
+			case BishopPieceWhite:
+			case BishopPieceBlack:
+				square->setPiece(new Bishop(square, isWhite));
+				break;
+			case RookPieceWhite:
+			case RookPieceBlack:
+				square->setPiece(new Rook(square, isWhite));
+				break;
+			case QueenPieceWhite:
+			case QueenPieceBlack:
+				square->setPiece(new Queen(square, isWhite));
+				break;
+			//king here
+			default:
+				break;
+		}
+
 		board[i] = square;
 	}
 

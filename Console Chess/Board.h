@@ -41,6 +41,12 @@ public:
 
 	static std::string formatAsString();
 private:
+	enum PieceType { NoPiece,
+		PawnPieceWhite, KnightPieceWhite, BishopPieceWhite, RookPieceWhite, QueenPieceWhite, KingPieceWhite,
+		PawnPieceBlack, KnightPieceBlack, BishopPieceBlack, RookPieceBlack, QueenPieceBlack, KingPieceBlack,
+	};
+	static const PieceType DEFAULT_BOARD[BOARD_SIZE];
+
 	static BoardState state;
 	static Square* board[BOARD_SIZE];
 	static bool boardWhiteAttack[BOARD_SIZE];
