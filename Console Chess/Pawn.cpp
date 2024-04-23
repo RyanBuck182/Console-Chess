@@ -14,7 +14,7 @@ vector<Move*> Pawn::computeValidMoves() const {
 
 	try {
 		lastMove = Board::getLastMove();
-	} catch (const char* error) {
+	} catch (const char*) {
 		lastMove = nullptr;
 	}
 	
@@ -26,7 +26,7 @@ vector<Move*> Pawn::computeValidMoves() const {
 	//Considering forward
 	try {
 		forwardSquare = Board::getForwardSquare(square);
-	} catch (const char* error) {
+	} catch (const char*) {
 		forwardSquare = nullptr;
 	}
 
@@ -37,7 +37,7 @@ vector<Move*> Pawn::computeValidMoves() const {
 	//Considering forward 2 spaces
 	try {
 		doubleForwardSquare = Board::getForwardSquare(forwardSquare);
-	} catch (const char* error) {
+	} catch (const char*) {
 		doubleForwardSquare = nullptr;
 	}
 
@@ -48,7 +48,7 @@ vector<Move*> Pawn::computeValidMoves() const {
 	//Considering left diagonal
 	try {
 		leftDiagonalSquare = Board::getLeftSquare(Board::getForwardSquare(square));
-	} catch (const char* error) {
+	} catch (const char*) {
 		leftDiagonalSquare = nullptr;
 	}
 
@@ -65,7 +65,7 @@ vector<Move*> Pawn::computeValidMoves() const {
 	//Considering right diagonal
 	try {
 		rightDiagonalSquare = Board::getRightSquare(Board::getForwardSquare(square));
-	} catch (const char* error) {
+	} catch (const char*) {
 		rightDiagonalSquare = nullptr;
 	}
 

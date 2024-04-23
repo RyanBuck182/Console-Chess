@@ -22,7 +22,7 @@ vector<Move*>Rook::computeValidMoves() const {
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
 			else
 				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-		} catch (const char* error) {
+		} catch (const char*) {
 			squareCursor = nullptr;
 		}
 	}
@@ -39,7 +39,7 @@ vector<Move*>Rook::computeValidMoves() const {
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
 			else
 				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-		} catch (const char* error) {
+		} catch (const char*) {
 			squareCursor = nullptr;
 		}
 	}
@@ -56,7 +56,7 @@ vector<Move*>Rook::computeValidMoves() const {
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
 			else
 				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-		} catch (const char* error) {
+		} catch (const char*) {
 			squareCursor = nullptr;
 		}
 	}
@@ -75,7 +75,7 @@ vector<Move*>Rook::computeValidMoves() const {
 			else
 				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
 		}
-		catch (const char* error) {
+		catch (const char*) {
 			squareCursor = nullptr;
 		}
 	}

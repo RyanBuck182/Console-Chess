@@ -17,7 +17,7 @@ int main() {
 
 			try {
 				cin >> move;
-			} catch (const char* error) {
+			} catch (const char*) {
 				move = nullptr;
 				cout << "Invalid move! Please input a legal move.\n";
 			}

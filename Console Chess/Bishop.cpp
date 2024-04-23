@@ -21,7 +21,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
 			else
 				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-		} catch (const char* error) {
+		} catch (const char*) {
 			squareCursor = nullptr;
 		}
 	}
@@ -38,7 +38,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
 			else
 				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-		} catch (const char* error) {
+		} catch (const char*) {
 			squareCursor = nullptr;
 		}
 	}
@@ -55,7 +55,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
 			else
 				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-		} catch (const char* error) {
+		} catch (const char*) {
 			squareCursor = nullptr;
 		}
 	}
@@ -72,7 +72,7 @@ vector<Move*>Bishop::computeValidMoves() const {
 					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
 			else
 				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-		} catch (const char* error) {
+		} catch (const char*) {
 			squareCursor = nullptr;
 		}
 	}

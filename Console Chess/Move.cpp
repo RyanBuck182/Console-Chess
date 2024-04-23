@@ -37,7 +37,7 @@ istream& operator>>(istream& in, Move*& move) {
 
 		try {
 			cin >> startSquare;
-		} catch (const char* error) {
+		} catch (const char*) {
 			cout << "Invalid input! Please input a valid square (e.g. a1).\n\n";
 		}
 	}
@@ -47,7 +47,7 @@ istream& operator>>(istream& in, Move*& move) {
 
 		try {
 			cin >> endSquare;
-		} catch (const char* error) {
+		} catch (const char*) {
 			cout << "Invalid input! Please input a valid square (e.g. a1).\n\n";
 		}
 	}
