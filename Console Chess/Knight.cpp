@@ -7,7 +7,7 @@ using namespace std;
 Knight::Knight(Square* square, bool isWhite) : Piece(square, isWhite, 'N', 'n') {}
 Knight::~Knight() {}
 
-vector<Move*>Knight::computeValidMoves(const Board& board) const
+vector<Move*> Knight::computeValidMoves() const
 {
 	vector<Move*> validMoves;
 
@@ -16,7 +16,7 @@ vector<Move*>Knight::computeValidMoves(const Board& board) const
 	while (squareCursor != nullptr)
 	{
 		try {
-			squareCursor = board.getForwardSquare(board.getForwardSquare(board.getRightSquare(squareCursor)));
+			squareCursor = Board::getForwardSquare(Board::getForwardSquare(Board::getRightSquare(squareCursor)));
 			if (squareCursor->isOccupied())
 			{
 				if (squareCursor->getPiece()->isWhite() == isWhite())
@@ -43,7 +43,7 @@ vector<Move*>Knight::computeValidMoves(const Board& board) const
 	while (squareCursor != nullptr)
 	{
 		try {
-			squareCursor = board.getForwardSquare(board.getForwardSquare(board.getLeftSquare(squareCursor)));
+			squareCursor = Board::getForwardSquare(Board::getForwardSquare(Board::getLeftSquare(squareCursor)));
 			if (squareCursor->isOccupied())
 			{
 				if (squareCursor->getPiece()->isWhite() == isWhite())
@@ -70,7 +70,7 @@ vector<Move*>Knight::computeValidMoves(const Board& board) const
 	while (squareCursor != nullptr)
 	{
 		try {
-			squareCursor = board.getRightSquare(board.getRightSquare(board.getForwardSquare(squareCursor)));
+			squareCursor = Board::getRightSquare(Board::getRightSquare(Board::getForwardSquare(squareCursor)));
 			if (squareCursor->isOccupied())
 			{
 				if (squareCursor->getPiece()->isWhite() == isWhite())
@@ -97,7 +97,7 @@ vector<Move*>Knight::computeValidMoves(const Board& board) const
 	while (squareCursor != nullptr)
 	{
 		try {
-			squareCursor = board.getRightSquare(board.getRightSquare(board.getBackwardSquare(squareCursor)));
+			squareCursor = Board::getRightSquare(Board::getRightSquare(Board::getBackwardSquare(squareCursor)));
 			if (squareCursor->isOccupied())
 			{
 				if (squareCursor->getPiece()->isWhite() == isWhite())
@@ -124,7 +124,7 @@ vector<Move*>Knight::computeValidMoves(const Board& board) const
 	while (squareCursor != nullptr)
 	{
 		try {
-			squareCursor = board.getBackwardSquare(board.getBackwardSquare(board.getLeftSquare(squareCursor)));
+			squareCursor = Board::getBackwardSquare(Board::getBackwardSquare(Board::getLeftSquare(squareCursor)));
 			if (squareCursor->isOccupied())
 			{
 				if (squareCursor->getPiece()->isWhite() == isWhite())
@@ -151,7 +151,7 @@ vector<Move*>Knight::computeValidMoves(const Board& board) const
 	while (squareCursor != nullptr)
 	{
 		try {
-			squareCursor = board.getBackwardSquare(board.getBackwardSquare(board.getRightSquare(squareCursor)));
+			squareCursor = Board::getBackwardSquare(Board::getBackwardSquare(Board::getRightSquare(squareCursor)));
 			if (squareCursor->isOccupied())
 			{
 				if (squareCursor->getPiece()->isWhite() == isWhite())
@@ -178,7 +178,7 @@ vector<Move*>Knight::computeValidMoves(const Board& board) const
 	while (squareCursor != nullptr)
 	{
 		try {
-			squareCursor = board.getLeftSquare(board.getLeftSquare(board.getForwardSquare(squareCursor)));
+			squareCursor = Board::getLeftSquare(Board::getLeftSquare(Board::getForwardSquare(squareCursor)));
 			if (squareCursor->isOccupied())
 			{
 				if (squareCursor->getPiece()->isWhite() == isWhite())
@@ -205,7 +205,7 @@ vector<Move*>Knight::computeValidMoves(const Board& board) const
 	while (squareCursor != nullptr)
 	{
 		try {
-			squareCursor = board.getLeftSquare(board.getLeftSquare(board.getBackwardSquare(squareCursor)));
+			squareCursor = Board::getLeftSquare(Board::getLeftSquare(Board::getBackwardSquare(squareCursor)));
 			if (squareCursor->isOccupied())
 			{
 				if (squareCursor->getPiece()->isWhite() == isWhite())
