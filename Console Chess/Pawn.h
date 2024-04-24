@@ -6,10 +6,13 @@
 class Pawn : public Piece {
 public:
 	Pawn(Square*, bool);
-	~Pawn();
-
-	std::vector<Move*> computeValidMoves(const Board&) const override;
+	
+	std::vector<Move*> computeValidMoves() const override;
+	void makeMove(Move* move) override;
 private:
+	void makeEnPassantMove(Move* move);
+	void makePromotionMove(Move* move);
+
 	bool hasMoved;
 };
 

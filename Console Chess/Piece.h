@@ -5,21 +5,28 @@
 
 class Square;
 class Board;
-struct Move;
+class Move;
 
 class Piece {
 public:
 	Piece(Square*, bool, char, char);
-	~Piece();
 
-	Square* square; //add accessor and mutator
-	bool isWhite; //add accessor
+	Square* getSquare() const;
+	void setSquare(Square* square);
 
-	//add accessor
+	bool isWhite() const;
+
+	char getPieceSymbol() const;
+
+	virtual std::vector<Move*> computeValidMoves() const = 0;
+	virtual void makeMove(Move* move);
+protected:
+	void makeStandardMove(Move* move);
+
+	Square* square;
+	bool pieceIsWhite;
 	char whitePieceSymbol;
 	char blackPieceSymbol;
-
-	virtual std::vector<Move*> computeValidMoves(const Board&) const = 0;
 };
 
 #endif

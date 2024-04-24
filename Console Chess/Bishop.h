@@ -1,10 +1,13 @@
-#pragma once
+#ifndef BISHOP_H
+#define BISHOP_H
+
 #include "Piece.h"
 
-class Bishop : public Piece
-{
+class Bishop : public Piece {
 public:
 	Bishop(Square*, bool);
-	~Bishop();
-	std::vector<Move*> computeValidMoves(const Board&) const override;
+
+	std::vector<Move*> computeValidMoves() const override;
 };
+
+#endif

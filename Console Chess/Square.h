@@ -1,6 +1,8 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 
+#include <iostream>
+
 class Piece;
 
 class Square {
@@ -9,14 +11,17 @@ public:
 	Square(int, Piece*);
 	~Square();
 
+	int getId() const;
+	Piece* getPiece() const;
 	void setPiece(Piece*);
 
-	bool operator==(const Square&);
+	bool isOccupied() const;
 
-	//make private
-	int id; //add accessor
-	bool isOccupied; //add accessor
-	Piece* piece; //add accessor
+	bool operator==(const Square&);
+	friend std::istream& operator>>(std::istream&, Square*&);
+private:
+	int id;
+	Piece* piece;
 };
 
 #endif

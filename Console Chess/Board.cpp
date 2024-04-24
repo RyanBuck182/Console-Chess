@@ -1,33 +1,69 @@
-﻿#include "Board.h"
+﻿#include <sstream>
+
+#include "Board.h"
 #include "Square.h"
 #include "Move.h"
 #include "Piece.h"
 #include "Pawn.h"
+#include "Bishop.h"
+#include "Rook.h"
+#include "Queen.h"
 
 using namespace std;
 
-Board::Board() {
-	for (int i = 0; i < BOARD_SIZE / 4; i++) {
+const Board::PieceType Board::DEFAULT_BOARD[BOARD_SIZE] = {
+	RookPieceWhite, KnightPieceWhite, BishopPieceWhite, QueenPieceWhite,  KingPieceWhite, BishopPieceWhite, KnightPieceWhite, RookPieceWhite,
+	PawnPieceWhite,   PawnPieceWhite,   PawnPieceWhite,  PawnPieceWhite,  PawnPieceWhite,   PawnPieceWhite,   PawnPieceWhite, PawnPieceWhite,
+	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
+	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
+	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
+	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
+	PawnPieceBlack,   PawnPieceBlack,   PawnPieceBlack,  PawnPieceBlack,  PawnPieceBlack,   PawnPieceBlack,   PawnPieceBlack, PawnPieceBlack,
+	RookPieceBlack, KnightPieceBlack, BishopPieceBlack,  KingPieceBlack, QueenPieceBlack, BishopPieceBlack, KnightPieceBlack, RookPieceBlack,
+};
+
+Board::BoardState Board::state;
+Square* Board::board[BOARD_SIZE];
+bool Board::boardWhiteAttack[BOARD_SIZE];
+bool Board::boardBlackAttack[BOARD_SIZE];
+std::vector<Move*> Board::moveList;
+
+void Board::initialize() {
+	for (int i = 0; i < BOARD_SIZE; i++) {
 		Square* square = new Square(i);
-		square->setPiece(new Pawn(square, true));
+
+		bool isWhite = static_cast<int>(DEFAULT_BOARD[i]) < 6;
+
+		switch (DEFAULT_BOARD[i]) {
+			case PawnPieceWhite:
+			case PawnPieceBlack:
+				square->setPiece(new Pawn(square, isWhite));
+				break;
+			//knight here
+			case BishopPieceWhite:
+			case BishopPieceBlack:
+				square->setPiece(new Bishop(square, isWhite));
+				break;
+			case RookPieceWhite:
+			case RookPieceBlack:
+				square->setPiece(new Rook(square, isWhite));
+				break;
+			case QueenPieceWhite:
+			case QueenPieceBlack:
+				square->setPiece(new Queen(square, isWhite));
+				break;
+			//king here
+			default:
+				break;
+		}
+
 		board[i] = square;
 	}
 
-	for (int i = BOARD_SIZE / 4; i < BOARD_SIZE / 4 * 3; i++) {
-		Square* square = new Square(i);
-		board[i] = square;
-	}
-
-	for (int i = BOARD_SIZE / 4 * 3; i < BOARD_SIZE; i++) {
-		Square* square = new Square(i);
-		square->setPiece(new Pawn(square, false));
-		board[i] = square;
-	}
-
-	state = WhiteToPlay;
+	state = Board::WhiteToPlay;
 }
 
-Board::~Board() {
+void Board::clear() {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		delete board[i];
 		board[i] = nullptr;
@@ -38,142 +74,178 @@ Board::~Board() {
 		moveList[i] = nullptr;
 	}
 	moveList.clear();
+
+	initialize();
 }
 
-bool Board::idInRange(int id) const {
+bool Board::idInRange(int id) {
 	if (id < 0 || id >= BOARD_SIZE)
 		return false;
 	return true;
 }
 
-Square* Board::getSquareFromId(int id) const {
+Board::BoardState Board::getState() {
+	return state;
+}
+
+Square* Board::getSquareFromId(int id) {
 	if (!idInRange(id))
 		throw "Id not in range.";
 	return board[id];
 }
 
-Move* Board::getLastMove() const {
+bool Board::isSquareAttacked(int id) {
+	return (state == Board::WhiteToPlay) ? boardBlackAttack[id] : boardWhiteAttack[id];
+}
+
+bool Board::isSquareAttacked(Square* square) {
+	return (state == Board::WhiteToPlay) ? boardBlackAttack[square->getId()] : boardWhiteAttack[square->getId()];
+}
+
+Square* Board::getNorthSquare(Square* square) {
+	return Board::getSquareFromId(square->getId() + 8);
+}
+
+Square* Board::getSouthSquare(Square* square) {
+	return Board::getSquareFromId(square->getId() - 8);
+}
+
+Square* Board::getEastSquare(Square* square) {
+	return Board::getSquareFromId(square->getId() + 1);
+}
+
+Square* Board::getWestSquare(Square* square) {
+	return Board::getSquareFromId(square->getId() - 1);
+}
+
+Square* Board::getForwardSquare(Square* square) {
+	if (state == Board::WhiteToPlay)
+		return getNorthSquare(square);
+	else
+		return getSouthSquare(square);
+}
+
+Square* Board::getBackwardSquare(Square* square) {
+	if (state == Board::WhiteToPlay)
+		return getSouthSquare(square);
+	else
+		return getNorthSquare(square);
+}
+
+Square* Board::getRightSquare(Square* square) {
+	if (state == Board::WhiteToPlay)
+		return getEastSquare(square);
+	else
+		return getWestSquare(square);
+}
+
+Square* Board::getLeftSquare(Square* square) {
+	if (state == Board::WhiteToPlay)
+		return getWestSquare(square);
+	else
+		return getEastSquare(square);
+}
+
+Move* Board::getLastMove() {
 	if (moveList.size() > 0)
 		return moveList.back();
 	else
 		throw "Can not retrieve the last element of an empty move list.";
 }
 
+bool Board::moveIsValid(Move* move) {
+	if (move->getStartSquare()->getPiece() == nullptr)
+		return false;
 
-void Board::makeMove(Move* move) {
+	if (state  == Board::WhiteToPlay && !move->getStartSquare()->getPiece()->isWhite() || state == Board::BlackToPlay && move->getStartSquare()->getPiece()->isWhite())
+		return false;
+
 	bool moveIsValid = false;
-
-	if (move->startSquare->piece == nullptr)
-		throw "Starting square has no piece on it.";
-
-	vector<Move*> validMoves = move->startSquare->piece->computeValidMoves(*this);
+	vector<Move*> validMoves = move->getStartSquare()->getPiece()->computeValidMoves();
 	for (int i = 0; i < validMoves.size(); i++) {
 		if (*move == *validMoves[i]) {
 			moveIsValid = true;
-			move->moveType = validMoves[i]->moveType;
 			break;
 		}
 	}
 
-	if (!moveIsValid)
-		throw "That move is not valid.";
+	return moveIsValid;
+}
 
-	if (state == WhiteToPlay && !move->startSquare->piece->isWhite || state == BlackToPlay && move->startSquare->piece->isWhite)
-		throw "Attempting to move other side's piece.";
+void Board::correctMoveType(Move* move) {
+	if (!moveIsValid(move))
+		throw "Cannot correct the move type of an invalid move.";
+
+	vector<Move*> validMoves = move->getStartSquare()->getPiece()->computeValidMoves();
+	for (int i = 0; i < validMoves.size(); i++) {
+		if (*move == *validMoves[i]) {
+			move->setMoveType(validMoves[i]->getMoveType());
+			break;
+		}
+	}
+}
+
+void Board::makeMove(Move* move) {
+	if (!moveIsValid(move))
+		throw "Cannot make an invalid move.";
+
+	correctMoveType(move);
 
 	moveList.push_back(move);
 
 	//check for special moves (castle, en passant, promotion)
 
-	//make move
-	delete move->endSquare->piece;
-	move->endSquare->setPiece(move->startSquare->piece);
-	move->endSquare->piece->square = move->endSquare;
-	move->startSquare->setPiece(nullptr);
 
-	state = (state == WhiteToPlay) ? BlackToPlay : WhiteToPlay;
+
+	//make move
+	move->getStartSquare()->getPiece()->makeMove(move);
+	
+	//delete move->getEndSquare()->getPiece();
+	//move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());
+	//move->getEndSquare()->getPiece()->setSquare(move->getEndSquare());
+	//move->getStartSquare()->setPiece(nullptr);
+
+	state = (state == Board::WhiteToPlay) ? Board::BlackToPlay : Board::WhiteToPlay;
 
 	//check for win/stalemate/etc
 }
 
-ostream& operator<<(ostream& out, const Board& board) {
-	if (board.state == Board::WhiteToPlay) {
-		out << "  +---+---+---+---+---+---+---+---+\n";
-		for (int i = Board::Board::BOARD_LENGTH; i > 0; i--) {
-			out << i;
+string Board::formatAsString() {
+	stringstream str;
+
+	if (state == Board::WhiteToPlay) {
+		str << "  +---+---+---+---+---+---+---+---+\n";
+		for (int i = Board::BOARD_LENGTH; i > 0; i--) {
+			str << i;
 			for (int j = Board::BOARD_LENGTH; j > 0; j--) {
-				out << " | ";
-				Piece* piece = board.getSquareFromId(i * Board::BOARD_LENGTH - j)->piece;
+				str << " | ";
+				Piece* piece = Board::getSquareFromId(i * Board::BOARD_LENGTH - j)->getPiece();
 				if (piece == nullptr)
-					out << ' ';
+					str << ' ';
 				else
-					out << ((piece->isWhite) ? piece->whitePieceSymbol : piece->blackPieceSymbol);
+					str << piece->getPieceSymbol();
 			}
-			out << " |\n";
-			out << "  +---+---+---+---+---+---+---+---+\n";
+			str << " |\n";
+			str << "  +---+---+---+---+---+---+---+---+\n";
 		}
-		out << "    a   b   c   d   e   f   g   h  \n";
+		str << "    a   b   c   d   e   f   g   h  \n";
 	} else {
-		out << "  +---+---+---+---+---+---+---+---+\n";
+		str << "  +---+---+---+---+---+---+---+---+\n";
 		for (int i = 1; i <= Board::BOARD_LENGTH; i++) {
-			out << i;
+			str << i;
 			for (int j = 1; j <= Board::BOARD_LENGTH; j++) {
-				out << " | ";
-				Piece* piece = board.getSquareFromId(i * Board::BOARD_LENGTH - j)->piece;
+				str << " | ";
+				Piece* piece = Board::getSquareFromId(i * Board::BOARD_LENGTH - j)->getPiece();
 				if (piece == nullptr)
-					out << ' ';
+					str << ' ';
 				else
-					out << ((piece->isWhite) ? piece->whitePieceSymbol : piece->blackPieceSymbol);
+					str << piece->getPieceSymbol();
 			}
-			out << " |\n";
-			out << "  +---+---+---+---+---+---+---+---+\n";
+			str << " |\n";
+			str << "  +---+---+---+---+---+---+---+---+\n";
 		}
-		out << "    h   g   f   e   d   c   b   a  \n";
+		str << "    h   g   f   e   d   c   b   a  \n";
 	}
-	
-	return out;
-}
 
-Square* Board::getNorthSquare(Square* square) const {
-	return getSquareFromId(square->id + 8);
-}
-
-Square* Board::getSouthSquare(Square* square) const {
-	return getSquareFromId(square->id - 8);
-}
-
-Square* Board::getEastSquare(Square* square) const {
-	return getSquareFromId(square->id + 1);
-}
-
-Square* Board::getWestSquare(Square* square) const {
-	return getSquareFromId(square->id - 1);
-}
-
-Square* Board::getForwardSquare(Square* square) const {
-	if (state == WhiteToPlay)
-		return getNorthSquare(square);
-	else
-		return getSouthSquare(square);
-}
-
-Square* Board::getBackwardSquare(Square* square) const {
-	if (state == WhiteToPlay)
-		return getSouthSquare(square);
-	else
-		return getNorthSquare(square);
-}
-
-Square* Board::getRightSquare(Square* square) const {
-	if (state == WhiteToPlay)
-		return getEastSquare(square);
-	else
-		return getWestSquare(square);
-}
-
-Square* Board::getLeftSquare(Square* square) const {
-	if (state == WhiteToPlay)
-		return getWestSquare(square);
-	else
-		return getEastSquare(square);
+	return str.str();
 }

@@ -1,20 +1,30 @@
 #ifndef MOVE_H
 #define MOVE_H
 
+#include <iostream>
+
 class Square;
 
-struct Move {
-	enum MoveType { Standard, Capture, DoublePawn, EnPassant, Castle };
+class Move {
+public:
+	enum MoveType { Standard, Capture, DoublePawn, EnPassant, PawnPromotion, Castle };
 
 	Move(Square*, Square*);
 	Move(Square*, Square*, MoveType);
 	~Move();
 
+	Square* getStartSquare() const;
+	Square* getEndSquare() const;
+
+	MoveType getMoveType() const;
+	void setMoveType(MoveType moveType);
+
+	bool operator==(const Move& move) const;
+	friend std::istream& operator>>(std::istream&, Move*&);
+private:
 	Square* startSquare;
 	Square* endSquare;
 	MoveType moveType;
-
-	bool operator==(const Move& move) const;
 };
 
 #endif
