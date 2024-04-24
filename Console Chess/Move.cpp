@@ -49,7 +49,7 @@ istream& operator>>(istream& in, Move*& move) {
 	Square* endSquare = nullptr;
 
 	while (startSquare == nullptr) {
-		cout << "  Start Square: ";
+		cout << "Start Square: ";
 
 		try {
 			cin >> startSquare;
@@ -59,7 +59,7 @@ istream& operator>>(istream& in, Move*& move) {
 	}
 
 	while (endSquare == nullptr) {
-		cout << "    End Square: ";
+		cout << "  End Square: ";
 
 		try {
 			cin >> endSquare;
