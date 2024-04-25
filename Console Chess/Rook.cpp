@@ -5,7 +5,11 @@
 
 using namespace std;
 
-Rook::Rook(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'R', 'r') {}
+Rook::Rook(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'R', 'r'), pieceHasMoved(false) {}
+
+bool Rook::hasMoved() const {
+	return pieceHasMoved;
+}
 
 vector<Move*>Rook::computeValidMoves() const {
 	vector<Move*> validMoves;

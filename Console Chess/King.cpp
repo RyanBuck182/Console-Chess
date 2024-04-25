@@ -5,7 +5,15 @@
 
 using namespace std;
 
-King::King(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'K', 'k') {}
+King::King(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'K', 'k'), pieceHasMoved(false), pieceInCheck(false) {}
+
+bool King::hasMoved() const {
+	return pieceHasMoved;
+}
+
+bool King::inCheck() const {
+	return pieceInCheck;
+}
 
 vector<Move*>King::computeValidMoves() const {
 	vector<Move*> validMoves;
@@ -54,8 +62,8 @@ vector<Move*>King::computeValidMoves() const {
 	// Determining valid moves
 	for (int i = 0; i < potentialEndSquares.size(); i++) {
 		bool squareExists = potentialEndSquares[i];
-		bool isUnoccupiedOrCapturable = !potentialEndSquares[i]->isOccupied() || potentialEndSquares[i]->getPiece()->isWhite() != isWhite();
-		bool isAttacked = Board::isSquareAttacked(potentialEndSquares[i]);
+		bool isUnoccupiedOrCapturable = !potentialEndSquares[i]->isOccupied() || potentialEndSquares[i]->getPiece()->isWhite() != pieceIsWhite;
+		bool isAttacked = Board::isSquareAttacked(potentialEndSquares[i], !pieceIsWhite);
 	
 		if (squareExists && isUnoccupiedOrCapturable && isAttacked)
 			validMoves.push_back(new Move(square, potentialEndSquares[i]));
