@@ -7,6 +7,7 @@
 
 class Square;
 class Move;
+class King;
 
 class Board {
 public:
@@ -38,6 +39,7 @@ public:
 	static bool moveIsValid(Move*);
 	static void correctMoveType(Move*);
 	static void makeMove(Move*);
+	static void calculateAttacks();
 
 	static std::string formatAsString();
 private:
@@ -49,8 +51,9 @@ private:
 
 	static BoardState state;
 	static Square* board[BOARD_SIZE];
-	static bool boardWhiteAttack[BOARD_SIZE];
-	static bool boardBlackAttack[BOARD_SIZE];
+	static bool boardWhiteAttacks[BOARD_SIZE];
+	static bool boardBlackAttacks[BOARD_SIZE];
+
 	static std::vector<Move*> moveList;
 };
 

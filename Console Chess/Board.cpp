@@ -9,24 +9,25 @@
 #include "Bishop.h"
 #include "Rook.h"
 #include "Queen.h"
+#include "King.h"
 
 using namespace std;
 
 const Board::PieceType Board::DEFAULT_BOARD[BOARD_SIZE] = {
 	RookWhite, KnightWhite, BishopWhite, QueenWhite,  KingWhite, BishopWhite, KnightWhite, RookWhite,
 	PawnWhite,   PawnWhite,   PawnWhite,  PawnWhite,  PawnWhite,   PawnWhite,   PawnWhite, PawnWhite,
-	    Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
-	    Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
-	    Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
-	    Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
+		Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
+		Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
+		Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
+		Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
 	PawnBlack,   PawnBlack,   PawnBlack,  PawnBlack,  PawnBlack,   PawnBlack,   PawnBlack, PawnBlack,
 	RookBlack, KnightBlack, BishopBlack,  KingBlack, QueenBlack, BishopBlack, KnightBlack, RookBlack,
 };
 
 Board::BoardState Board::state;
 Square* Board::board[BOARD_SIZE];
-bool Board::boardWhiteAttack[BOARD_SIZE];
-bool Board::boardBlackAttack[BOARD_SIZE];
+bool Board::boardWhiteAttacks[BOARD_SIZE];
+bool Board::boardBlackAttacks[BOARD_SIZE];
 std::vector<Move*> Board::moveList;
 
 void Board::initialize() {
@@ -56,7 +57,10 @@ void Board::initialize() {
 			case QueenBlack:
 				square->setPiece(new Queen(square, isWhite));
 				break;
-			//king here
+			case KingWhite:
+			case KingBlack:
+				square->setPiece(new King(square, isWhite));
+				break;
 			default:
 				break;
 		}
@@ -99,11 +103,11 @@ Square* Board::getSquareFromId(int id) {
 }
 
 bool Board::isSquareAttacked(int id) {
-	return (state == Board::WhiteToPlay) ? boardBlackAttack[id] : boardWhiteAttack[id];
+	return (state == Board::WhiteToPlay) ? boardBlackAttacks[id] : boardWhiteAttacks[id];
 }
 
 bool Board::isSquareAttacked(Square* square) {
-	return (state == Board::WhiteToPlay) ? boardBlackAttack[square->getId()] : boardWhiteAttack[square->getId()];
+	return (state == Board::WhiteToPlay) ? boardBlackAttacks[square->getId()] : boardWhiteAttacks[square->getId()];
 }
 
 Square* Board::getNorthSquare(Square* square) {
@@ -161,7 +165,7 @@ bool Board::moveIsValid(Move* move) {
 	if (move->getStartSquare()->getPiece() == nullptr)
 		return false;
 
-	if (state  == Board::WhiteToPlay && !move->getStartSquare()->getPiece()->isWhite() || state == Board::BlackToPlay && move->getStartSquare()->getPiece()->isWhite())
+	if (state == Board::WhiteToPlay && !move->getStartSquare()->getPiece()->isWhite() || state == Board::BlackToPlay && move->getStartSquare()->getPiece()->isWhite())
 		return false;
 
 	bool moveIsValid = false;
@@ -196,22 +200,31 @@ void Board::makeMove(Move* move) {
 	correctMoveType(move);
 
 	moveList.push_back(move);
-
-	//check for special moves (castle, en passant, promotion)
-
-
-
-	//make move
 	move->getStartSquare()->getPiece()->makeMove(move);
-	
-	//delete move->getEndSquare()->getPiece();
-	//move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());
-	//move->getEndSquare()->getPiece()->setSquare(move->getEndSquare());
-	//move->getStartSquare()->setPiece(nullptr);
 
 	state = (state == Board::WhiteToPlay) ? Board::BlackToPlay : Board::WhiteToPlay;
 
 	//check for win/stalemate/etc
+}
+
+void Board::calculateAttacks() {
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		boardWhiteAttacks[i] = false;
+		boardBlackAttacks[i] = false;
+	}
+
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		if (board[i]->isOccupied()) {
+			bool isWhite = board[i]->getPiece()->isWhite();
+			vector<Square*> attackedSquares = board[i]->getPiece()->getAttackedSquares();
+			for (int j = 0; j < attackedSquares.size(); j++) {
+				if (isWhite)
+					boardWhiteAttacks[attackedSquares[j]->getId()] = true;
+				else
+					boardBlackAttacks[attackedSquares[j]->getId()] = true;
+			}
+		}
+	}
 }
 
 string Board::formatAsString() {
