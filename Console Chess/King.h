@@ -9,6 +9,7 @@ public:
 	
 	bool hasMoved() const;
 	bool inCheck() const;
+	void setInCheck(bool);
 	std::vector<Move*> computeValidMoves() const override;
 private:
 	bool pieceHasMoved;

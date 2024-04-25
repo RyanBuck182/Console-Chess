@@ -15,6 +15,10 @@ bool King::inCheck() const {
 	return pieceInCheck;
 }
 
+void King::setInCheck(bool pieceInCheck) {
+	this->pieceInCheck = pieceInCheck;
+}
+
 vector<Move*>King::computeValidMoves() const {
 	vector<Move*> validMoves;
 	vector<Square*> potentialEndSquares;
