@@ -1,5 +1,5 @@
-#ifndef ROOK_H
-#define ROOK_H
+#ifndef KNIGHT_H
+#define KNIGHT_H
 
 #include "Piece.h"
 
