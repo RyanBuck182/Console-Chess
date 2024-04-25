@@ -2,229 +2,64 @@
 #include "Square.h"
 #include "Board.h"
 #include "Move.h"
+
 using namespace std;
 
-Knight::Knight(Square* square, bool isWhite) : Piece(square, isWhite, 'N', 'n') {}
-Knight::~Knight() {}
+Knight::Knight(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'N', 'n') {}
 
-vector<Move*> Knight::computeValidMoves() const
-{
+vector<Move*> Knight::computeValidMoves() const {
 	vector<Move*> validMoves;
+	vector<Square*> potentialEndSquares;
 
-	// up up right
-	Square* squareCursor = square;
-	while (squareCursor != nullptr)
-	{
-		try {
-			squareCursor = Board::getForwardSquare(Board::getForwardSquare(Board::getRightSquare(squareCursor)));
-			if (squareCursor->isOccupied())
-			{
-				if (squareCursor->getPiece()->isWhite() == isWhite())
-				{
-					break;
-				}
-				else {
-					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
-				}
-			}
-			else {
-				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-			}
+	// Forward left move
+	try {
+		potentialEndSquares.push_back(Board::getLeftSquare(Board::getForwardSquare(Board::getForwardSquare(square))));
+	} catch (const char*) {}
 
-		}
-		catch (const char* error) {
-			squareCursor = nullptr;
-		}
+	// Forward right move
+	try {
+		potentialEndSquares.push_back(Board::getRightSquare(Board::getForwardSquare(Board::getForwardSquare(square))));
+	} catch (const char*) {}
 
-	}
+	// Left forward move
+	try {
+		potentialEndSquares.push_back(Board::getForwardSquare(Board::getLeftSquare(Board::getLeftSquare(square))));
+	} catch (const char*) {}
 
-	// up up left
-	squareCursor = square;
-	while (squareCursor != nullptr)
-	{
-		try {
-			squareCursor = Board::getForwardSquare(Board::getForwardSquare(Board::getLeftSquare(squareCursor)));
-			if (squareCursor->isOccupied())
-			{
-				if (squareCursor->getPiece()->isWhite() == isWhite())
-				{
-					break;
-				}
-				else {
-					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
-				}
-			}
-			else {
-				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-			}
+	// Left backward move
+	try {
+		potentialEndSquares.push_back(Board::getBackwardSquare(Board::getLeftSquare(Board::getLeftSquare(square))));
+	} catch (const char*) {}
 
-		}
-		catch (const char* error) {
-			squareCursor = nullptr;
-		}
+	// Right forward move
+	try {
+		potentialEndSquares.push_back(Board::getForwardSquare(Board::getRightSquare(Board::getRightSquare(square))));
+	} catch (const char*) {}
 
-	}
+	// Right backward move
+	try {
+		potentialEndSquares.push_back(Board::getBackwardSquare(Board::getRightSquare(Board::getRightSquare(square))));
+	} catch (const char*) {}
 
-	// right right up
-	squareCursor = square;
-	while (squareCursor != nullptr)
-	{
-		try {
-			squareCursor = Board::getRightSquare(Board::getRightSquare(Board::getForwardSquare(squareCursor)));
-			if (squareCursor->isOccupied())
-			{
-				if (squareCursor->getPiece()->isWhite() == isWhite())
-				{
-					break;
-				}
-				else {
-					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
-				}
-			}
-			else {
-				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-			}
+	// Backward left move
+	try {
+		potentialEndSquares.push_back(Board::getLeftSquare(Board::getBackwardSquare(Board::getBackwardSquare(square))));
+	} catch (const char*) {}
 
-		}
-		catch (const char* error) {
-			squareCursor = nullptr;
-		}
+	// Backward right move
+	try {
+		potentialEndSquares.push_back(Board::getRightSquare(Board::getBackwardSquare(Board::getBackwardSquare(square))));
+	} catch (const char*) {}
 
-	}
-
-	// right right down
-	squareCursor = square;
-	while (squareCursor != nullptr)
-	{
-		try {
-			squareCursor = Board::getRightSquare(Board::getRightSquare(Board::getBackwardSquare(squareCursor)));
-			if (squareCursor->isOccupied())
-			{
-				if (squareCursor->getPiece()->isWhite() == isWhite())
-				{
-					break;
-				}
-				else {
-					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
-				}
-			}
-			else {
-				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-			}
-
-		}
-		catch (const char* error) {
-			squareCursor = nullptr;
-		}
-
-	}
-
-	// back back left
-	squareCursor = square;
-	while (squareCursor != nullptr)
-	{
-		try {
-			squareCursor = Board::getBackwardSquare(Board::getBackwardSquare(Board::getLeftSquare(squareCursor)));
-			if (squareCursor->isOccupied())
-			{
-				if (squareCursor->getPiece()->isWhite() == isWhite())
-				{
-					break;
-				}
-				else {
-					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
-				}
-			}
-			else {
-				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-			}
-
-		}
-		catch (const char* error) {
-			squareCursor = nullptr;
-		}
-
-	}
-
-	// back back right
-	squareCursor = square;
-	while (squareCursor != nullptr)
-	{
-		try {
-			squareCursor = Board::getBackwardSquare(Board::getBackwardSquare(Board::getRightSquare(squareCursor)));
-			if (squareCursor->isOccupied())
-			{
-				if (squareCursor->getPiece()->isWhite() == isWhite())
-				{
-					break;
-				}
-				else {
-					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
-				}
-			}
-			else {
-				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-			}
-
-		}
-		catch (const char* error) {
-			squareCursor = nullptr;
-		}
-
-	}
-
-	// left left up
-	squareCursor = square;
-	while (squareCursor != nullptr)
-	{
-		try {
-			squareCursor = Board::getLeftSquare(Board::getLeftSquare(Board::getForwardSquare(squareCursor)));
-			if (squareCursor->isOccupied())
-			{
-				if (squareCursor->getPiece()->isWhite() == isWhite())
-				{
-					break;
-				}
-				else {
-					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
-				}
-			}
-			else {
-				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-			}
-
-		}
-		catch (const char* error) {
-			squareCursor = nullptr;
-		}
-
-	}
-
-	// left left down
-	squareCursor = square;
-	while (squareCursor != nullptr)
-	{
-		try {
-			squareCursor = Board::getLeftSquare(Board::getLeftSquare(Board::getBackwardSquare(squareCursor)));
-			if (squareCursor->isOccupied())
-			{
-				if (squareCursor->getPiece()->isWhite() == isWhite())
-				{
-					break;
-				}
-				else {
-					validMoves.push_back(new Move(square, squareCursor, Move::Capture));
-				}
-			}
-			else {
-				validMoves.push_back(new Move(square, squareCursor, Move::Standard));
-			}
-
-		}
-		catch (const char* error) {
-			squareCursor = nullptr;
-		}
-
+	// Determining valid moves
+	for (int i = 0; i < potentialEndSquares.size(); i++) {
+		if (potentialEndSquares[i]->isOccupied())
+			if (potentialEndSquares[i]->getPiece()->isWhite() != isWhite())
+				continue;
+			else
+				validMoves.push_back(new Move(square, potentialEndSquares[i], Move::Capture));
+		else
+			validMoves.push_back(new Move(square, potentialEndSquares[i], Move::Standard));
 	}
 
 	return validMoves;

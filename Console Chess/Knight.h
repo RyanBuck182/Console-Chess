@@ -1,10 +1,13 @@
-#pragma once
+#ifndef ROOK_H
+#define ROOK_H
+
 #include "Piece.h"
 
-class Knight : public Piece
-{
+class Knight : public Piece {
 public:
 	Knight(Square*, bool);
-	~Knight();
+
 	std::vector<Move*> computeValidMoves() const override;
 };
+
+#endif
