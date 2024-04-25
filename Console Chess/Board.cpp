@@ -5,6 +5,7 @@
 #include "Move.h"
 #include "Piece.h"
 #include "Pawn.h"
+#include "Knight.h"
 #include "Bishop.h"
 #include "Rook.h"
 #include "Queen.h"
@@ -12,14 +13,14 @@
 using namespace std;
 
 const Board::PieceType Board::DEFAULT_BOARD[BOARD_SIZE] = {
-	RookPieceWhite, KnightPieceWhite, BishopPieceWhite, QueenPieceWhite,  KingPieceWhite, BishopPieceWhite, KnightPieceWhite, RookPieceWhite,
-	PawnPieceWhite,   PawnPieceWhite,   PawnPieceWhite,  PawnPieceWhite,  PawnPieceWhite,   PawnPieceWhite,   PawnPieceWhite, PawnPieceWhite,
-	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
-	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
-	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
-	       NoPiece,          NoPiece,          NoPiece,         NoPiece,         NoPiece,          NoPiece,          NoPiece,        NoPiece,
-	PawnPieceBlack,   PawnPieceBlack,   PawnPieceBlack,  PawnPieceBlack,  PawnPieceBlack,   PawnPieceBlack,   PawnPieceBlack, PawnPieceBlack,
-	RookPieceBlack, KnightPieceBlack, BishopPieceBlack,  KingPieceBlack, QueenPieceBlack, BishopPieceBlack, KnightPieceBlack, RookPieceBlack,
+	RookWhite, KnightWhite, BishopWhite, QueenWhite,  KingWhite, BishopWhite, KnightWhite, RookWhite,
+	PawnWhite,   PawnWhite,   PawnWhite,  PawnWhite,  PawnWhite,   PawnWhite,   PawnWhite, PawnWhite,
+	       Empty,          Empty,          Empty,         Empty,         Empty,          Empty,          Empty,        Empty,
+	       Empty,          Empty,          Empty,         Empty,         Empty,          Empty,          Empty,        Empty,
+	       Empty,          Empty,          Empty,         Empty,         Empty,          Empty,          Empty,        Empty,
+	       Empty,          Empty,          Empty,         Empty,         Empty,          Empty,          Empty,        Empty,
+	PawnBlack,   PawnBlack,   PawnBlack,  PawnBlack,  PawnBlack,   PawnBlack,   PawnBlack, PawnBlack,
+	RookBlack, KnightBlack, BishopBlack,  KingBlack, QueenBlack, BishopBlack, KnightBlack, RookBlack,
 };
 
 Board::BoardState Board::state;
@@ -35,21 +36,24 @@ void Board::initialize() {
 		bool isWhite = static_cast<int>(DEFAULT_BOARD[i]) < 6;
 
 		switch (DEFAULT_BOARD[i]) {
-			case PawnPieceWhite:
-			case PawnPieceBlack:
+			case PawnWhite:
+			case PawnBlack:
 				square->setPiece(new Pawn(square, isWhite));
 				break;
-			//knight here
-			case BishopPieceWhite:
-			case BishopPieceBlack:
+			case KnightWhite:
+			case KnightBlack:
+				square->setPiece(new Knight(square, isWhite));
+				break;
+			case BishopWhite:
+			case BishopBlack:
 				square->setPiece(new Bishop(square, isWhite));
 				break;
-			case RookPieceWhite:
-			case RookPieceBlack:
+			case RookWhite:
+			case RookBlack:
 				square->setPiece(new Rook(square, isWhite));
 				break;
-			case QueenPieceWhite:
-			case QueenPieceBlack:
+			case QueenWhite:
+			case QueenBlack:
 				square->setPiece(new Queen(square, isWhite));
 				break;
 			//king here

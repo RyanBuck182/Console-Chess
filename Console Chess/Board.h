@@ -41,9 +41,9 @@ public:
 
 	static std::string formatAsString();
 private:
-	enum PieceType { NoPiece,
-		PawnPieceWhite, KnightPieceWhite, BishopPieceWhite, RookPieceWhite, QueenPieceWhite, KingPieceWhite,
-		PawnPieceBlack, KnightPieceBlack, BishopPieceBlack, RookPieceBlack, QueenPieceBlack, KingPieceBlack,
+	enum PieceType { Empty,
+		PawnWhite, KnightWhite, BishopWhite, RookWhite, QueenWhite, KingWhite,
+		PawnBlack, KnightBlack, BishopBlack, RookBlack, QueenBlack, KingBlack,
 	};
 	static const PieceType DEFAULT_BOARD[BOARD_SIZE];
 
