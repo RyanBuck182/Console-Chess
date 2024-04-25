@@ -19,6 +19,7 @@ public:
 	static void resign();
 	static void displayGameEndMessage();
 	static void displayQuitMessage();
+	static void saveGame();
 };
 
 #endif

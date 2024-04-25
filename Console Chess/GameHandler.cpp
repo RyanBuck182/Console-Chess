@@ -123,3 +123,7 @@ void GameHandler::displayQuitMessage() {
 	cout << "Terminating program.\n";
 	cout << "Thanks for playing!\n";
 }
+
+void GameHandler::saveGame() {
+
+}
