@@ -15,10 +15,10 @@ using namespace std;
 const Board::PieceType Board::DEFAULT_BOARD[BOARD_SIZE] = {
 	RookWhite, KnightWhite, BishopWhite, QueenWhite,  KingWhite, BishopWhite, KnightWhite, RookWhite,
 	PawnWhite,   PawnWhite,   PawnWhite,  PawnWhite,  PawnWhite,   PawnWhite,   PawnWhite, PawnWhite,
-	       Empty,          Empty,          Empty,         Empty,         Empty,          Empty,          Empty,        Empty,
-	       Empty,          Empty,          Empty,         Empty,         Empty,          Empty,          Empty,        Empty,
-	       Empty,          Empty,          Empty,         Empty,         Empty,          Empty,          Empty,        Empty,
-	       Empty,          Empty,          Empty,         Empty,         Empty,          Empty,          Empty,        Empty,
+	    Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
+	    Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
+	    Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
+	    Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
 	PawnBlack,   PawnBlack,   PawnBlack,  PawnBlack,  PawnBlack,   PawnBlack,   PawnBlack, PawnBlack,
 	RookBlack, KnightBlack, BishopBlack,  KingBlack, QueenBlack, BishopBlack, KnightBlack, RookBlack,
 };
