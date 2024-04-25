@@ -25,7 +25,13 @@ const Board::PieceType Board::DEFAULT_BOARD[BOARD_SIZE] = {
 	RookBlack, KnightBlack, BishopBlack,  KingBlack, QueenBlack, BishopBlack, KnightBlack, RookBlack,
 };
 
-
+King* Board::whiteKing;
+King* Board::blackKing;
+Board::BoardState Board::state;
+Square* Board::board[BOARD_SIZE];
+bool Board::boardWhiteAttacks[BOARD_SIZE];
+bool Board::boardBlackAttacks[BOARD_SIZE];
+std::vector<Move*> Board::moveList;
 
 void Board::initialize() {
 	for (int i = 0; i < BOARD_SIZE; i++) {
@@ -58,9 +64,9 @@ void Board::initialize() {
 			case KingBlack:
 				square->setPiece(new King(square, isWhite));
 				if (isWhite)
-					whiteKing = static_cast<King>(square->getPiece());
+					whiteKing = static_cast<King*>(square->getPiece());
 				else
-					blackKing = static_cast<King>(square->getPiece());
+					blackKing = static_cast<King*>(square->getPiece());
 				break;
 			default:
 				break;
