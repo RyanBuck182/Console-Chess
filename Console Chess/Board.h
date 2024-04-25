@@ -37,7 +37,7 @@ public:
 	static Square* getLeftSquare(Square*);
 
 	static Move* getLastMove();
-	static vector<Move*> getMoveList();
+	static std::vector<Move*> getMoveList();
 	static bool moveIsValid(Move*);
 	static void correctMoveType(Move*);
 	static void makeMove(Move*);
