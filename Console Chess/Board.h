@@ -22,6 +22,7 @@ public:
 	static bool idInRange(int);
 
 	static BoardState getState();
+	static void setState(BoardState);
 	static Square* getSquareFromId(int);
 	static bool isSquareAttacked(int, bool);
 	static bool isSquareAttacked(Square*, bool);

@@ -103,6 +103,10 @@ Board::BoardState Board::getState() {
 	return state;
 }
 
+void Board::setState(Board::BoardState state) {
+	Board::state = state;
+}
+
 Square* Board::getSquareFromId(int id) {
 	if (!idInRange(id))
 		throw "Id not in range.";
