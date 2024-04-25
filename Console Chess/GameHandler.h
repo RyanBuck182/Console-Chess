@@ -12,11 +12,11 @@ public:
 	static int useGameMenu();
 	static bool hasGameEnded();
 	static void outputBoard();
-	static string getSideString(bool);
+	static std::string getSideString(bool);
 	static int useMoveMenu();
 	static Move* chooseMove();
-	static void offerDraw(bool);
-	static void resign(bool);
+	static void offerDraw();
+	static void resign();
 	static void displayGameEndMessage();
 	static void displayQuitMessage();
 };

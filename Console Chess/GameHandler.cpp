@@ -11,7 +11,7 @@ bool GameHandler::currentPlayerIsWhite() {
 }
 
 int GameHandler::useGameMenu() {
-	cout << "Welcome to Console Chess by Ryan Buck and Connor English.\n";
+	cout << "Welcome to Console Chess by Ryan Buck and Connor English.\n\n";
 	cout << "Please make a selection:\n";
 	cout << "  (1) New Game\n";
 	cout << "  (2) Load Game\n";
@@ -22,8 +22,6 @@ int GameHandler::useGameMenu() {
 	cin >> choice;
 	cin.clear();
 	cin.ignore(INT_MAX, '\n');
-
-	cout << "\n\n";
 
 	return choice;
 }
@@ -43,7 +41,7 @@ string GameHandler::getSideString(bool current) {
 	if (current)
 		return (currentPlayerIsWhite()) ? "White" : "Black";
 	else
-		return (!currentPlayerIsWhite()) ? "Black" : "White";
+		return (!currentPlayerIsWhite()) ? "White" : "Black";
 }
 
 int GameHandler::useMoveMenu() {
@@ -52,6 +50,7 @@ int GameHandler::useMoveMenu() {
 	cout << "  (2) Offer draw\n";
 	cout << "  (3) Resign\n";
 	cout << "  (4) Save\n";
+	cout << "  (5) Quit\n";
 	cout << "Choice: ";
 
 	int choice;
@@ -59,15 +58,12 @@ int GameHandler::useMoveMenu() {
 	cin.clear();
 	cin.ignore(INT_MAX, '\n');
 
-	cout << '\n';
-
 	return choice;
 }
 
 Move* GameHandler::chooseMove() {
 	Move* move = nullptr;
 	while (move == nullptr) {
-		cout << "\n";
 		try {
 			cin >> move;
 		} catch (const char*) {
@@ -79,48 +75,48 @@ Move* GameHandler::chooseMove() {
 	return move;
 }
 
-void GameHandler::offerDraw(bool playerOfferingIsWhite) {
-	cout << getSideString(playerOfferingIsWhite) << " offers a draw.\n";
-	cout << "Does " << getSideString(!playerOfferingIsWhite) << " accept?\n";
-	cout << "  (1) Yes";
-	cout << "  (2) No";
+void GameHandler::offerDraw() {
+	cout << getSideString(true) << " offers a draw.\n";
+	cout << "Does " << getSideString(false) << " accept?\n";
+	cout << "  (1) Yes\n";
+	cout << "  (2) No\n";
+	cout << "Choice: ";
 
-	int drawChoice;
-	cin >> drawChoice;
+	int choice;
+	cin >> choice;
 	cin.clear();
 	cin.ignore(INT_MAX, '\n');
 
-	if (drawChoice == 1)
+	if (choice == 1)
 		Board::setState(Board::Draw);
 	else
 		cout << "Draw declined.\n";
 }
 
-void GameHandler::resign(bool playerResigningIsWhite) {
+void GameHandler::resign() {
 	cout << "Are you sure you want to resign?\n";
-	cout << "  (1) Yes";
-	cout << "  (2) No";
+	cout << "  (1) Yes\n";
+	cout << "  (2) No\n";
+	cout << "Choice: ";
 
-	int resignChoice;
-	cin >> resignChoice;
+	int choice;
+	cin >> choice;
 	cin.clear();
 	cin.ignore(INT_MAX, '\n');
 
-	if (resignChoice == 1)
-		Board::setState((Board::getState() == Board::WhiteToPlay) ? Board::BlackWin : Board::WhiteWin);
+	if (choice == 1)
+		Board::setState((currentPlayerIsWhite()) ? Board::BlackWin : Board::WhiteWin);
 	else
 		cout << "Canceling resignation.\n";
 }
 
 void GameHandler::displayGameEndMessage() {
 	if (Board::getState() == Board::WhiteWin || Board::getState() == Board::BlackWin)
-		cout << GameHandler::getSideString(GameHandler::currentPlayerIsWhite()) << " Wins!\n";
+		cout << '\n' << GameHandler::getSideString(GameHandler::currentPlayerIsWhite()) << " Wins!\n\n";
 	else if (Board::getState() == Board::Stalemate)
-		cout << "The game has ended in stalemate.\n";
+		cout << "\nThe game has ended in stalemate.\n\n";
 	else if (Board::getState() == Board::Draw)
-		cout << "The game has ended in a draw.\n";
-	else
-		cout << "The game has ended.\n";
+		cout << "\nThe game has ended in a draw.\n\n";
 }
 
 void GameHandler::displayQuitMessage() {
