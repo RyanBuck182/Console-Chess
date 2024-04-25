@@ -37,7 +37,7 @@ void Board::initialize() {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		Square* square = new Square(i);
 
-		bool isWhite = static_cast<int>(DEFAULT_BOARD[i]) < 6;
+		bool isWhite = static_cast<int>(DEFAULT_BOARD[i]) <= 6;
 
 		switch (DEFAULT_BOARD[i]) {
 			case PawnWhite:
