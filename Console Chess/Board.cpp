@@ -172,6 +172,11 @@ Move* Board::getLastMove() {
 		throw "Can not retrieve the last element of an empty move list.";
 }
 
+vector<Move*> Board::getMoveList() {
+	return moveList;
+}
+
+
 bool Board::moveIsValid(Move* move) {
 	if (move->getStartSquare()->getPiece() == nullptr)
 		return false;
@@ -247,8 +252,10 @@ void Board::updateState() {
 	vector<Square*> adjacentSquares = king->getAttackedSquares();
 	bool kingCanMove = false;
 	for (int i = 0; i < adjacentSquares.size(); i++) {
-		if (!isSquareAttacked(adjacentSquares[i], !king->isWhite()))
+		if (!isSquareAttacked(adjacentSquares[i], !king->isWhite())) {
 			kingCanMove = true;
+			break;
+		}
 	}
 
 	if (king->inCheck() && !kingCanMove)
