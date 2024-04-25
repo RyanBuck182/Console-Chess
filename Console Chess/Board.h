@@ -11,7 +11,7 @@ class King;
 
 class Board {
 public:
-	enum BoardState { WhiteToPlay, BlackToPlay, Win, Stalemate, Draw };
+	enum BoardState { WhiteToPlay, BlackToPlay, WhiteWin, BlackWin, Stalemate, Draw };
 	
 	static const int BOARD_LENGTH = 8;
 	static const int BOARD_SIZE = BOARD_LENGTH * BOARD_LENGTH;
@@ -23,8 +23,8 @@ public:
 
 	static BoardState getState();
 	static Square* getSquareFromId(int);
-	static bool isSquareAttacked(int);
-	static bool isSquareAttacked(Square*);
+	static bool isSquareAttacked(int, bool);
+	static bool isSquareAttacked(Square*, bool);
 
 	static Square* getNorthSquare(Square*);
 	static Square* getSouthSquare(Square*);
@@ -40,6 +40,7 @@ public:
 	static void correctMoveType(Move*);
 	static void makeMove(Move*);
 	static void calculateAttacks();
+	static void updateState();
 
 	static std::string formatAsString();
 private:
@@ -48,6 +49,9 @@ private:
 		PawnBlack, KnightBlack, BishopBlack, RookBlack, QueenBlack, KingBlack,
 	};
 	static const PieceType DEFAULT_BOARD[BOARD_SIZE];
+
+	static King* whiteKing;
+	static King* blackKing;
 
 	static BoardState state;
 	static Square* board[BOARD_SIZE];

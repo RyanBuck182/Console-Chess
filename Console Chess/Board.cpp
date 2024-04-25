@@ -1,4 +1,5 @@
 ﻿#include <sstream>
+#include <cctype>
 
 #include "Board.h"
 #include "Square.h"
@@ -24,11 +25,7 @@ const Board::PieceType Board::DEFAULT_BOARD[BOARD_SIZE] = {
 	RookBlack, KnightBlack, BishopBlack,  KingBlack, QueenBlack, BishopBlack, KnightBlack, RookBlack,
 };
 
-Board::BoardState Board::state;
-Square* Board::board[BOARD_SIZE];
-bool Board::boardWhiteAttacks[BOARD_SIZE];
-bool Board::boardBlackAttacks[BOARD_SIZE];
-std::vector<Move*> Board::moveList;
+
 
 void Board::initialize() {
 	for (int i = 0; i < BOARD_SIZE; i++) {
@@ -60,6 +57,10 @@ void Board::initialize() {
 			case KingWhite:
 			case KingBlack:
 				square->setPiece(new King(square, isWhite));
+				if (isWhite)
+					whiteKing = static_cast<King>(square->getPiece());
+				else
+					blackKing = static_cast<King>(square->getPiece());
 				break;
 			default:
 				break;
@@ -102,12 +103,12 @@ Square* Board::getSquareFromId(int id) {
 	return board[id];
 }
 
-bool Board::isSquareAttacked(int id) {
-	return (state == Board::WhiteToPlay) ? boardBlackAttacks[id] : boardWhiteAttacks[id];
+bool Board::isSquareAttacked(int id, bool byWhite) {
+	return (!byWhite) ? boardBlackAttacks[id] : boardWhiteAttacks[id];
 }
 
-bool Board::isSquareAttacked(Square* square) {
-	return (state == Board::WhiteToPlay) ? boardBlackAttacks[square->getId()] : boardWhiteAttacks[square->getId()];
+bool Board::isSquareAttacked(Square* square, bool byWhite) {
+	return (!byWhite) ? boardBlackAttacks[square->getId()] : boardWhiteAttacks[square->getId()];
 }
 
 Square* Board::getNorthSquare(Square* square) {
@@ -204,7 +205,7 @@ void Board::makeMove(Move* move) {
 
 	state = (state == Board::WhiteToPlay) ? Board::BlackToPlay : Board::WhiteToPlay;
 
-	//check for win/stalemate/etc
+	updateState();
 }
 
 void Board::calculateAttacks() {
@@ -224,6 +225,48 @@ void Board::calculateAttacks() {
 					boardBlackAttacks[attackedSquares[j]->getId()] = true;
 			}
 		}
+	}
+}
+
+void Board::updateState() {
+	whiteKing->setInCheck(isSquareAttacked(whiteKing->getSquare(), !whiteKing->isWhite()));
+	blackKing->setInCheck(isSquareAttacked(blackKing->getSquare(), !blackKing->isWhite()));
+
+	King* king = (state == WhiteToPlay) ? blackKing : whiteKing;
+
+	vector<Square*> adjacentSquares = king->getAttackedSquares();
+	bool kingCanMove = false;
+	for (int i = 0; i < adjacentSquares.size(); i++) {
+		if (!isSquareAttacked(adjacentSquares[i], !king->isWhite()))
+			kingCanMove = true;
+	}
+
+	if (king->inCheck() && !kingCanMove)
+		state = (king->isWhite()) ? Board::BlackWin : Board::WhiteWin;
+	else if (!kingCanMove)
+		state = Board::Stalemate;
+	else {
+		bool sufficientMaterial = false;
+		int threePointPieceCount = 0;
+
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			if (!board[i]->isOccupied())
+				continue;
+
+			char pieceSymbol = tolower(board[i]->getPiece()->getPieceSymbol());
+			if (pieceSymbol == 'p' || pieceSymbol == 'r' || pieceSymbol == 'q') {
+				sufficientMaterial = true;
+				break;
+			} else if (threePointPieceCount++ > 1) {
+				sufficientMaterial = true;
+				break;
+			}
+		}
+
+		if (!sufficientMaterial)
+			state = Board::Draw;
+		else
+			state = (state == Board::WhiteToPlay) ? Board::BlackToPlay : Board::WhiteToPlay;
 	}
 }
 
