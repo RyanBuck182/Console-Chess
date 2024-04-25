@@ -11,5 +11,6 @@
 #include "Rook.h"
 #include "Queen.h"
 #include "King.h"
+#include "GameHandler.h"
 
 #endif

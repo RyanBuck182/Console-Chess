@@ -1,58 +1,55 @@
 #include <iostream>
 #include <cctype>
+#include <string>
 
 #include "ConsoleChess.h"
 
 using namespace std;
 
 int main() {
-	Board::initialize();
+	bool quitGame = false;
+	while (!quitGame) {
+		int gameChoice = GameHandler::useGameMenu();
 
-	while (Board::getState() != Board::Win) {
-		cout << Board::formatAsString();
-		
-		cout << '\n' << ((Board::getState() == Board::WhiteToPlay) ? "White" : "Black") << " To Play\n";
-		cout << "  (1) Make move\n";
-		cout << "  (2) Offer draw\n";
-		cout << "  (3) Resign\n";
-		cout << "  (4) Save\n";
-		cout << "Choice: ";
-		
-		int choice;
-		cin >> choice;
-		cin.clear();
-		cin.ignore(INT_MAX, '\n');
+		switch (gameChoice) {
+			case 1: // New Game
+				Board::initialize();
 
-		switch (choice) {
-			case 1: {
-				Move* move = nullptr;
-				while (move == nullptr) {
-					cout << "\n";
-					try {
-						cin >> move;
-					} catch (const char*) {
-						move = nullptr;
-						cout << "Invalid move! Please input a legal move.\n";
+				while (!GameHandler::hasGameEnded()) {
+					GameHandler::outputBoard();
+
+					int moveChoice = GameHandler::useMoveMenu();
+
+					switch (moveChoice) {
+						case 1: { // Make Move
+							Move* move = GameHandler::chooseMove();
+							Board::makeMove(move);
+							break;
+						} case 2: // Offer Draw
+							GameHandler::offerDraw(GameHandler::currentPlayerIsWhite());
+							break;
+						case 3: // Resign
+							GameHandler::resign(GameHandler::currentPlayerIsWhite());
+							break;
+						case 4: // Save
+							break;
+						default:
+							cout << "Please enter a valid option.\n";
+							break;
 					}
+
+					cout << "\n\n";
 				}
 
-				Board::makeMove(move);
+				GameHandler::displayGameEndMessage();
 				break;
-			}
-			case 2:
-				//offer draw
+			case 2: // Load Game
 				break;
-			case 3:
-				//resign
-				break;
-			case 4:
-				//save
-				break;
-			default:
-				//"please enter a valid option"
+			case 3: // Quit
+				quitGame = true;
 				break;
 		}
-
-		cout << "\n\n";
 	}
+
+	GameHandler::displayQuitMessage();
 }
