@@ -22,7 +22,7 @@ const Board::PieceType Board::DEFAULT_BOARD[BOARD_SIZE] = {
 		Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
 		Empty,       Empty,       Empty,      Empty,      Empty,       Empty,       Empty,     Empty,
 	PawnBlack,   PawnBlack,   PawnBlack,  PawnBlack,  PawnBlack,   PawnBlack,   PawnBlack, PawnBlack,
-	RookBlack, KnightBlack, BishopBlack,  KingBlack, QueenBlack, BishopBlack, KnightBlack, RookBlack,
+	RookBlack, KnightBlack, BishopBlack,  QueenBlack, KingBlack, BishopBlack, KnightBlack, RookBlack,
 };
 
 King* Board::whiteKing;
