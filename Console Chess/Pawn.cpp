@@ -90,6 +90,22 @@ vector<Move*> Pawn::computeValidMoves() const {
 	return validMoves;
 }
 
+vector<Square*> Pawn::getAttackedSquares() const {
+	vector<Square*> attackedSquares;
+
+	// Right diagonal
+	try {
+		attackedSquares.push_back(Board::getRightSquare(Board::getForwardSquare(square)));
+	} catch (const char*) {}
+
+	// Left diagonal
+	try {
+		attackedSquares.push_back(Board::getLeftSquare(Board::getForwardSquare(square)));
+	} catch (const char*) {}
+
+	return attackedSquares;
+}
+
 void Pawn::makeMove(Move* move) {
 	switch (move->getMoveType()) {
 		case Move::EnPassant:

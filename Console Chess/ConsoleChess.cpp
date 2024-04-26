@@ -12,10 +12,11 @@ int main() {
 		int gameChoice = GameHandler::useGameMenu();
 		
 		switch (gameChoice) {
-			case 1: // New Game
+			case 1: { // New Game
 				Board::initialize();
 
-				while (!quitGame && !GameHandler::hasGameEnded()) {
+				bool returnToMainMenu = false;
+				while (!returnToMainMenu && !GameHandler::hasGameEnded()) {
 					cout << "\n\n";
 					GameHandler::outputBoard();
 
@@ -23,11 +24,11 @@ int main() {
 
 					cout << '\n';
 					switch (moveChoice) {
-						case 1: { // Make Move
+						case 1: { // Make move
 							Move* move = GameHandler::chooseMove();
 							Board::makeMove(move);
 							break;
-						} case 2: // Offer Draw
+						} case 2: // Offer draw
 							GameHandler::offerDraw();
 							break;
 						case 3: // Resign
@@ -35,22 +36,31 @@ int main() {
 							break;
 						case 4: // Save
 							break;
-						case 5: // Quit
-							quitGame = true;
+						case 5: // Return to main menu
+							returnToMainMenu = true;
 							break;
 						default:
-							cout << "Please enter a valid option.\n";
+							cout << "That is not a valid option.\n";
+							cout << "Press enter to continue...";
+							cin.clear();
+							cin.ignore(INT_MAX, '\n');
+							cout << '\n';
 							break;
 					}
 				}
 
 				GameHandler::displayGameEndMessage();
+				Board::clear();
 				break;
+			}
 			case 2: // Load Game
 				break;
 			case 3: // Quit
 				cout << '\n';
 				quitGame = true;
+				break;
+			default:
+				cout << "Invalid input!\n";
 				break;
 		}
 	}

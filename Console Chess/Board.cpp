@@ -218,8 +218,7 @@ void Board::makeMove(Move* move) {
 	moveList.push_back(move);
 	move->getStartSquare()->getPiece()->makeMove(move);
 
-	state = (state == Board::WhiteToPlay) ? Board::BlackToPlay : Board::WhiteToPlay;
-
+	calculateAttacks();
 	updateState();
 }
 
@@ -231,10 +230,9 @@ void Board::calculateAttacks() {
 
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		if (board[i]->isOccupied()) {
-			bool isWhite = board[i]->getPiece()->isWhite();
 			vector<Square*> attackedSquares = board[i]->getPiece()->getAttackedSquares();
 			for (int j = 0; j < attackedSquares.size(); j++) {
-				if (isWhite)
+				if (board[i]->getPiece()->isWhite())
 					boardWhiteAttacks[attackedSquares[j]->getId()] = true;
 				else
 					boardBlackAttacks[attackedSquares[j]->getId()] = true;

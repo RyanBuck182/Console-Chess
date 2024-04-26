@@ -24,16 +24,6 @@ void Piece::makeMove(Move* move) {
 	makeStandardMove(move);
 }
 
-vector<Square*> Piece::getAttackedSquares() {
-	vector<Move*> validMoves = computeValidMoves();
-	
-	vector<Square*> attackedSquares;
-	for (int i = 0; i < validMoves.size(); i++)
-		attackedSquares.push_back(validMoves[i]->getEndSquare());
-
-	return attackedSquares;
-}
-
 void Piece::makeStandardMove(Move* move) {
 	delete move->getEndSquare()->getPiece();
 	move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());

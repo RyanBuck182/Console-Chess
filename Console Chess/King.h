@@ -11,6 +11,7 @@ public:
 	bool inCheck() const;
 	void setInCheck(bool);
 	std::vector<Move*> computeValidMoves() const override;
+	std::vector<Square*> getAttackedSquares() const override;
 private:
 	bool pieceHasMoved;
 	bool pieceInCheck;

@@ -8,6 +8,7 @@ public:
 	Pawn(Square*, bool);
 	
 	std::vector<Move*> computeValidMoves() const override;
+	std::vector<Square*> getAttackedSquares() const override;
 	void makeMove(Move* move) override;
 private:
 	void makeEnPassantMove(Move* move);

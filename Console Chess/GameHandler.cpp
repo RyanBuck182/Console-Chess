@@ -50,7 +50,7 @@ int GameHandler::useMoveMenu() {
 	cout << "  (2) Offer draw\n";
 	cout << "  (3) Resign\n";
 	cout << "  (4) Save\n";
-	cout << "  (5) Quit\n";
+	cout << "  (5) Return To Main Menu\n";
 	cout << "Choice: ";
 
 	int choice;
@@ -68,7 +68,7 @@ Move* GameHandler::chooseMove() {
 			cin >> move;
 		} catch (const char*) {
 			move = nullptr;
-			cout << "Invalid move! Please input a legal move.\n";
+			cout << "Invalid move! Please input a legal move.\n\n";
 		}
 	}
 

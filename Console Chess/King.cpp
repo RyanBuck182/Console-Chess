@@ -21,57 +21,68 @@ void King::setInCheck(bool pieceInCheck) {
 
 vector<Move*>King::computeValidMoves() const {
 	vector<Move*> validMoves;
-	vector<Square*> potentialEndSquares;
+	vector<Square*> potentialEndSquares = getAttackedSquares();
+
+	// Determining valid moves
+	for (int i = 0; i < potentialEndSquares.size(); i++) {
+		bool isUnoccupied = !potentialEndSquares[i]->isOccupied();
+		bool isAttacked = Board::isSquareAttacked(potentialEndSquares[i], !pieceIsWhite);
+	
+		if (isUnoccupied) {
+			if (!isAttacked)
+				validMoves.push_back(new Move(square, potentialEndSquares[i], Move::Standard));
+		} else {
+			bool isCapturable = potentialEndSquares[i]->getPiece()->isWhite() != pieceIsWhite;
+			if (isCapturable && !isAttacked)
+				validMoves.push_back(new Move(square, potentialEndSquares[i], Move::Capture));
+		}
+	}
+
+	return validMoves;
+}
+
+vector<Square*> King::getAttackedSquares() const {
+	vector<Square*> attackedSquares;
 
 	// Forward move
 	try {
-		potentialEndSquares.push_back(Board::getForwardSquare(square));
+		attackedSquares.push_back(Board::getForwardSquare(square));
 	} catch (const char*) {}
 
 	// Forward right move
 	try {
-		potentialEndSquares.push_back(Board::getRightSquare(Board::getForwardSquare(square)));
+		attackedSquares.push_back(Board::getRightSquare(Board::getForwardSquare(square)));
 	} catch (const char*) {}
 
 	// Right move
 	try {
-		potentialEndSquares.push_back(Board::getRightSquare(square));
+		attackedSquares.push_back(Board::getRightSquare(square));
 	} catch (const char*) {}
 
 	// Right backward move
 	try {
-		potentialEndSquares.push_back(Board::getBackwardSquare(Board::getRightSquare(square)));
+		attackedSquares.push_back(Board::getBackwardSquare(Board::getRightSquare(square)));
 	} catch (const char*) {}
 
 	// Backward move
 	try {
-		potentialEndSquares.push_back(Board::getBackwardSquare(square));
+		attackedSquares.push_back(Board::getBackwardSquare(square));
 	} catch (const char*) {}
 
 	// Backward left move
 	try {
-		potentialEndSquares.push_back(Board::getLeftSquare(Board::getBackwardSquare(square)));
+		attackedSquares.push_back(Board::getLeftSquare(Board::getBackwardSquare(square)));
 	} catch (const char*) {}
 
 	// Left move
 	try {
-		potentialEndSquares.push_back(Board::getLeftSquare(square));
+		attackedSquares.push_back(Board::getLeftSquare(square));
 	} catch (const char*) {}
 
 	// Left forward move
 	try {
-		potentialEndSquares.push_back(Board::getForwardSquare(Board::getLeftSquare(square)));
+		attackedSquares.push_back(Board::getForwardSquare(Board::getLeftSquare(square)));
 	} catch (const char*) {}
 
-	// Determining valid moves
-	for (int i = 0; i < potentialEndSquares.size(); i++) {
-		bool squareExists = potentialEndSquares[i];
-		bool isUnoccupiedOrCapturable = !potentialEndSquares[i]->isOccupied() || potentialEndSquares[i]->getPiece()->isWhite() != pieceIsWhite;
-		bool isAttacked = Board::isSquareAttacked(potentialEndSquares[i], !pieceIsWhite);
-	
-		if (squareExists && isUnoccupiedOrCapturable && isAttacked)
-			validMoves.push_back(new Move(square, potentialEndSquares[i]));
-	}
-
-	return validMoves;
+	return attackedSquares;
 }
