@@ -17,10 +17,7 @@ Move::Move(Square* startSquare, Square* endSquare, MoveType moveType) {
 }
 
 Move::~Move() {
-	delete startSquare;
 	startSquare = nullptr;
-
-	delete endSquare;
 	endSquare = nullptr;
 }
 
