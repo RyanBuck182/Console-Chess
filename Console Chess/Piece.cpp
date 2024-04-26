@@ -4,6 +4,19 @@
 
 using namespace std;
 
+Piece::Piece(Board* board, Square* square, bool pieceIsWhite, char whitePieceSymbol, char blackPieceSymbol) {
+	this->board = board;
+	this->square = square;
+	this->pieceIsWhite = pieceIsWhite;
+	this->whitePieceSymbol = whitePieceSymbol;
+	this->blackPieceSymbol = blackPieceSymbol;
+}
+
+Piece::~Piece() {
+	board = nullptr;
+	square = nullptr;
+}
+
 Square* Piece::getSquare() const {
 	return square;
 }
@@ -29,12 +42,4 @@ void Piece::makeStandardMove(Move* move) {
 	move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());
 	move->getEndSquare()->getPiece()->setSquare(move->getEndSquare());
 	move->getStartSquare()->setPiece(nullptr);
-}
-
-Piece::Piece(Board* board, Square* square, bool pieceIsWhite, char whitePieceSymbol, char blackPieceSymbol) {
-	this->board = board;
-	this->square = square;
-	this->pieceIsWhite = pieceIsWhite;
-	this->whitePieceSymbol = whitePieceSymbol;
-	this->blackPieceSymbol = blackPieceSymbol;
 }

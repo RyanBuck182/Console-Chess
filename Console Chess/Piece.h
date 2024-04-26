@@ -10,6 +10,7 @@ class Move;
 class Piece {
 public:
 	Piece(Board*, Square*, bool, char, char);
+	~Piece();
 
 	Square* getSquare() const;
 	void setSquare(Square* square);

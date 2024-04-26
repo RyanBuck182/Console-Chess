@@ -26,7 +26,6 @@ Square::Square(Board* board, int id, Piece* piece)
 
 Square::~Square() {
 	if (piece != nullptr) {
-		piece->setSquare(nullptr);
 		delete piece;
 		piece = nullptr;
 	}
