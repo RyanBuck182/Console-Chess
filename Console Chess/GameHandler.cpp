@@ -6,8 +6,10 @@
 
 using namespace std;
 
+Board* GameHandler::board = nullptr;
+
 bool GameHandler::currentPlayerIsWhite() {
-	return Board::getState() == Board::WhiteToPlay;
+	return board->getState() == board->WhiteToPlay;
 }
 
 int GameHandler::useGameMenu() {
@@ -27,14 +29,14 @@ int GameHandler::useGameMenu() {
 }
 
 bool GameHandler::hasGameEnded() {
-	return Board::getState() == Board::WhiteWin
-		|| Board::getState() == Board::BlackWin
-		|| Board::getState() == Board::Draw
-		|| Board::getState() == Board::Stalemate;
+	return board->getState() == board->WhiteWin
+		|| board->getState() == board->BlackWin
+		|| board->getState() == board->Draw
+		|| board->getState() == board->Stalemate;
 }
 
 void GameHandler::outputBoard() {
-	cout << Board::formatAsString();
+	cout << board->formatAsString();
 }
 
 string GameHandler::getSideString(bool current) {
@@ -62,12 +64,14 @@ int GameHandler::useMoveMenu() {
 }
 
 Move* GameHandler::chooseMove() {
-	Move* move = nullptr;
-	while (move == nullptr) {
+	Move* move = new Move(board);
+	bool validMove = false;
+	while (!validMove) {
 		try {
 			cin >> move;
+			validMove = true;
 		} catch (const char*) {
-			move = nullptr;
+			validMove = false;
 			cout << "Invalid move! Please input a legal move.\n\n";
 		}
 	}
@@ -88,7 +92,7 @@ void GameHandler::offerDraw() {
 	cin.ignore(INT_MAX, '\n');
 
 	if (choice == 1)
-		Board::setState(Board::Draw);
+		board->setState(board->Draw);
 	else
 		cout << "Draw declined.\n";
 }
@@ -105,17 +109,17 @@ void GameHandler::resign() {
 	cin.ignore(INT_MAX, '\n');
 
 	if (choice == 1)
-		Board::setState((currentPlayerIsWhite()) ? Board::BlackWin : Board::WhiteWin);
+		board->setState((currentPlayerIsWhite()) ? board->BlackWin : board->WhiteWin);
 	else
 		cout << "Canceling resignation.\n";
 }
 
 void GameHandler::displayGameEndMessage() {
-	if (Board::getState() == Board::WhiteWin || Board::getState() == Board::BlackWin)
+	if (board->getState() == board->WhiteWin || board->getState() == board->BlackWin)
 		cout << '\n' << GameHandler::getSideString(GameHandler::currentPlayerIsWhite()) << " Wins!\n\n";
-	else if (Board::getState() == Board::Stalemate)
+	else if (board->getState() == board->Stalemate)
 		cout << "\nThe game has ended in stalemate.\n\n";
-	else if (Board::getState() == Board::Draw)
+	else if (board->getState() == board->Draw)
 		cout << "\nThe game has ended in a draw.\n\n";
 }
 

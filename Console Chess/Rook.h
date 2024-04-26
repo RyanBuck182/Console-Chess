@@ -5,7 +5,7 @@
 
 class Rook : public Piece {
 public:
-	Rook(Square*, bool);
+	Rook(Board*, Square*, bool);
 
 	bool hasMoved() const;
 	std::vector<Move*> computeValidMoves() const override;

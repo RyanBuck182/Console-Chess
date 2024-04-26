@@ -4,7 +4,7 @@
 #include "Move.h"
 using namespace std;
 
-Bishop::Bishop(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'B', 'b') {}
+Bishop::Bishop(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'B', 'b') {}
 
 vector<Move*>Bishop::computeValidMoves() const {
 	vector<Move*> validMoves;
@@ -13,9 +13,9 @@ vector<Move*>Bishop::computeValidMoves() const {
 	for (int i = 0; i < potentialEndSquares.size(); i++) {
 		if (potentialEndSquares[i]->isOccupied()) {
 			if (potentialEndSquares[i]->getPiece()->isWhite() != pieceIsWhite)
-				validMoves.push_back(new Move(square, potentialEndSquares[i], Move::Capture));
+				validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Capture));
 		} else
-			validMoves.push_back(new Move(square, potentialEndSquares[i], Move::Standard));
+			validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Standard));
 	}
 
 	return validMoves;
@@ -28,7 +28,7 @@ vector<Square*> Bishop::getAttackedSquares() const {
 	Square* squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = Board::getLeftSquare(Board::getForwardSquare(squareCursor));
+			squareCursor = board->getLeftSquare(board->getForwardSquare(squareCursor));
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -41,7 +41,7 @@ vector<Square*> Bishop::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = Board::getRightSquare(Board::getForwardSquare(squareCursor));
+			squareCursor = board->getRightSquare(board->getForwardSquare(squareCursor));
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -54,7 +54,7 @@ vector<Square*> Bishop::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = Board::getLeftSquare(Board::getBackwardSquare(squareCursor));
+			squareCursor = board->getLeftSquare(board->getBackwardSquare(squareCursor));
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -67,7 +67,7 @@ vector<Square*> Bishop::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = Board::getRightSquare(Board::getBackwardSquare(squareCursor));
+			squareCursor = board->getRightSquare(board->getBackwardSquare(squareCursor));
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;

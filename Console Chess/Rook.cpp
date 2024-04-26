@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Rook::Rook(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'R', 'r'), pieceHasMoved(false) {}
+Rook::Rook(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'R', 'r'), pieceHasMoved(false) {}
 
 bool Rook::hasMoved() const {
 	return pieceHasMoved;
@@ -18,9 +18,9 @@ vector<Move*>Rook::computeValidMoves() const {
 	for (int i = 0; i < potentialEndSquares.size(); i++) {
 		if (potentialEndSquares[i]->isOccupied()) {
 			if (potentialEndSquares[i]->getPiece()->isWhite() != pieceIsWhite)
-				validMoves.push_back(new Move(square, potentialEndSquares[i], Move::Capture));
+				validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Capture));
 		} else
-			validMoves.push_back(new Move(square, potentialEndSquares[i], Move::Standard));
+			validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Standard));
 	}
 
 	//add additional castling check
@@ -35,7 +35,7 @@ vector<Square*> Rook::getAttackedSquares() const {
 	Square* squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = Board::getForwardSquare(squareCursor);
+			squareCursor = board->getForwardSquare(squareCursor);
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -48,7 +48,7 @@ vector<Square*> Rook::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = Board::getBackwardSquare(squareCursor);
+			squareCursor = board->getBackwardSquare(squareCursor);
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -61,7 +61,7 @@ vector<Square*> Rook::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = Board::getLeftSquare(squareCursor);
+			squareCursor = board->getLeftSquare(squareCursor);
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -74,7 +74,7 @@ vector<Square*> Rook::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = Board::getRightSquare(squareCursor);
+			squareCursor = board->getRightSquare(squareCursor);
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;

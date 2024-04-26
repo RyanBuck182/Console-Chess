@@ -31,7 +31,8 @@ void Piece::makeStandardMove(Move* move) {
 	move->getStartSquare()->setPiece(nullptr);
 }
 
-Piece::Piece(Square* square, bool pieceIsWhite, char whitePieceSymbol, char blackPieceSymbol) {
+Piece::Piece(Board* board, Square* square, bool pieceIsWhite, char whitePieceSymbol, char blackPieceSymbol) {
+	this->board = board;
 	this->square = square;
 	this->pieceIsWhite = pieceIsWhite;
 	this->whitePieceSymbol = whitePieceSymbol;

@@ -4,14 +4,22 @@
 
 using namespace std;
 
-Square::Square(int id)
+Square::Square(Board* board) {
+	this->board = board;
+	this->id = -1;
+	this->piece = nullptr;
+}
+
+Square::Square(Board* board, int id)
 {
+	this->board = board;
 	this->id = id;
 	this->piece = nullptr;
 }
 
-Square::Square(int id, Piece* piece)
+Square::Square(Board* board, int id, Piece* piece)
 {
+	this->board = board;
 	this->id = id;
 	setPiece(piece);
 }
@@ -22,6 +30,10 @@ Square::~Square() {
 		delete piece;
 		piece = nullptr;
 	}
+}
+
+Board* Square::getBoard() const {
+	return board;
 }
 
 int Square::getId() const {
@@ -55,7 +67,7 @@ istream& operator>>(istream& in, Square*& square) {
 
 	int id = (row - 1) * Board::BOARD_LENGTH + (static_cast<int>(tolower(column) - static_cast<int>('a')));
 
-	square = Board::getSquareFromId(id);
+	square = square->getBoard()->getSquareFromId(id);
 
 	return in;
 }

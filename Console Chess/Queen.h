@@ -5,7 +5,7 @@
 
 class Queen : public Piece {
 public:
-	Queen(Square*, bool);
+	Queen(Board*, Square*, bool);
 
 	std::vector<Move*> computeValidMoves() const override;
 	std::vector<Square*> getAttackedSquares() const override;

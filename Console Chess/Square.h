@@ -3,14 +3,17 @@
 
 #include <iostream>
 
+class Board;
 class Piece;
 
 class Square {
 public:
-	Square(int);
-	Square(int, Piece*);
+	Square(Board*);
+	Square(Board*, int);
+	Square(Board*, int, Piece*);
 	~Square();
 
+	Board* getBoard() const;
 	int getId() const;
 	Piece* getPiece() const;
 	void setPiece(Piece*);
@@ -20,6 +23,7 @@ public:
 	bool operator==(const Square&);
 	friend std::istream& operator>>(std::istream&, Square*&);
 private:
+	Board* board;
 	int id;
 	Piece* piece;
 };

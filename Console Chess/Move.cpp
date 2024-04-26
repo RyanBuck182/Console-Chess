@@ -4,19 +4,26 @@
 
 using namespace std;
 
-Move::Move(Square* startSquare, Square* endSquare) {
+Move::Move(Board* board) {
+	this->board = board;
+}
+
+Move::Move(Board* board, Square* startSquare, Square* endSquare) {
+	this->board = board;
 	this->startSquare = startSquare;
 	this->endSquare = endSquare;
 	moveType = Standard;
 }
 
-Move::Move(Square* startSquare, Square* endSquare, MoveType moveType) {
+Move::Move(Board* board, Square* startSquare, Square* endSquare, MoveType moveType) {
+	this->board = board;
 	this->startSquare = startSquare;
 	this->endSquare = endSquare;
 	this->moveType = moveType;
 }
 
 Move::~Move() {
+	board = nullptr;
 	startSquare = nullptr;
 	endSquare = nullptr;
 }
@@ -42,10 +49,10 @@ bool Move::operator==(const Move& move) const {
 }
 
 istream& operator>>(istream& in, Move*& move) {
-	Square* startSquare = nullptr;
-	Square* endSquare = nullptr;
+	Square* startSquare = new Square(move->board);
+	Square* endSquare = new Square(move->board);
 
-	while (startSquare == nullptr) {
+	while (startSquare->getId() == -1) {
 		cout << "Start Square: ";
 
 		try {
@@ -55,7 +62,7 @@ istream& operator>>(istream& in, Move*& move) {
 		}
 	}
 
-	while (endSquare == nullptr) {
+	while (endSquare->getId() == -1) {
 		cout << "  End Square: ";
 
 		try {
@@ -65,9 +72,9 @@ istream& operator>>(istream& in, Move*& move) {
 		}
 	}
 
-	move = new Move(startSquare, endSquare);
+	move = new Move(move->board, startSquare, endSquare);
 
-	if (!Board::moveIsValid(move))
+	if (!move->getStartSquare()->getBoard()->moveIsValid(move))
 		throw "Move is not valid.";
 
 	return in;

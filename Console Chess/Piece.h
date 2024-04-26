@@ -9,7 +9,7 @@ class Move;
 
 class Piece {
 public:
-	Piece(Square*, bool, char, char);
+	Piece(Board*, Square*, bool, char, char);
 
 	Square* getSquare() const;
 	void setSquare(Square* square);
@@ -24,6 +24,7 @@ public:
 protected:
 	void makeStandardMove(Move* move);
 
+	Board* board;
 	Square* square;
 	bool pieceIsWhite;
 	char whitePieceSymbol;

@@ -8,6 +8,7 @@ class Move;
 
 class GameHandler {
 public:
+	static Board* board;
 	static bool currentPlayerIsWhite();
 	static int useGameMenu();
 	static bool hasGameEnded();

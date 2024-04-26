@@ -9,8 +9,9 @@ class Move {
 public:
 	enum MoveType { Standard, Capture, DoublePawn, EnPassant, PawnPromotion, Castle };
 
-	Move(Square*, Square*);
-	Move(Square*, Square*, MoveType);
+	Move(Board*);
+	Move(Board*, Square*, Square*);
+	Move(Board*, Square*, Square*, MoveType);
 	~Move();
 
 	Square* getStartSquare() const;
@@ -22,6 +23,7 @@ public:
 	bool operator==(const Move& move) const;
 	friend std::istream& operator>>(std::istream&, Move*&);
 private:
+	Board* board;
 	Square* startSquare;
 	Square* endSquare;
 	MoveType moveType;

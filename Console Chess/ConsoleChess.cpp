@@ -13,7 +13,7 @@ int main() {
 		
 		switch (gameChoice) {
 			case 1: { // New Game
-				Board::initialize();
+				GameHandler::board = new Board();
 
 				bool returnToMainMenu = false;
 				while (!returnToMainMenu && !GameHandler::hasGameEnded()) {
@@ -26,7 +26,7 @@ int main() {
 					switch (moveChoice) {
 						case 1: { // Make move
 							Move* move = GameHandler::chooseMove();
-							Board::makeMove(move);
+							GameHandler::board->makeMove(move);
 							break;
 						} case 2: // Offer draw
 							GameHandler::offerDraw();
@@ -50,7 +50,8 @@ int main() {
 				}
 
 				GameHandler::displayGameEndMessage();
-				Board::clear();
+				delete GameHandler::board;
+				GameHandler::board = nullptr;
 				break;
 			}
 			case 2: // Load Game

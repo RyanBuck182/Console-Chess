@@ -5,10 +5,11 @@
 #include "Bishop.h"
 #include "Rook.h"
 #include "Queen.h"
+#include "Knight.h"
 
 using namespace std;
 
-Pawn::Pawn(Square* square, bool pieceIsWhite) : Piece(square, pieceIsWhite, 'P', 'p'), hasMoved(false) {}
+Pawn::Pawn(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'P', 'p'), hasMoved(false) {}
 
 vector<Move*> Pawn::computeValidMoves() const {
 	vector<Move*> validMoves;
@@ -16,7 +17,7 @@ vector<Move*> Pawn::computeValidMoves() const {
 	Move* lastMove;
 
 	try {
-		lastMove = Board::getLastMove();
+		lastMove = board->getLastMove();
 	} catch (const char*) {
 		lastMove = nullptr;
 	}
@@ -28,58 +29,58 @@ vector<Move*> Pawn::computeValidMoves() const {
 
 	//Considering forward
 	try {
-		forwardSquare = Board::getForwardSquare(square);
+		forwardSquare = board->getForwardSquare(square);
 	} catch (const char*) {
 		forwardSquare = nullptr;
 	}
 
 	bool forwardSquareIsValid = forwardSquare != nullptr && !forwardSquare->isOccupied();
 	if (forwardSquareIsValid)
-		validMoves.push_back(new Move(square, forwardSquare));
+		validMoves.push_back(new Move(board, square, forwardSquare));
 
 	//Considering forward 2 spaces
 	try {
-		doubleForwardSquare = Board::getForwardSquare(forwardSquare);
+		doubleForwardSquare = board->getForwardSquare(forwardSquare);
 	} catch (const char*) {
 		doubleForwardSquare = nullptr;
 	}
 
 	bool doubleForwardSquareIsValid = doubleForwardSquare != nullptr && !doubleForwardSquare->isOccupied();
 	if (forwardSquareIsValid && doubleForwardSquareIsValid && !hasMoved)
-		validMoves.push_back(new Move(square, doubleForwardSquare, Move::DoublePawn));
+		validMoves.push_back(new Move(board, square, doubleForwardSquare, Move::DoublePawn));
 
 	//Considering left diagonal
 	try {
-		leftDiagonalSquare = Board::getLeftSquare(Board::getForwardSquare(square));
+		leftDiagonalSquare = board->getLeftSquare(board->getForwardSquare(square));
 	} catch (const char*) {
 		leftDiagonalSquare = nullptr;
 	}
 
 	if (leftDiagonalSquare != nullptr) {
 		bool leftDiagonalCaptureIsValid = leftDiagonalSquare->isOccupied() && leftDiagonalSquare->getPiece()->isWhite() != pieceIsWhite;
- 		bool leftDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->getMoveType() == Move::DoublePawn && *Board::getLeftSquare(square) == *lastMove->getEndSquare();
+ 		bool leftDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->getMoveType() == Move::DoublePawn && *board->getLeftSquare(square) == *lastMove->getEndSquare();
 
 		if (leftDiagonalCaptureIsValid)
-			validMoves.push_back(new Move(square, leftDiagonalSquare, Move::Capture));
+			validMoves.push_back(new Move(board, square, leftDiagonalSquare, Move::Capture));
 		else if (leftDiagonalEnPassantIsValid)
-			validMoves.push_back(new Move(square, leftDiagonalSquare, Move::EnPassant));
+			validMoves.push_back(new Move(board, square, leftDiagonalSquare, Move::EnPassant));
 	}
 
 	//Considering right diagonal
 	try {
-		rightDiagonalSquare = Board::getRightSquare(Board::getForwardSquare(square));
+		rightDiagonalSquare = board->getRightSquare(board->getForwardSquare(square));
 	} catch (const char*) {
 		rightDiagonalSquare = nullptr;
 	}
 
 	if (rightDiagonalSquare != nullptr) {
 		bool rightDiagonalCaptureIsValid = rightDiagonalSquare->isOccupied() && rightDiagonalSquare->getPiece()->isWhite() != pieceIsWhite;
-		bool rightDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->getMoveType() == Move::DoublePawn && *Board::getRightSquare(square) == *lastMove->getEndSquare();
+		bool rightDiagonalEnPassantIsValid = lastMove != nullptr && lastMove->getMoveType() == Move::DoublePawn && *board->getRightSquare(square) == *lastMove->getEndSquare();
 
 		if (rightDiagonalCaptureIsValid)
-			validMoves.push_back(new Move(square, rightDiagonalSquare, Move::Capture));
+			validMoves.push_back(new Move(board, square, rightDiagonalSquare, Move::Capture));
 		else if (rightDiagonalEnPassantIsValid)
-			validMoves.push_back(new Move(square, rightDiagonalSquare, Move::EnPassant));
+			validMoves.push_back(new Move(board, square, rightDiagonalSquare, Move::EnPassant));
 	}
 
 	for (int i = 0; i < validMoves.size(); i++) {
@@ -95,12 +96,12 @@ vector<Square*> Pawn::getAttackedSquares() const {
 
 	// Right diagonal
 	try {
-		attackedSquares.push_back(Board::getRightSquare(Board::getForwardSquare(square)));
+		attackedSquares.push_back(board->getRightSquare(board->getForwardSquare(square)));
 	} catch (const char*) {}
 
 	// Left diagonal
 	try {
-		attackedSquares.push_back(Board::getLeftSquare(Board::getForwardSquare(square)));
+		attackedSquares.push_back(board->getLeftSquare(board->getForwardSquare(square)));
 	} catch (const char*) {}
 
 	return attackedSquares;
@@ -125,8 +126,8 @@ void Pawn::makeEnPassantMove(Move* move) {
 	move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());
 	move->getEndSquare()->getPiece()->setSquare(move->getEndSquare());
 
-	delete Board::getBackwardSquare(move->getEndSquare())->getPiece();
-	Board::getBackwardSquare(move->getEndSquare())->setPiece(nullptr);
+	delete board->getBackwardSquare(move->getEndSquare())->getPiece();
+	board->getBackwardSquare(move->getEndSquare())->setPiece(nullptr);
 	
 	move->getStartSquare()->setPiece(nullptr);
 }
@@ -146,16 +147,16 @@ void Pawn::makePromotionMove(Move* move) {
 	Piece* promotedPiece = nullptr;
 	switch (choice) {
 		case 1:
-			//promotedPiece = new Knight(move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
-			//break
+			promotedPiece = new Knight(board, move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
+			break;
 		case 2:
-			promotedPiece = new Bishop(move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
+			promotedPiece = new Bishop(board, move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
 			break;
 		case 3:
-			promotedPiece = new Rook(move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
+			promotedPiece = new Rook(board, move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
 			break;
 		default:
-			promotedPiece = new Queen(move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
+			promotedPiece = new Queen(board, move->getEndSquare(), move->getStartSquare()->getPiece()->isWhite());
 			break;
 	}
 

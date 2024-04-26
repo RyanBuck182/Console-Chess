@@ -5,7 +5,7 @@
 
 class Pawn : public Piece {
 public:
-	Pawn(Square*, bool);
+	Pawn(Board*, Square*, bool);
 	
 	std::vector<Move*> computeValidMoves() const override;
 	std::vector<Square*> getAttackedSquares() const override;

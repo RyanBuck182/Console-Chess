@@ -7,6 +7,7 @@
 
 class Square;
 class Move;
+class Piece;
 class King;
 
 class Board {
@@ -16,35 +17,38 @@ public:
 	static const int BOARD_LENGTH = 8;
 	static const int BOARD_SIZE = BOARD_LENGTH * BOARD_LENGTH;
 
-	static void initialize();
-	static void clear();
-
 	static bool idInRange(int);
 
-	static BoardState getState();
-	static void setState(BoardState);
-	static Square* getSquareFromId(int);
-	static bool isSquareAttacked(int, bool);
-	static bool isSquareAttacked(Square*, bool);
+	Board();
+	~Board();
 
-	static Square* getNorthSquare(Square*);
-	static Square* getSouthSquare(Square*);
-	static Square* getEastSquare(Square*);
-	static Square* getWestSquare(Square*);
-	static Square* getForwardSquare(Square*);
-	static Square* getBackwardSquare(Square*);
-	static Square* getRightSquare(Square*);
-	static Square* getLeftSquare(Square*);
+	BoardState getState() const;
+	void setState(BoardState);
 
-	static Move* getLastMove();
-	static std::vector<Move*> getMoveList();
-	static bool moveIsValid(Move*);
-	static void correctMoveType(Move*);
-	static void makeMove(Move*);
-	static void calculateAttacks();
-	static void updateState();
+	Square* getSquareFromId(int) const;
+	bool isSquareAttacked(int, bool) const;
+	bool isSquareAttacked(Square*, bool) const;
 
-	static std::string formatAsString();
+	Square* getNorthSquare(Square*);
+	Square* getSouthSquare(Square*);
+	Square* getEastSquare(Square*);
+	Square* getWestSquare(Square*);
+	Square* getForwardSquare(Square*);
+	Square* getBackwardSquare(Square*);
+	Square* getRightSquare(Square*);
+	Square* getLeftSquare(Square*);
+
+	Move* getLastMove() const;
+	std::vector<Move*> getMoveList() const;
+	bool moveIsValid(Move*) const;
+	void correctMoveType(Move*) const;
+	void makeMove(Move*);
+	void calculateAttacks();
+	void updateState();
+
+	std::vector<Piece*> getPieceList() const;
+
+	std::string formatAsString();
 private:
 	enum PieceType { Empty,
 		PawnWhite, KnightWhite, BishopWhite, RookWhite, QueenWhite, KingWhite,
@@ -52,15 +56,16 @@ private:
 	};
 	static const PieceType DEFAULT_BOARD[BOARD_SIZE];
 
-	static King* whiteKing;
-	static King* blackKing;
+	King* whiteKing;
+	King* blackKing;
 
-	static BoardState state;
-	static Square* board[BOARD_SIZE];
-	static bool boardWhiteAttacks[BOARD_SIZE];
-	static bool boardBlackAttacks[BOARD_SIZE];
+	BoardState state;
+	Square* boardSquares[BOARD_SIZE];
+	bool boardWhiteAttacks[BOARD_SIZE];
+	bool boardBlackAttacks[BOARD_SIZE];
 
-	static std::vector<Move*> moveList;
+	std::vector<Piece*> pieceList;
+	std::vector<Move*> moveList;
 };
 
 #endif

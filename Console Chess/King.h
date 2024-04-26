@@ -5,7 +5,7 @@
 
 class King : public Piece {
 public:
-	King(Square*, bool);
+	King(Board*, Square*, bool);
 	
 	bool hasMoved() const;
 	bool inCheck() const;
