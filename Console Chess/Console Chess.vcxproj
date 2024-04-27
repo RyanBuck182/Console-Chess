@@ -154,6 +154,9 @@
     <ClInclude Include="Rook.h" />
     <ClInclude Include="Square.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="saved.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

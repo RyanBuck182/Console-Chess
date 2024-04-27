@@ -21,6 +21,7 @@ public:
 	static void displayGameEndMessage();
 	static void displayQuitMessage();
 	static void saveGame();
+	static void loadGame();
 };
 
 #endif

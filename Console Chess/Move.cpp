@@ -48,6 +48,23 @@ bool Move::operator==(const Move& move) const {
 	return startSquare == move.startSquare && endSquare == move.endSquare;
 }
 
+ostream& operator<<(ostream& out, const Move& move)
+{
+	int startRow;
+	int endRow;
+	char startColumn;
+	char endColumn;
+
+	startRow = (move.getStartSquare()->getId() / 8) + 1;
+	endRow = (move.getEndSquare()->getId() / 8) + 1;
+
+	startColumn = static_cast<char>(move.getStartSquare()->getId() % 8 + 97);
+	endColumn =  static_cast<char>(move.getEndSquare()->getId() % 8 + 97);
+	
+	out << startColumn << startRow << " " << endColumn << endRow;
+
+	return out;
+}
 istream& operator>>(istream& in, Move*& move) {
 	Square* startSquare = new Square(move->board);
 	Square* endSquare = new Square(move->board);
