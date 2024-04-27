@@ -35,6 +35,7 @@ int main() {
 							GameHandler::resign();
 							break;
 						case 4: // Save
+							GameHandler::saveGame();
 							break;
 						case 5: // Return to main menu
 							returnToMainMenu = true;
@@ -55,6 +56,7 @@ int main() {
 				break;
 			}
 			case 2: // Load Game
+				GameHandler::loadGame();
 				break;
 			case 3: // Quit
 				cout << '\n';

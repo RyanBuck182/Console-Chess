@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include <fstream>
+#include <vector>
 #include "GameHandler.h"
 #include "Board.h"
 #include "Move.h"
@@ -129,5 +130,19 @@ void GameHandler::displayQuitMessage() {
 }
 
 void GameHandler::saveGame() {
-
+	ofstream saveFile;
+	saveFile.open("saved.txt");
+	for (int i = 0; i < board->getMoveList().size(); i++)
+	{
+		saveFile << *board->getMoveList()[i] << endl;
+	}
+	cout << "Game has been saved!\n";
+	saveFile.close();
 }
+
+void GameHandler::loadGame() {
+	ifstream saveFile;
+	saveFile.open("saved.txt");
+	
+}
+
