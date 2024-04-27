@@ -12,7 +12,7 @@ class King;
 
 class Board {
 public:
-	enum BoardState { WhiteToPlay, BlackToPlay, WhiteWin, BlackWin, Stalemate, Draw };
+	enum BoardState { WhiteToPlay, BlackToPlay, WhiteWin, BlackWin, Draw };
 	
 	static const int BOARD_LENGTH = 8;
 	static const int BOARD_SIZE = BOARD_LENGTH * BOARD_LENGTH;
@@ -20,7 +20,6 @@ public:
 	static bool idInRange(int);
 
 	Board();
-	Board(Board* board);
 	~Board();
 
 	BoardState getState() const;
@@ -43,13 +42,15 @@ public:
 	std::vector<Move*> getMoveList() const;
 	bool moveIsValid(Move*) const;
 	void correctMoveType(Move*) const;
-	void makeMove(Move*, bool = false);
+	void makeMove(Move*);
 	void calculateAttacks();
 	void updateState();
 
+	void captureKing(bool);
+
 	std::vector<Piece*> getPieceList() const;
 
-	std::string formatAsString();
+	std::string formatAsString() const;
 private:
 	enum PieceType { Empty,
 		PawnWhite, KnightWhite, BishopWhite, RookWhite, QueenWhite, KingWhite,

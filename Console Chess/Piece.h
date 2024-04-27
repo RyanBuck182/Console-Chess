@@ -10,9 +10,7 @@ class Move;
 class Piece {
 public:
 	Piece(Board*, Square*, bool, char, char);
-	~Piece();
-
-	virtual Piece* clone(Board*, Square*) const = 0;
+	virtual ~Piece();
 
 	Square* getSquare() const;
 	void setSquare(Square* square);

@@ -24,12 +24,6 @@ Square::Square(Board* board, int id, Piece* piece)
 	setPiece(piece);
 }
 
-Square::Square(Board* board, Square* square) {
-	this->board = board;
-	id = square->getId();
-	piece = nullptr;
-}
-
 Square::~Square() {
 	if (piece != nullptr) {
 		delete piece;

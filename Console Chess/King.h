@@ -6,11 +6,9 @@
 class King : public Piece {
 public:
 	King(Board*, Square*, bool);
-	Piece* clone(Board*, Square*) const override;
+	~King();
 
 	bool hasMoved() const;
-	bool inCheck() const;
-	void setInCheck(bool);
 	std::vector<Move*> computeValidMoves() const override;
 	std::vector<Square*> getAttackedSquares() const override;
 private:

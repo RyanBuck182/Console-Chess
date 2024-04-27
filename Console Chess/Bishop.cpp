@@ -6,12 +6,6 @@ using namespace std;
 
 Bishop::Bishop(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'B', 'b') {}
 
-Piece* Bishop::clone(Board* newBoard, Square* newSquare) const {
-	Piece* piece = new Bishop(newBoard, newSquare, pieceIsWhite);
-	newSquare->setPiece(piece);
-	return piece;
-}
-
 vector<Move*>Bishop::computeValidMoves() const {
 	vector<Move*> validMoves;
 	vector<Square*> potentialEndSquares = getAttackedSquares();

@@ -78,39 +78,6 @@ Board::Board() {
 	state = Board::WhiteToPlay;
 }
 
-Board::Board(Board* board) {
-	for (int i = 0; i < BOARD_SIZE; i++) {
-		boardSquares[i] = new Square(this, board->getSquareFromId(i));
-		
-		Piece* piece;
-		if (boardSquares[i]->isOccupied())
-			piece = boardSquares[i]->getPiece()->clone(board, boardSquares[i]);
-		else
-			piece = nullptr;
-		
-		if (piece != nullptr) {
-			pieceList.push_back(piece);
-
-			King* kingPiece = dynamic_cast<King*>(piece);
-			cout << "Cloning king: ";
-			cout << kingPiece << endl;
-			if (kingPiece != nullptr)
-				if (kingPiece->isWhite())
-					whiteKing = kingPiece;
-				else
-					blackKing = kingPiece;
-		}
-	}
-
-	vector<Move*> oldMoveList;
-	for (int i = 0; i < oldMoveList.size(); i++)
-		moveList.push_back(oldMoveList[i]);
-
-	state = board->state;
-
-	calculateAttacks();
-}
-
 Board::~Board() {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		delete boardSquares[i];
@@ -239,14 +206,11 @@ void Board::correctMoveType(Move* move) const {
 	}
 }
 
-void Board::makeMove(Move* move, bool forceMove) {
-	cout << "Force move: " << forceMove << endl;
-	if (!forceMove && !moveIsValid(move))
+void Board::makeMove(Move* move) {
+	if (!moveIsValid(move))
 		throw "Cannot make an invalid move.";
-	cout << "Move was forced or valid\n";
 
-	if (!forceMove)
-		correctMoveType(move);
+	correctMoveType(move);
 
 	moveList.push_back(move);
 	move->getStartSquare()->getPiece()->makeMove(move);
@@ -274,56 +238,27 @@ void Board::calculateAttacks() {
 	}
 }
 
-void Board::updateState() {
-	cout << whiteKing;
-	whiteKing->setInCheck(isSquareAttacked(whiteKing->getSquare(), !whiteKing->isWhite()));
-	blackKing->setInCheck(isSquareAttacked(blackKing->getSquare(), !blackKing->isWhite()));
+void Board::updateState() {	
+	if (whiteKing == nullptr)
+		state = BlackWin;
+	else if (blackKing == nullptr)
+		state = WhiteWin;
+	else
+		state = (state == WhiteToPlay) ? BlackToPlay : WhiteToPlay;
+}
 
-	King* king = (state == WhiteToPlay) ? blackKing : whiteKing;
-
-	vector<Square*> adjacentSquares = king->getAttackedSquares();
-	bool kingCanMove = false;
-	for (int i = 0; i < adjacentSquares.size(); i++) {
-		if (!isSquareAttacked(adjacentSquares[i], !king->isWhite())) {
-			kingCanMove = true;
-			break;
-		}
-	}
-
-	if (king->inCheck() && !kingCanMove)
-		state = (king->isWhite()) ? BlackWin : WhiteWin;
-	else if (!kingCanMove)
-		state = Stalemate;
-	else {
-		bool sufficientMaterial = false;
-		int threePointPieceCount = 0;
-
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			if (!boardSquares[i]->isOccupied())
-				continue;
-
-			char pieceSymbol = tolower(boardSquares[i]->getPiece()->getPieceSymbol());
-			if (pieceSymbol == 'p' || pieceSymbol == 'r' || pieceSymbol == 'q') {
-				sufficientMaterial = true;
-				break;
-			} else if (threePointPieceCount++ > 1) {
-				sufficientMaterial = true;
-				break;
-			}
-		}
-
-		if (!sufficientMaterial)
-			state = Draw;
-		else
-			state = (state == WhiteToPlay) ? BlackToPlay : WhiteToPlay;
-	}
+void Board::captureKing(bool isWhite) {
+	if (isWhite)
+		whiteKing = nullptr;
+	else
+		blackKing = nullptr;
 }
 
 vector<Piece*> Board::getPieceList() const {
 	return pieceList;
 }
 
-string Board::formatAsString() {
+string Board::formatAsString() const {
 	stringstream str;
 
 	if (state == WhiteToPlay) {

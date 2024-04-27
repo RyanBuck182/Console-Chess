@@ -32,8 +32,7 @@ int GameHandler::useGameMenu() {
 bool GameHandler::hasGameEnded() {
 	return board->getState() == board->WhiteWin
 		|| board->getState() == board->BlackWin
-		|| board->getState() == board->Draw
-		|| board->getState() == board->Stalemate;
+		|| board->getState() == board->Draw;
 }
 
 void GameHandler::outputBoard() {
@@ -118,8 +117,6 @@ void GameHandler::resign() {
 void GameHandler::displayGameEndMessage() {
 	if (board->getState() == board->WhiteWin || board->getState() == board->BlackWin)
 		cout << '\n' << GameHandler::getSideString(GameHandler::currentPlayerIsWhite()) << " Wins!\n\n";
-	else if (board->getState() == board->Stalemate)
-		cout << "\nThe game has ended in stalemate.\n\n";
 	else if (board->getState() == board->Draw)
 		cout << "\nThe game has ended in a draw.\n\n";
 }

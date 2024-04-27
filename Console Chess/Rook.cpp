@@ -7,12 +7,6 @@ using namespace std;
 
 Rook::Rook(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'R', 'r'), pieceHasMoved(false) {}
 
-Piece* Rook::clone(Board* newBoard, Square* newSquare) const {
-	Piece* piece = new Rook(newBoard, newSquare, pieceIsWhite);
-	newSquare->setPiece(piece);
-	return piece;
-}
-
 bool Rook::hasMoved() const {
 	return pieceHasMoved;
 }

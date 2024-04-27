@@ -7,56 +7,29 @@ using namespace std;
 
 King::King(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'K', 'k'), pieceHasMoved(false), pieceInCheck(false) {}
 
-Piece* King::clone(Board* newBoard, Square* newSquare) const {
-	Piece* piece = new King(newBoard, newSquare, pieceIsWhite);
-	newSquare->setPiece(piece);
-	return piece;
+King::~King() {
+	board->captureKing(pieceIsWhite);
 }
 
 bool King::hasMoved() const {
 	return pieceHasMoved;
 }
 
-bool King::inCheck() const {
-	return pieceInCheck;
-}
-
-void King::setInCheck(bool pieceInCheck) {
-	this->pieceInCheck = pieceInCheck;
-}
-
 vector<Move*>King::computeValidMoves() const {
-	vector<Move*> potentialValidMoves;
+	vector<Move*> validMoves;
 	vector<Square*> potentialEndSquares = getAttackedSquares();
 
 	// Determining valid moves
 	for (int i = 0; i < potentialEndSquares.size(); i++) {
 		bool isUnoccupied = !potentialEndSquares[i]->isOccupied();
-		bool isAttacked = board->isSquareAttacked(potentialEndSquares[i], !pieceIsWhite);
-	
+
 		if (isUnoccupied) {
-			if (!isAttacked)
-				potentialValidMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Standard));
+			validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Standard));
 		} else {
 			bool isCapturable = potentialEndSquares[i]->getPiece()->isWhite() != pieceIsWhite;
-			if (isCapturable && !isAttacked)
-				potentialValidMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Capture));
+			if (isCapturable)
+				validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Capture));
 		}
-	}
-
-	//Verifiying that moves are actually valid by making them on a cloned board.
-	vector<Move*> validMoves;
-	for (int i = 0; i < potentialValidMoves.size(); i++) {
-		Board* clonedBoard = new Board(board);
-#include <iostream>
-		cout << "Calling make move\n";
-		clonedBoard->makeMove(potentialValidMoves[i], true);
-
-		bool isAttacked = clonedBoard->isSquareAttacked(potentialValidMoves[i]->getEndSquare(), !pieceIsWhite);
-		if (!isAttacked)
-			validMoves.push_back(potentialValidMoves[i]);
-
-		delete clonedBoard;
 	}
 
 	return validMoves;

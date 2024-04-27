@@ -11,7 +11,6 @@ public:
 	Square(Board*);
 	Square(Board*, int);
 	Square(Board*, int, Piece*);
-	Square(Board*, Square*);
 	~Square();
 
 	Board* getBoard() const;
