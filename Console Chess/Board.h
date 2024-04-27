@@ -20,6 +20,7 @@ public:
 	static bool idInRange(int);
 
 	Board();
+	Board(Board* board);
 	~Board();
 
 	BoardState getState() const;

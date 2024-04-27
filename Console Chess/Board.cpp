@@ -78,6 +78,36 @@ Board::Board() {
 	state = Board::WhiteToPlay;
 }
 
+Board::Board(Board* board) {
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		boardSquares[i] = new Square(this, board->getSquareFromId(i));
+		
+		Piece* piece;
+		if (boardSquares[i]->isOccupied())
+			piece = boardSquares[i]->getPiece()->clone(board, boardSquares[i]);
+		else
+			piece = nullptr;
+		
+		if (piece != nullptr)
+			pieceList.push_back(piece);
+
+		King* kingPiece = dynamic_cast<King*>(piece);
+		if (kingPiece != nullptr)
+			if (kingPiece->isWhite())
+				whiteKing = kingPiece;
+			else
+				blackKing = kingPiece;
+	}
+
+	vector<Move*> oldMoveList;
+	for (int i = 0; i < oldMoveList.size(); i++)
+		moveList.push_back(oldMoveList[i]);
+
+	state = board->state;
+
+	calculateAttacks();
+}
+
 Board::~Board() {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		delete boardSquares[i];
