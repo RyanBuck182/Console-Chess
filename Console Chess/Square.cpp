@@ -7,14 +7,14 @@ using namespace std;
 Square::Square(Board* board) {
 	this->board = board;
 	this->id = -1;
-	this->piece = nullptr;
+	piece = nullptr;
 }
 
 Square::Square(Board* board, int id)
 {
 	this->board = board;
 	this->id = id;
-	this->piece = nullptr;
+	piece = nullptr;
 }
 
 Square::Square(Board* board, int id, Piece* piece)
@@ -22,6 +22,12 @@ Square::Square(Board* board, int id, Piece* piece)
 	this->board = board;
 	this->id = id;
 	setPiece(piece);
+}
+
+Square::Square(Board* board, Square* square) {
+	this->board = board;
+	id = square->getId();
+	piece = nullptr;
 }
 
 Square::~Square() {
