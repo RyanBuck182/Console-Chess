@@ -11,6 +11,12 @@ using namespace std;
 
 Pawn::Pawn(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'P', 'p'), hasMoved(false) {}
 
+Piece* Pawn::clone(Board* newBoard, Square* newSquare) const {
+	Piece* piece = new Pawn(newBoard, newSquare, pieceIsWhite);
+	newSquare->setPiece(piece);
+	return piece;
+}
+
 vector<Move*> Pawn::computeValidMoves() const {
 	vector<Move*> validMoves;
 	

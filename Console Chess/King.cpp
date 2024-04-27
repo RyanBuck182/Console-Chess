@@ -7,6 +7,12 @@ using namespace std;
 
 King::King(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'K', 'k'), pieceHasMoved(false), pieceInCheck(false) {}
 
+Piece* King::clone(Board* newBoard, Square* newSquare) const {
+	Piece* piece = new King(newBoard, newSquare, pieceIsWhite);
+	newSquare->setPiece(piece);
+	return piece;
+}
+
 bool King::hasMoved() const {
 	return pieceHasMoved;
 }

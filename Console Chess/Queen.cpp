@@ -7,6 +7,12 @@ using namespace std;
 
 Queen::Queen(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'Q', 'q') {}
 
+Piece* Queen::clone(Board* newBoard, Square* newSquare) const {
+	Piece* piece = new Queen(newBoard, newSquare, pieceIsWhite);
+	newSquare->setPiece(piece);
+	return piece;
+}
+
 vector<Move*>Queen::computeValidMoves() const {
 	vector<Move*> validMoves;
 	vector<Square*> potentialEndSquares = getAttackedSquares();

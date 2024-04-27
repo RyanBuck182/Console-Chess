@@ -12,6 +12,8 @@ public:
 	Piece(Board*, Square*, bool, char, char);
 	~Piece();
 
+	virtual Piece* clone(Board*, Square*) const = 0;
+
 	Square* getSquare() const;
 	void setSquare(Square* square);
 

@@ -7,6 +7,12 @@ using namespace std;
 
 Knight::Knight(Board* board, Square* square, bool pieceIsWhite) : Piece(board, square, pieceIsWhite, 'N', 'n') {}
 
+Piece* Knight::clone(Board* newBoard, Square* newSquare) const {
+	Piece* piece = new Knight(newBoard, newSquare, pieceIsWhite);
+	newSquare->setPiece(piece);
+	return piece;
+}
+
 vector<Move*> Knight::computeValidMoves() const {
 	vector<Move*> validMoves;
 	vector<Square*> potentialEndSquares = getAttackedSquares();

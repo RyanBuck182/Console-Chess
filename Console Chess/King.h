@@ -6,7 +6,8 @@
 class King : public Piece {
 public:
 	King(Board*, Square*, bool);
-	
+	Piece* clone(Board*, Square*) const override;
+
 	bool hasMoved() const;
 	bool inCheck() const;
 	void setInCheck(bool);
