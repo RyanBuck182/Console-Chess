@@ -88,15 +88,18 @@ Board::Board(Board* board) {
 		else
 			piece = nullptr;
 		
-		if (piece != nullptr)
+		if (piece != nullptr) {
 			pieceList.push_back(piece);
 
-		King* kingPiece = dynamic_cast<King*>(piece);
-		if (kingPiece != nullptr)
-			if (kingPiece->isWhite())
-				whiteKing = kingPiece;
-			else
-				blackKing = kingPiece;
+			King* kingPiece = dynamic_cast<King*>(piece);
+			cout << "Cloning king: ";
+			cout << kingPiece << endl;
+			if (kingPiece != nullptr)
+				if (kingPiece->isWhite())
+					whiteKing = kingPiece;
+				else
+					blackKing = kingPiece;
+		}
 	}
 
 	vector<Move*> oldMoveList;
@@ -236,11 +239,14 @@ void Board::correctMoveType(Move* move) const {
 	}
 }
 
-void Board::makeMove(Move* move) {
-	if (!moveIsValid(move))
+void Board::makeMove(Move* move, bool forceMove) {
+	cout << "Force move: " << forceMove << endl;
+	if (!forceMove && !moveIsValid(move))
 		throw "Cannot make an invalid move.";
+	cout << "Move was forced or valid\n";
 
-	correctMoveType(move);
+	if (!forceMove)
+		correctMoveType(move);
 
 	moveList.push_back(move);
 	move->getStartSquare()->getPiece()->makeMove(move);
@@ -269,6 +275,7 @@ void Board::calculateAttacks() {
 }
 
 void Board::updateState() {
+	cout << whiteKing;
 	whiteKing->setInCheck(isSquareAttacked(whiteKing->getSquare(), !whiteKing->isWhite()));
 	blackKing->setInCheck(isSquareAttacked(blackKing->getSquare(), !blackKing->isWhite()));
 

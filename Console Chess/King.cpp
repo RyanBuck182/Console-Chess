@@ -26,7 +26,7 @@ void King::setInCheck(bool pieceInCheck) {
 }
 
 vector<Move*>King::computeValidMoves() const {
-	vector<Move*> validMoves;
+	vector<Move*> potentialValidMoves;
 	vector<Square*> potentialEndSquares = getAttackedSquares();
 
 	// Determining valid moves
@@ -36,12 +36,27 @@ vector<Move*>King::computeValidMoves() const {
 	
 		if (isUnoccupied) {
 			if (!isAttacked)
-				validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Standard));
+				potentialValidMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Standard));
 		} else {
 			bool isCapturable = potentialEndSquares[i]->getPiece()->isWhite() != pieceIsWhite;
 			if (isCapturable && !isAttacked)
-				validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Capture));
+				potentialValidMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Capture));
 		}
+	}
+
+	//Verifiying that moves are actually valid by making them on a cloned board.
+	vector<Move*> validMoves;
+	for (int i = 0; i < potentialValidMoves.size(); i++) {
+		Board* clonedBoard = new Board(board);
+#include <iostream>
+		cout << "Calling make move\n";
+		clonedBoard->makeMove(potentialValidMoves[i], true);
+
+		bool isAttacked = clonedBoard->isSquareAttacked(potentialValidMoves[i]->getEndSquare(), !pieceIsWhite);
+		if (!isAttacked)
+			validMoves.push_back(potentialValidMoves[i]);
+
+		delete clonedBoard;
 	}
 
 	return validMoves;

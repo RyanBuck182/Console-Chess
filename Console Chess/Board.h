@@ -43,7 +43,7 @@ public:
 	std::vector<Move*> getMoveList() const;
 	bool moveIsValid(Move*) const;
 	void correctMoveType(Move*) const;
-	void makeMove(Move*);
+	void makeMove(Move*, bool = false);
 	void calculateAttacks();
 	void updateState();
 
