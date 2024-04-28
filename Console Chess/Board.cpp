@@ -71,7 +71,9 @@ Board::Board() {
 		}
 
 		boardSquares[i] = square;
-		pieceList.push_back(square->getPiece());
+
+		if (square->isOccupied())
+			pieceList.push_back(square->getPiece());
 	}
 
 	calculateAttacks();
@@ -144,7 +146,7 @@ bool Board::moveIsValid(Move move) const {
 	return moveIsValid;
 }
 
-void Board::correctMoveType(Move move) const {
+void Board::correctMoveType(Move& move) const {
 	if (!moveIsValid(move))
 		throw "Cannot correct the move type of an invalid move.";
 

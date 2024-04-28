@@ -32,10 +32,12 @@ public:
 	Move* getLastMove();
 	std::vector<Move> getMoveList() const;
 	bool moveIsValid(Move) const;
-	void correctMoveType(Move) const;
+	void correctMoveType(Move&) const;
 	void makeMove(Move);
 	void calculateAttacks();
 	void updateState();
+
+	void captureKing(bool);
 
 	std::vector<Piece*> getPieceList() const;
 

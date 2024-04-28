@@ -11,9 +11,11 @@ public:
 	bool hasMoved() const;
 	std::vector<Move> computeValidMoves() const override;
 	std::vector<Square*> getAttackedSquares() const override;
+	void makeMove(Move move) override;
 private:
+	void makeCastleMove(Move move);
+
 	bool pieceHasMoved;
-	bool pieceInCheck;
 };
 
 #endif
