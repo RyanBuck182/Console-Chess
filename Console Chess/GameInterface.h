@@ -6,7 +6,7 @@
 class Board;
 class Move;
 
-class GameHandler {
+class GameInterface {
 public:
 	static Board* board;
 	static bool currentPlayerIsWhite();
@@ -14,6 +14,8 @@ public:
 	static bool hasGameEnded();
 	static void outputBoard();
 	static std::string getSideString(bool);
+	static void playGame();
+	static bool doTurn();
 	static int useMoveMenu();
 	static Move chooseMove();
 	static void offerDraw();

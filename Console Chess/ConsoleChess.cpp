@@ -9,56 +9,19 @@ using namespace std;
 int main() {
 	bool quitGame = false;
 	while (!quitGame) {
-		int gameChoice = GameHandler::useGameMenu();
-		
+		int gameChoice = GameInterface::useGameMenu() - 1;
+
+		enum choices { NewGame, LoadGame, Quit };
 		switch (gameChoice) {
-			case 1: { // New Game
-				GameHandler::board = new Board();
-
-				bool returnToMainMenu = false;
-				while (!returnToMainMenu && !GameHandler::hasGameEnded()) {
-					cout << "\n\n";
-					GameHandler::outputBoard();
-
-					int moveChoice = GameHandler::useMoveMenu();
-
-					cout << '\n';
-					switch (moveChoice) {
-						case 1: { // Make move
-							Move move = GameHandler::chooseMove();
-							GameHandler::board->makeMove(move);
-							break;
-						} case 2: // Offer draw
-							GameHandler::offerDraw();
-							break;
-						case 3: // Resign
-							GameHandler::resign();
-							break;
-						case 4: // Save
-							GameHandler::saveGame();
-							break;
-						case 5: // Return to main menu
-							returnToMainMenu = true;
-							break;
-						default:
-							cout << "That is not a valid option.\n";
-							cout << "Press enter to continue...";
-							cin.clear();
-							cin.ignore(INT_MAX, '\n');
-							cout << '\n';
-							break;
-					}
-				}
-
-				GameHandler::displayGameEndMessage();
-				delete GameHandler::board;
-				GameHandler::board = nullptr;
+			case NewGame:
+				GameInterface::board = new Board();
+				GameInterface::playGame();
 				break;
-			}
-			case 2: // Load Game
-				GameHandler::loadGame();
+			case LoadGame:
+				GameInterface::loadGame();
+				GameInterface::playGame();
 				break;
-			case 3: // Quit
+			case Quit:
 				cout << '\n';
 				quitGame = true;
 				break;
@@ -69,5 +32,5 @@ int main() {
 		cout << endl;
 	}
 
-	GameHandler::displayQuitMessage();
+	GameInterface::displayQuitMessage();
 }
