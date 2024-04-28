@@ -40,42 +40,42 @@ vector<Square*> King::getAttackedSquares() const {
 
 	// Forward move
 	try {
-		attackedSquares.push_back(board->getForwardSquare(square));
+		attackedSquares.push_back(square->getForwardSquare());
 	} catch (const char*) {}
 
 	// Forward right move
 	try {
-		attackedSquares.push_back(board->getRightSquare(board->getForwardSquare(square)));
+		attackedSquares.push_back(square->getForwardSquare()->getRightSquare());
 	} catch (const char*) {}
 
 	// Right move
 	try {
-		attackedSquares.push_back(board->getRightSquare(square));
+		attackedSquares.push_back(square->getRightSquare());
 	} catch (const char*) {}
 
 	// Right backward move
 	try {
-		attackedSquares.push_back(board->getBackwardSquare(board->getRightSquare(square)));
+		attackedSquares.push_back(square->getRightSquare()->getBackwardSquare());
 	} catch (const char*) {}
 
 	// Backward move
 	try {
-		attackedSquares.push_back(board->getBackwardSquare(square));
+		attackedSquares.push_back(square->getBackwardSquare());
 	} catch (const char*) {}
 
 	// Backward left move
 	try {
-		attackedSquares.push_back(board->getLeftSquare(board->getBackwardSquare(square)));
+		attackedSquares.push_back(square->getBackwardSquare()->getLeftSquare());
 	} catch (const char*) {}
 
 	// Left move
 	try {
-		attackedSquares.push_back(board->getLeftSquare(square));
+		attackedSquares.push_back(square->getLeftSquare());
 	} catch (const char*) {}
 
 	// Left forward move
 	try {
-		attackedSquares.push_back(board->getForwardSquare(board->getLeftSquare(square)));
+		attackedSquares.push_back(square->getLeftSquare()->getForwardSquare());
 	} catch (const char*) {}
 
 	return attackedSquares;

@@ -29,7 +29,7 @@ vector<Square*> Queen::getAttackedSquares() const {
 	Square* squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board->getForwardSquare(squareCursor);
+			squareCursor = squareCursor->getForwardSquare();
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -42,7 +42,7 @@ vector<Square*> Queen::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board->getBackwardSquare(squareCursor);
+			squareCursor = squareCursor->getBackwardSquare();
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -55,7 +55,7 @@ vector<Square*> Queen::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board->getLeftSquare(squareCursor);
+			squareCursor = squareCursor->getLeftSquare();
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -68,7 +68,7 @@ vector<Square*> Queen::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board->getRightSquare(squareCursor);
+			squareCursor = squareCursor->getRightSquare();
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -81,7 +81,7 @@ vector<Square*> Queen::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board->getLeftSquare(board->getForwardSquare(squareCursor));
+			squareCursor = squareCursor->getForwardSquare()->getLeftSquare();
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -94,7 +94,7 @@ vector<Square*> Queen::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board->getRightSquare(board->getForwardSquare(squareCursor));
+			squareCursor = squareCursor->getForwardSquare()->getRightSquare();
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -107,7 +107,7 @@ vector<Square*> Queen::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board->getLeftSquare(board->getBackwardSquare(squareCursor));
+			squareCursor = squareCursor->getBackwardSquare()->getLeftSquare();
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;
@@ -120,7 +120,7 @@ vector<Square*> Queen::getAttackedSquares() const {
 	squareCursor = square;
 	while (squareCursor != nullptr) {
 		try {
-			squareCursor = board->getRightSquare(board->getBackwardSquare(squareCursor));
+			squareCursor = squareCursor->getBackwardSquare()->getRightSquare();
 			attackedSquares.push_back(squareCursor);
 			if (squareCursor->isOccupied())
 				squareCursor = nullptr;

@@ -66,6 +66,7 @@ int main() {
 				cout << "Invalid input!\n";
 				break;
 		}
+		cout << endl;
 	}
 
 	GameHandler::displayQuitMessage();

@@ -28,42 +28,42 @@ vector<Square*> Knight::getAttackedSquares() const {
 
 	// Forward left
 	try {
-		attackedSquares.push_back(board->getLeftSquare(board->getForwardSquare(board->getForwardSquare(square))));
+		attackedSquares.push_back(square->getForwardSquare()->getForwardSquare()->getLeftSquare());
 	} catch (const char*) {}
 
 	// Forward right
 	try {
-		attackedSquares.push_back(board->getRightSquare(board->getForwardSquare(board->getForwardSquare(square))));
+		attackedSquares.push_back(square->getForwardSquare()->getForwardSquare()->getRightSquare());
 	} catch (const char*) {}
 
 	// Left forward
 	try {
-		attackedSquares.push_back(board->getForwardSquare(board->getLeftSquare(board->getLeftSquare(square))));
+		attackedSquares.push_back(square->getLeftSquare()->getLeftSquare()->getForwardSquare());
 	} catch (const char*) {}
 
 	// Left backward
 	try {
-		attackedSquares.push_back(board->getBackwardSquare(board->getLeftSquare(board->getLeftSquare(square))));
+		attackedSquares.push_back(square->getLeftSquare()->getLeftSquare()->getBackwardSquare());
 	} catch (const char*) {}
 
 	// Right forward
 	try {
-		attackedSquares.push_back(board->getForwardSquare(board->getRightSquare(board->getRightSquare(square))));
+		attackedSquares.push_back(square->getRightSquare()->getRightSquare()->getForwardSquare());
 	} catch (const char*) {}
 
 	// Right backward
 	try {
-		attackedSquares.push_back(board->getBackwardSquare(board->getRightSquare(board->getRightSquare(square))));
+		attackedSquares.push_back(square->getRightSquare()->getRightSquare()->getBackwardSquare());
 	} catch (const char*) {}
 
 	// Backward left
 	try {
-		attackedSquares.push_back(board->getLeftSquare(board->getBackwardSquare(board->getBackwardSquare(square))));
+		attackedSquares.push_back(square->getBackwardSquare()->getBackwardSquare()->getLeftSquare());
 	} catch (const char*) {}
 
 	// Backward right
 	try {
-		attackedSquares.push_back(board->getRightSquare(board->getBackwardSquare(board->getBackwardSquare(square))));
+		attackedSquares.push_back(square->getBackwardSquare()->getBackwardSquare()->getRightSquare());
 	} catch (const char*) {}
 
 	return attackedSquares;

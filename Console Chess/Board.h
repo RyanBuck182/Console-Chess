@@ -29,15 +29,6 @@ public:
 	bool isSquareAttacked(int, bool) const;
 	bool isSquareAttacked(Square*, bool) const;
 
-	Square* getNorthSquare(Square*);
-	Square* getSouthSquare(Square*);
-	Square* getEastSquare(Square*);
-	Square* getWestSquare(Square*);
-	Square* getForwardSquare(Square*);
-	Square* getBackwardSquare(Square*);
-	Square* getRightSquare(Square*);
-	Square* getLeftSquare(Square*);
-
 	Move* getLastMove() const;
 	std::vector<Move*> getMoveList() const;
 	bool moveIsValid(Move*) const;

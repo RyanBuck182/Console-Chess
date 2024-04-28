@@ -119,50 +119,6 @@ bool Board::isSquareAttacked(Square* square, bool byWhite) const {
 	return (!byWhite) ? boardBlackAttacks[square->getId()] : boardWhiteAttacks[square->getId()];
 }
 
-Square* Board::getNorthSquare(Square* square) {
-	return Board::getSquareFromId(square->getId() + 8);
-}
-
-Square* Board::getSouthSquare(Square* square) {
-	return Board::getSquareFromId(square->getId() - 8);
-}
-
-Square* Board::getEastSquare(Square* square) {
-	return Board::getSquareFromId(square->getId() + 1);
-}
-
-Square* Board::getWestSquare(Square* square) {
-	return Board::getSquareFromId(square->getId() - 1);
-}
-
-Square* Board::getForwardSquare(Square* square) {
-	if (state == WhiteToPlay)
-		return getNorthSquare(square);
-	else
-		return getSouthSquare(square);
-}
-
-Square* Board::getBackwardSquare(Square* square) {
-	if (state == WhiteToPlay)
-		return getSouthSquare(square);
-	else
-		return getNorthSquare(square);
-}
-
-Square* Board::getRightSquare(Square* square) {
-	if (state == WhiteToPlay)
-		return getEastSquare(square);
-	else
-		return getWestSquare(square);
-}
-
-Square* Board::getLeftSquare(Square* square) {
-	if (state == WhiteToPlay)
-		return getWestSquare(square);
-	else
-		return getEastSquare(square);
-}
-
 Move* Board::getLastMove() const {
 	if (moveList.size() > 0)
 		return moveList.back();

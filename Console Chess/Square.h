@@ -18,6 +18,15 @@ public:
 	Piece* getPiece() const;
 	void setPiece(Piece*);
 
+	Square* getNorthSquare() const;
+	Square* getSouthSquare() const;
+	Square* getEastSquare() const;
+	Square* getWestSquare() const;
+	Square* getForwardSquare() const;
+	Square* getBackwardSquare() const;
+	Square* getRightSquare() const;
+	Square* getLeftSquare() const;
+
 	bool isOccupied() const;
 
 	bool operator==(const Square&);

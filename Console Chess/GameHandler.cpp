@@ -14,7 +14,7 @@ bool GameHandler::currentPlayerIsWhite() {
 }
 
 int GameHandler::useGameMenu() {
-	cout << "Welcome to Console Chess by Ryan Buck and Connor English.\n\n";
+	cout << "Welcome to Console Chess by Ryan Buck and Connor English.\n";
 	cout << "Please make a selection:\n";
 	cout << "  (1) New Game\n";
 	cout << "  (2) Load Game\n";

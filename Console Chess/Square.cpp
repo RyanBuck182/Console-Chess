@@ -47,6 +47,50 @@ void Square::setPiece(Piece* piece) {
 	this->piece = piece;
 }
 
+Square* Square::getNorthSquare() const {
+	return board->getSquareFromId(id + 8);
+}
+
+Square* Square::getSouthSquare() const {
+	return board->getSquareFromId(id - 8);
+}
+
+Square* Square::getEastSquare() const {
+	return board->getSquareFromId(id + 1);
+}
+
+Square* Square::getWestSquare() const {
+	return board->getSquareFromId(id - 1);
+}
+
+Square* Square::getForwardSquare() const {
+	if (board->getState() == Board::WhiteToPlay)
+		return getNorthSquare();
+	else
+		return getSouthSquare();
+}
+
+Square* Square::getBackwardSquare() const {
+	if (board->getState() == Board::WhiteToPlay)
+		return getSouthSquare();
+	else
+		return getNorthSquare();
+}
+
+Square* Square::getRightSquare() const {
+	if (board->getState() == Board::WhiteToPlay)
+		return getEastSquare();
+	else
+		return getWestSquare();
+}
+
+Square* Square::getLeftSquare() const {
+	if (board->getState() == Board::WhiteToPlay)
+		return getWestSquare();
+	else
+		return getEastSquare();
+}
+
 bool Square::isOccupied() const {
 	return piece != nullptr;
 }
