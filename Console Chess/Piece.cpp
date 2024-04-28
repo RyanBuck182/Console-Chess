@@ -39,7 +39,7 @@ void Piece::makeMove(Move move) {
 
 void Piece::makeStandardMove(Move move) {
 	delete move.getEndSquare()->getPiece();
-	move.getEndSquare()->setPiece(move.getStartSquare()->getPiece());
-	move.getEndSquare()->getPiece()->setSquare(move.getEndSquare());
-	move.getStartSquare()->setPiece(nullptr);
+	square->setPiece(nullptr);
+	move.getEndSquare()->setPiece(this);
+	this->setSquare(move.getEndSquare());
 }

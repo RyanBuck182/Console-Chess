@@ -122,14 +122,12 @@ void Pawn::makeMove(Move move) {
 }
 
 void Pawn::makeEnPassantMove(Move move) {
-	delete move.getEndSquare()->getPiece();
-	move.getEndSquare()->setPiece(move.getStartSquare()->getPiece());
-	move.getEndSquare()->getPiece()->setSquare(move.getEndSquare());
+	square->setPiece(nullptr);
+	move.getEndSquare()->setPiece(this);
+	this->setSquare(move.getEndSquare());
 
 	delete move.getEndSquare()->getBackwardSquare()->getPiece();
-	move.getEndSquare()->getBackwardSquare()->setPiece(nullptr);
-	
-	move.getStartSquare()->setPiece(nullptr);
+	move.getEndSquare()->getBackwardSquare()->setPiece(nullptr);	
 }
 
 void Pawn::makePromotionMove(Move move) {
@@ -147,21 +145,22 @@ void Pawn::makePromotionMove(Move move) {
 	Piece* promotedPiece = nullptr;
 	switch (choice) {
 		case 1:
-			promotedPiece = new Knight(board, move.getEndSquare(), move.getStartSquare()->getPiece()->isWhite());
+			promotedPiece = new Knight(board, move.getEndSquare(), pieceIsWhite);
 			break;
 		case 2:
-			promotedPiece = new Bishop(board, move.getEndSquare(), move.getStartSquare()->getPiece()->isWhite());
+			promotedPiece = new Bishop(board, move.getEndSquare(), pieceIsWhite);
 			break;
 		case 3:
-			promotedPiece = new Rook(board, move.getEndSquare(), move.getStartSquare()->getPiece()->isWhite());
+			promotedPiece = new Rook(board, move.getEndSquare(), pieceIsWhite);
 			break;
 		default:
-			promotedPiece = new Queen(board, move.getEndSquare(), move.getStartSquare()->getPiece()->isWhite());
+			promotedPiece = new Queen(board, move.getEndSquare(), pieceIsWhite);
 			break;
 	}
 
 	delete move.getEndSquare()->getPiece();
 	move.getEndSquare()->setPiece(promotedPiece);
 
-	move.getStartSquare()->setPiece(nullptr);
+	square->setPiece(nullptr);
+	delete this;
 }
