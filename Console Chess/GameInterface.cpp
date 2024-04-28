@@ -207,13 +207,11 @@ void GameInterface::loadGame() {
 		int startRow;
 		if (!(saveFile >> startColumn >> startRow)) break;
 		int startId = (startRow - 1) * Board::BOARD_LENGTH + (static_cast<int>(tolower(startColumn)) - static_cast<int>('a'));
-		cout << startId;
 
 		char endColumn;
 		int endRow;
 		if (!(saveFile >> endColumn >> endRow)) break;
 		int endId = (endRow - 1) * Board::BOARD_LENGTH + (static_cast<int>(tolower(endColumn)) - static_cast<int>('a'));
-		cout << endId;
 
 		moveList.push_back(Move(board, board->getSquareFromId(startId), board->getSquareFromId(endId)));
 	}
