@@ -1,3 +1,11 @@
+/*
+Modified By:    Connor English
+Class:          CSI-240-02
+Assignment:     Final Project
+Date Assigned:  4/11/24
+Due Date:       4/27/24 11:59PM
+*/
+
 #include "King.h"
 #include "Square.h"
 #include "Board.h"
