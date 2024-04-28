@@ -87,14 +87,9 @@ Board::~Board() {
 	for (int i = 0; i < pieceList.size(); i++) {
 		pieceList[i] = nullptr;
 	}
+
 	whiteKing = nullptr;
 	blackKing = nullptr;
-
-	for (int i = 0; i < moveList.size(); i++) {
-		delete moveList[i];
-		moveList[i] = nullptr;
-	}
-	moveList.clear();
 }
 
 Board::BoardState Board::getState() const {
@@ -119,28 +114,28 @@ bool Board::isSquareAttacked(Square* square, bool byWhite) const {
 	return (!byWhite) ? boardBlackAttacks[square->getId()] : boardWhiteAttacks[square->getId()];
 }
 
-Move* Board::getLastMove() const {
+Move* Board::getLastMove() {
 	if (moveList.size() > 0)
-		return moveList.back();
+		return &(moveList.back());
 	else
 		throw "Can not retrieve the last element of an empty move list.";
 }
 
-vector<Move*> Board::getMoveList() const {
+vector<Move> Board::getMoveList() const {
 	return moveList;
 }
 
-bool Board::moveIsValid(Move* move) const {
-	if (!move->getStartSquare()->isOccupied())
+bool Board::moveIsValid(Move move) const {
+	if (!move.getStartSquare()->isOccupied())
 		return false;
 
-	if (state == WhiteToPlay && !move->getStartSquare()->getPiece()->isWhite() || state == BlackToPlay && move->getStartSquare()->getPiece()->isWhite())
+	if (state == WhiteToPlay && !move.getStartSquare()->getPiece()->isWhite() || state == BlackToPlay && move.getStartSquare()->getPiece()->isWhite())
 		return false;
 
 	bool moveIsValid = false;
-	vector<Move*> validMoves = move->getStartSquare()->getPiece()->computeValidMoves();
+	vector<Move> validMoves = move.getStartSquare()->getPiece()->computeValidMoves();
 	for (int i = 0; i < validMoves.size(); i++) {
-		if (*move == *validMoves[i]) {
+		if (move == validMoves[i]) {
 			moveIsValid = true;
 			break;
 		}
@@ -149,27 +144,27 @@ bool Board::moveIsValid(Move* move) const {
 	return moveIsValid;
 }
 
-void Board::correctMoveType(Move* move) const {
+void Board::correctMoveType(Move move) const {
 	if (!moveIsValid(move))
 		throw "Cannot correct the move type of an invalid move.";
 
-	vector<Move*> validMoves = move->getStartSquare()->getPiece()->computeValidMoves();
+	vector<Move> validMoves = move.getStartSquare()->getPiece()->computeValidMoves();
 	for (int i = 0; i < validMoves.size(); i++) {
-		if (*move == *validMoves[i]) {
-			move->setMoveType(validMoves[i]->getMoveType());
+		if (move == validMoves[i]) {
+			move.setMoveType(validMoves[i].getMoveType());
 			break;
 		}
 	}
 }
 
-void Board::makeMove(Move* move) {
+void Board::makeMove(Move move) {
 	if (!moveIsValid(move))
 		throw "Cannot make an invalid move.";
 
 	correctMoveType(move);
 
 	moveList.push_back(move);
-	move->getStartSquare()->getPiece()->makeMove(move);
+	move.getStartSquare()->getPiece()->makeMove(move);
 
 	calculateAttacks();
 	updateState();

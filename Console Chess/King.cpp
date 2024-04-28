@@ -15,8 +15,8 @@ bool King::hasMoved() const {
 	return pieceHasMoved;
 }
 
-vector<Move*>King::computeValidMoves() const {
-	vector<Move*> validMoves;
+vector<Move>King::computeValidMoves() const {
+	vector<Move> validMoves;
 	vector<Square*> potentialEndSquares = getAttackedSquares();
 
 	// Determining valid moves
@@ -24,11 +24,11 @@ vector<Move*>King::computeValidMoves() const {
 		bool isUnoccupied = !potentialEndSquares[i]->isOccupied();
 
 		if (isUnoccupied) {
-			validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Standard));
+			validMoves.push_back(Move(board, square, potentialEndSquares[i], Move::Standard));
 		} else {
 			bool isCapturable = potentialEndSquares[i]->getPiece()->isWhite() != pieceIsWhite;
 			if (isCapturable)
-				validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Capture));
+				validMoves.push_back(Move(board, square, potentialEndSquares[i], Move::Capture));
 		}
 	}
 

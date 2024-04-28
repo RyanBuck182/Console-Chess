@@ -15,7 +15,7 @@ public:
 	static void outputBoard();
 	static std::string getSideString(bool);
 	static int useMoveMenu();
-	static Move* chooseMove();
+	static Move chooseMove();
 	static void offerDraw();
 	static void resign();
 	static void displayGameEndMessage();

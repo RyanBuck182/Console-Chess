@@ -11,19 +11,17 @@ bool Rook::hasMoved() const {
 	return pieceHasMoved;
 }
 
-vector<Move*>Rook::computeValidMoves() const {
-	vector<Move*> validMoves;
+vector<Move>Rook::computeValidMoves() const {
+	vector<Move> validMoves;
 	vector<Square*> potentialEndSquares = getAttackedSquares();
 
 	for (int i = 0; i < potentialEndSquares.size(); i++) {
 		if (potentialEndSquares[i]->isOccupied()) {
 			if (potentialEndSquares[i]->getPiece()->isWhite() != pieceIsWhite)
-				validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Capture));
+				validMoves.push_back(Move(board, square, potentialEndSquares[i], Move::Capture));
 		} else
-			validMoves.push_back(new Move(board, square, potentialEndSquares[i], Move::Standard));
+			validMoves.push_back(Move(board, square, potentialEndSquares[i], Move::Standard));
 	}
-
-	//add additional castling check
 
 	return validMoves;
 }

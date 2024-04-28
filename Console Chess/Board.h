@@ -29,15 +29,13 @@ public:
 	bool isSquareAttacked(int, bool) const;
 	bool isSquareAttacked(Square*, bool) const;
 
-	Move* getLastMove() const;
-	std::vector<Move*> getMoveList() const;
-	bool moveIsValid(Move*) const;
-	void correctMoveType(Move*) const;
-	void makeMove(Move*);
+	Move* getLastMove();
+	std::vector<Move> getMoveList() const;
+	bool moveIsValid(Move) const;
+	void correctMoveType(Move) const;
+	void makeMove(Move);
 	void calculateAttacks();
 	void updateState();
-
-	void captureKing(bool);
 
 	std::vector<Piece*> getPieceList() const;
 
@@ -58,7 +56,7 @@ private:
 	bool boardBlackAttacks[BOARD_SIZE];
 
 	std::vector<Piece*> pieceList;
-	std::vector<Move*> moveList;
+	std::vector<Move> moveList;
 };
 
 #endif

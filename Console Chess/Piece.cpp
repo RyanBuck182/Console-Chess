@@ -33,13 +33,13 @@ char Piece::getPieceSymbol() const {
 	return (pieceIsWhite) ? whitePieceSymbol : blackPieceSymbol;
 }
 
-void Piece::makeMove(Move* move) {
+void Piece::makeMove(Move move) {
 	makeStandardMove(move);
 }
 
-void Piece::makeStandardMove(Move* move) {
-	delete move->getEndSquare()->getPiece();
-	move->getEndSquare()->setPiece(move->getStartSquare()->getPiece());
-	move->getEndSquare()->getPiece()->setSquare(move->getEndSquare());
-	move->getStartSquare()->setPiece(nullptr);
+void Piece::makeStandardMove(Move move) {
+	delete move.getEndSquare()->getPiece();
+	move.getEndSquare()->setPiece(move.getStartSquare()->getPiece());
+	move.getEndSquare()->getPiece()->setSquare(move.getEndSquare());
+	move.getStartSquare()->setPiece(nullptr);
 }

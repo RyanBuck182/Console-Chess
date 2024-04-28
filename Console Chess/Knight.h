@@ -7,7 +7,7 @@ class Knight : public Piece {
 public:
 	Knight(Board*, Square*, bool);
 
-	std::vector<Move*> computeValidMoves() const override;
+	std::vector<Move> computeValidMoves() const override;
 	std::vector<Square*> getAttackedSquares() const override;
 };
 

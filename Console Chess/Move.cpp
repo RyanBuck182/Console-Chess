@@ -6,6 +6,9 @@ using namespace std;
 
 Move::Move(Board* board) {
 	this->board = board;
+	startSquare = nullptr;
+	endSquare = nullptr;
+	moveType = Standard;
 }
 
 Move::Move(Board* board, Square* startSquare, Square* endSquare) {
@@ -65,9 +68,9 @@ ostream& operator<<(ostream& out, const Move& move)
 
 	return out;
 }
-istream& operator>>(istream& in, Move*& move) {
-	Square* startSquare = new Square(move->board);
-	Square* endSquare = new Square(move->board);
+istream& operator>>(istream& in, Move& move) {
+	Square* startSquare = new Square(move.board);
+	Square* endSquare = new Square(move.board);
 
 	while (startSquare->getId() == -1) {
 		cout << "Start Square: ";
@@ -89,9 +92,9 @@ istream& operator>>(istream& in, Move*& move) {
 		}
 	}
 
-	move = new Move(move->board, startSquare, endSquare);
+	move = Move(move.board, startSquare, endSquare);
 
-	if (!move->getStartSquare()->getBoard()->moveIsValid(move))
+	if (!move.getStartSquare()->getBoard()->moveIsValid(move))
 		throw "Move is not valid.";
 
 	return in;

@@ -63,8 +63,8 @@ int GameHandler::useMoveMenu() {
 	return choice;
 }
 
-Move* GameHandler::chooseMove() {
-	Move* move = new Move(board);
+Move GameHandler::chooseMove() {
+	Move move(board);
 	bool validMove = false;
 	while (!validMove) {
 		try {
@@ -131,7 +131,7 @@ void GameHandler::saveGame() {
 	saveFile.open("saved.txt");
 	for (int i = 0; i < board->getMoveList().size(); i++)
 	{
-		saveFile << *board->getMoveList()[i] << endl;
+		saveFile << board->getMoveList()[i] << endl;
 	}
 	cout << "Game has been saved!\n";
 	saveFile.close();

@@ -22,7 +22,7 @@ public:
 
 	bool operator==(const Move& move) const;
 	friend std::ostream& operator<<(std::ostream&, const Move&);
-	friend std::istream& operator>>(std::istream&, Move*&);
+	friend std::istream& operator>>(std::istream&, Move&);
 private:
 	Board* board;
 	Square* startSquare;

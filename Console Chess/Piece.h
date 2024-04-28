@@ -19,11 +19,11 @@ public:
 
 	char getPieceSymbol() const;
 
-	virtual std::vector<Move*> computeValidMoves() const = 0;
+	virtual std::vector<Move> computeValidMoves() const = 0;
 	virtual std::vector<Square*> getAttackedSquares() const = 0;
-	virtual void makeMove(Move* move);
+	virtual void makeMove(Move move);
 protected:
-	void makeStandardMove(Move* move);
+	void makeStandardMove(Move move);
 
 	Board* board;
 	Square* square;

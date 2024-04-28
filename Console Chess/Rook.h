@@ -8,7 +8,7 @@ public:
 	Rook(Board*, Square*, bool);
 
 	bool hasMoved() const;
-	std::vector<Move*> computeValidMoves() const override;
+	std::vector<Move> computeValidMoves() const override;
 	std::vector<Square*> getAttackedSquares() const override;
 private:
 	bool pieceHasMoved;

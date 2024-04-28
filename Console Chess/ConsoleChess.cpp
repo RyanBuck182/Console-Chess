@@ -25,7 +25,7 @@ int main() {
 					cout << '\n';
 					switch (moveChoice) {
 						case 1: { // Make move
-							Move* move = GameHandler::chooseMove();
+							Move move = GameHandler::chooseMove();
 							GameHandler::board->makeMove(move);
 							break;
 						} case 2: // Offer draw
